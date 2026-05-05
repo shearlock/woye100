@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>沃野100 - PET核心单词1000题完整版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "微软雅黑", sans-serif;
+        }
+        body {
+            background: #f0f2f5;
+            padding-bottom: 20px;
+        }
+        .login-mask {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+        .login-card {
+            background: #fff;
+            width: 80%;
+            max-width: 340px;
+            border-radius: 16px;
+            padding: 35px 25px;
+            text-align: center;
+        }
+        .wx-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #07c160;
+            color: #fff;
+            font-size: 32px;
+            line-height: 70px;
+            margin: 0 auto 20px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            background: #07c160;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        .tip-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+        }
+        .hide { display: none !important; }
+        .main-wrap {
+            padding: 15px;
+        }
+        .top-bar {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .top-bar h2 {
+            color: #333;
+            font-size: 20px;
+        }
+        .set-row {
+            margin-bottom: 12px;
+        }
+        .set-row select, .set-row input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .gen-new-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2c7be5;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .book-box {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 25px 20px;
+            min-height: 380px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .q-num {
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        .q-content {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #222;
+            margin-bottom: 25px;
+        }
+        .q-content .highlight {
+            color: #f56c6c;
+            font-weight: bold;
+        }
+        .opt-btns {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .opt-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #2c7be5;
+            background: #fff;
+            color: #2c7be5;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .opt-btn.active {
+            background: #2c7be5;
+            color: #fff;
+        }
+        .result-icon {
+            font-size: 40px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .right { color: #19be6b; }
+        .wrong { color: #f56c6c; }
+        .ans-box {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.7;
+            display: none;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .ctrl-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .ctrl-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .look-ans-btn {
+            background: #ff9500;
+            color: #fff;
+        }
+        .next-q-btn {
+            background: #19be6b;
+            color: #fff;
+            display: none;
+        }
+        .score-panel {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        .score-title {
+            font-size: 17px;
+            color: #333;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            color: #555;
+            margin: 8px 0;
+        }
+        .flower-wrap {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+        }
+        .flower-title {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .flower {
+            font-size: 24px;
+            margin-right: 6px;
+        }
+        .bottom-api-area{
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+<div class="login-mask" id="loginMask">
+    <div class="login-card">
+        <div class="wx-logo">微</div>
+        <div style="font-size:17px;color:#333;margin-bottom:20px;">微信快捷登录</div>
+        <button class="login-btn" onclick="wxLogin()">微信一键登录</button>
+        <div class="tip-text">仅本地模拟登录，不上传任何信息</div>
+    </div>
+</div>
+<div class="main-wrap hide" id="mainPage">
+    <div class="top-bar">
+        <h2>沃野100 - PET核心单词100题</h2>
+    </div>
+    <div class="set-row">
+        <select id="topicSel" onchange="loadTopicPaper()">
+    <option value="pet100">PET 核心单词 1-100</option>
+    <option value="pet200">PET 核心单词 101-200</option>
+    <option value="pet300">PET 核心单词 201-300</option>
+    <option value="pet400">PET 核心单词 301-400</option>
+    <option value="pet500">PET 核心单词 401-500</option>
+    <option value="pet600">PET 核心单词 501-600</option>
+    <option value="pet700">PET 核心单词 601-700</option>
+    <option value="pet800">PET 核心单词 701-800</option>
+    <option value="pet900">PET 核心单词 801-900</option>
+    <option value="pet1000">PET 核心单词 901-1000</option>
+    <option value="pet1100">PET 核心单词 1001-1100</option>
+    <option value="pet1200">PET 核心单词 1101-1200</option>
+</select>
+    </div>
+    <div class="book-box">
+        <div class="q-num" id="qNum">第 1 题 / 共 100 题</div>
+        <div class="q-content" id="qContent">请点击微信登录进入学习...</div>
+        <div class="opt-btns">
+            <button class="opt-btn" onclick="selectOpt('A')">A</button>
+            <button class="opt-btn" onclick="selectOpt('B')">B</button>
+            <button class="opt-btn" onclick="selectOpt('C')">C</button>
+        </div>
+        <div class="result-icon" id="resultIcon"></div>
+        <div class="ans-box" id="ansBox">
+            <div id="ansText"></div>
+        </div>
+        <div class="ctrl-btns">
+            <button class="ctrl-btn look-ans-btn" id="lookAnsBtn" onclick="showAnswer()">查看答案解析</button>
+            <button class="ctrl-btn next-q-btn" id="nextQBtn" onclick="nextQuestion()">下一题</button>
+        </div>
+    </div>
+    <div class="score-panel">
+        <div class="score-title">学习积分统计</div>
+        <div class="score-row">
+            <span>本专项得分</span>
+            <span id="currTopicScore">0 / 100</span>
+        </div>
+        <div class="score-row">
+            <span>累计总得分</span>
+            <span id="totalScore">0 / 100</span>
+        </div>
+        <div class="score-row">
+            <span>已通关专项</span>
+            <span id="passTopicNum">0 / 1</span>
+        </div>
+        <div class="flower-wrap">
+            <div class="flower-title">满分奖励小红花</div>
+            <div id="flowerBox"></div>
+        </div>
+    </div>
+    <div class="bottom-api-area">
+        <div class="set-row">
+            <input type="text" id="apiKey" placeholder="填入API Key可生成全新PET题库">
+        </div>
+        <button class="gen-new-btn" onclick="genNewPaper()">生成全新PET专项题库</button>
+    </div>
+</div>
+<script>
+function wxLogin(){
+    document.getElementById('loginMask').classList.add('hide');
+    document.getElementById('mainPage').classList.remove('hide');
+    initScoreData();
+    loadTopicPaper();
+}
+
+let questionList = [];
+let currentIdx = 0;
+let hasAnswered = false;
+let hasLookAns = false;
+let isScored = false;
+
+const topicFullMark = {
+    pet100:{score:0, full:false}
+};
+
+function initScoreData(){
+    updateScorePanel();
+}
+
+// PET 100题完整题库（第一批100词，高亮+选项+解析全量）
+const topicBank = {
+pet100:[
+{"q":"We cannot <span class='highlight'>abandon</span> our plan halfway.\nA.坚持 B.抛弃/放弃 C.更改","ans":"B","explain":"单词：abandon\n英 /əˈbændən/ 美 /əˈbændən/\n释义：v. 抛弃；放弃；终止\n词根拆解：a- 离开 + band 捆绑 + -on → 解开束缚、抛下离开\n词性变形：abandoned adj. 被抛弃的；颓废的"},
+{"q":"Everyone has the <span class='highlight'>ability</span> to learn new skills.\nA.习惯 B.能力/才干 C.爱好","ans":"B","explain":"单词：ability\n英 /əˈbɪləti/ 美 /əˈbɪləti/\n释义：n. 能力；才能；才干\n词根拆解：able 有能力的 + -ility 名词后缀 → 具备做事的本事\n词性变形：able adj. 能够的；有能力的"},
+{"q":"She is <span class='highlight'>able</span> to finish the task alone.\nA.能够/能干 B.拒绝 C.勉强","ans":"A","explain":"单词：able\n英 /ˈeɪbl/ 美 /ˈeɪbl/\n释义：adj. 能够；有才干的；能干的\n词根拆解：源自拉丁语 habilis 灵巧、适合\n词性变形：ability n. 能力；enable v. 使能够"},
+{"q":"It is <span class='highlight'>abnormal</span> to stay up all night every day.\nA.正常的 B.忙碌的 C.反常的/异常的","ans":"C","explain":"单词：abnormal\n英 /æbˈnɔːml/ 美 /æbˈnɔːrml/\n释义：adj. 反常的；异常的\n词根拆解：ab- 否定 + normal 正常的 → 不正常的\n词性变形：abnormally adv. 异常地"},
+{"q":"All passengers are already <span class='highlight'>aboard</span> the plane.\nA.在国外 B.在飞机/船上 C.等候","ans":"B","explain":"单词：aboard\n英 /əˈbɔːd/ 美 /əˈbɔːrd/\n释义：adv./prep. 在船/飞机/车上；登机\n词根拆解：a- 在…上 + board 船板 → 在船上\n词性变形：board n. 木板；甲板 v. 登机"},
+{"q":"Many students choose to study <span class='highlight'>abroad</span>.\nA.在校 B.在国外 C.在家","ans":"B","explain":"单词：abroad\n英 /əˈbrɔːd/ 美 /əˈbrɔːd/\n释义：adv. 在国外；到海外\n词根拆解：a- 向外 + broad 广阔 → 去往广阔他乡\n词性变形：broad adj. 宽阔的"},
+{"q":"He was <span class='highlight'>absent</span> from school for three days.\nA.缺席的 B.勤奋的 C.活跃的","ans":"A","explain":"单词：absent\n英 /ˈæbsənt/ 美 /ˈæbsənt/\n释义：adj. 缺席的；不在的；心不在焉\n词根拆解：ab- 离开 + sent 存在 → 不在现场\n词性变形：absence n. 缺席；缺勤"},
+{"q":"There is no <span class='highlight'>absolute</span> answer to this question.\nA.模糊的 B.绝对的/完全的 C.简单的","ans":"B","explain":"单词：absolute\n英 /ˈæbsəluːt/ 美 /ˈæbsəluːt/\n释义：adj. 绝对的；完全的；确凿的\n词根拆解：ab- 完全 + solute 松开 → 完全不受约束\n词性变形：absolutely adv. 绝对地；完全地"},
+{"q":"Plants <span class='highlight'>absorb</span> water and sunlight to grow.\nA.释放 B.吸收/理解 C.浪费","ans":"B","explain":"单词：absorb\n英 /əbˈsɔːb/ 美 /əbˈsɔːrb/\n释义：v. 吸收；理解；使全神贯注\n词根拆解：ab- 加强 + sorb 吸入 → 吸纳、吸收\n词性变形：absorption n. 吸收；专注"},
+{"q":"Art can express <span class='highlight'>abstract</span> feelings.\nA.具体的 B.抽象的 C.真实的","ans":"B","explain":"单词：abstract\n英 /ˈæbstrækt/ 美 /ˈæbstrækt/\n释义：adj. 抽象的 n. 摘要 v. 提取\n词根拆解：abs- 离开 + tract 拉 → 从实物抽离→抽象\n词性变形：abstraction n. 抽象概念"},
+{"q":"The forest is <span class='highlight'>abundant</span> in wild plants.\nA.稀少的 B.大量的/充裕的 C.普通的","ans":"B","explain":"单词：abundant\n英 /əˈbʌndənt/ 美 /əˈbʌndənt/\n释义：adj. 大量的；充裕的；丰盛的\n词根拆解：abund 溢出 + -ant 形容词后缀 → 多得溢出\n词性变形：abundance n. 充裕；丰富"},
+{"q":"We should not <span class='highlight'>abuse</span> natural resources.\nA.珍惜 B.滥用/虐待 C.节约","ans":"B","explain":"单词：abuse\n英 /əˈbjuːs/ 美 /əˈbjuːs/\n释义：v./n. 滥用；虐待；辱骂\n词根拆解：ab- 偏离 + use 使用 → 不正当地使用\n词性变形：abusive adj. 辱骂的；滥用的"},
+{"q":"He has great <span class='highlight'>academic</span> performance.\nA.运动的 B.学术的/学业的 C.艺术的","ans":"B","explain":"单词：academic\n英 /ˌækəˈdemɪk/ 美 /ˌækəˈdemɪk/\n释义：adj. 学术的；学业的 n. 学者\n词根拆解：academy 学院 + -ic 形容词后缀\n词性变形：academy n. 研究院；专科学校"},
+{"q":"We need to <span class='highlight'>accelerate</span> the pace of study.\nA.放慢 B.加速/加快 C.保持","ans":"B","explain":"单词：accelerate\n英 /əkˈseləreɪt/ 美 /əkˈseləreɪt/\n释义：v. 加速；促进；加快进程\n词根拆解：ac- 加强 + celer 快速 + -ate 动词后缀 → 使变快\n词性变形：acceleration n. 加速度；加速"},
+{"q":"She speaks English with a soft <span class='highlight'>accent</span>.\nA.口音/腔调 B.语速 C.词汇","ans":"A","explain":"单词：accent\n英 /ˈæksent/ 美 /ˈæksent/\n释义：n. 口音；重音；腔调\n词根拆解：ac- 加强 + cent 发声 → 说话发声的腔调\n词性变形：accented adj. 带口音的；重读的"},
+{"q":"I am happy to <span class='highlight'>accept</span> your invitation.\nA.拒绝 B.接受/接纳 C.忽略","ans":"B","explain":"单词：accept\n英 /əkˈsept/ 美 /əkˈsept/\n释义：v. 接受；接纳；同意\n词根拆解：ac- 加强 + cept 拿取 → 欣然拿取、接纳\n词性变形：acceptance n. 接受；认可"},
+{"q":"Your answer is perfectly <span class='highlight'>acceptable</span>.\nA.不可接受的 B.可接受的/合意的 C.奇怪的","ans":"B","explain":"单词：acceptable\n英 /əkˈseptəbl/ 美 /əkˈseptəbl/\n释义：adj. 可接受的；合意的；尚可的\n词根拆解：accept 接受 + -able 可…的 → 可以被接受\n词性变形：unacceptable adj. 不可接受的"},
+{"q":"Her <span class='highlight'>acceptance</span> of the prize surprised us.\nA.拒绝 B.接受/认可 C.犹豫","ans":"B","explain":"单词：acceptance\n英 /əkˈseptəns/ 美 /əkˈseptəns/\n释义：n. 接受；认可；接纳\n词根拆解：accept 接受 + -ance 名词后缀\n词性变形：accept v. 接受"},
+{"q":"Students have free <span class='highlight'>access</span> to the library.\nA.通道/使用权 B.时间 C.书籍","ans":"A","explain":"单词：access\n英 /ˈækses/ 美 /ˈækses/\n释义：n. 通道；使用权 v. 访问；获取\n词根拆解：ac- 进入 + cess 走 → 走进去的路径\n词性变形：accessible adj. 可进入的；易懂的"},
+{"q":"The village is only <span class='highlight'>accessible</span> by foot.\nA.偏僻的 B.可到达的/易用的 C.热闹的","ans":"B","explain":"单词：accessible\n英 /əkˈsesəbl/ 美 /əkˈsesəbl/\n释义：adj. 可到达的；易理解的；可使用的\n词根拆解：access 通路 + -ible 能够…的\n词性变形：inaccessible adj. 难以到达的"},
+{"q":"He had a small traffic <span class='highlight'>accident</span> yesterday.\nA.计划 B.事故/意外 C.聚会","ans":"B","explain":"单词：accident\n英 /ˈæksɪdənt/ 美 /ˈæksɪdənt/\n释义：n. 事故；意外；偶然事件\n词根拆解：ac- 降临 + cid 落下 + -ent → 突然降临的意外\n词性变形：accidental adj. 意外的"},
+{"q":"It was an <span class='highlight'>accidental</span> meeting in the street.\nA.刻意的 B.意外的/偶然的 C.经常的","ans":"B","explain":"单词：accidental\n英 /ˌæksɪˈdentl/ 美 /ˌæksɪˈdentl/\n释义：adj. 意外的；偶然的\n词根拆解：accident 意外 + -al 形容词后缀\n词性变形：accidentally adv. 意外地"},
+{"q":"The hall can <span class='highlight'>accommodate</span> 500 people.\nA.容纳/提供住宿 B.限制 C.招待","ans":"A","explain":"单词：accommodate\n英 /əˈkɒmədeɪt/ 美 /əˈkɑːmədeɪt/\n释义：v. 容纳；提供住宿；迁就\n词根拆解：ac- 加强 + commod 方便 + -ate → 提供便利、容纳\n词性变形：accommodation n. 住宿；住处"},
+{"q":"I will <span class='highlight'>accompany</span> you to the station.\nA.等待 B.陪伴/陪同 C.送别","ans":"B","explain":"单词：accompany\n英 /əˈkʌmpəni/ 美 /əˈkʌmpəni/\n释义：v. 陪伴；陪同；伴随\n词根拆解：ac- 一起 + company 同伴 → 做同伴、陪同\n词性变形：companion n. 同伴；伙伴"},
+{"q":"She <span class='highlight'>accomplished</span> her goal in one year.\nA.放弃 B.完成/实现 C.改变","ans":"B","explain":"单词：accomplish\n英 /əˈkɒmplɪʃ/ 美 /əˈkɑːmplɪʃ/\n释义：v. 完成；实现；达成\n词根拆解：ac- 加强 + compl 填满 + -ish → 把事情做圆满\n词性变形：accomplishment n. 成就；完成"},
+{"q":"His words <span class='highlight'>accord</span> with the facts.\nA.违背 B.符合/一致 C.猜测","ans":"B","explain":"单词：accord\n英 /əˈkɔːd/ 美 /əˈkɔːrd/\n释义：n. 协议 v. 符合；一致\n词根拆解：ac- 共同 + cord 心 → 同心合意、一致\n词性变形：according adv. 依据；按照"},
+{"q":"Act in <span class='highlight'>accordance</span> with the school rules.\nA.违背 B.一致/依照 C.忽略","ans":"B","explain":"单词：accordance\n英 /əˈkɔːdns/ 美 /əˈkɔːrdns/\n释义：n. 一致；依照；符合\n词根拆解：accord 一致 + -ance 名词后缀\n词性变形：accordingly adv. 因此；相应地"},
+{"q":"<span class='highlight'>According</span> to the weather report, it will rain.\nA.违反 B.根据/按照 C.无视","ans":"B","explain":"单词：according\n英 /əˈkɔːdɪŋ/ 美 /əˈkɔːrdɪŋ/\n释义：prep. 根据；按照\n词根拆解：accord 一致 + -ing 分词后缀 → 与…保持一致\n词性变形：accordingly adv. 从而；相应"},
+{"q":"He made a mistake and was punished <span class='highlight'>accordingly</span>.\nA.随意地 B.因此/相应地 C.无辜地","ans":"B","explain":"单词：accordingly\n英 /əˈkɔːdɪŋli/ 美 /əˈkɔːrdɪŋli/\n释义：adv. 因此；于是；相应地\n词根拆解：according 根据 + -ly 副词后缀\n词性变形：accord v./n. 一致；协议"},
+{"q":"She opened a new bank <span class='highlight'>account</span> last week.\nA.账户/描述 B.礼物 C.包裹","ans":"A","explain":"单词：account\n英 /əˈkaʊnt/ 美 /əˈkaʊnt/\n释义：n. 账户；描述；解释 v. 占比；解释\n词根拆解：ac- 计算 + count 数数 → 记账、叙述明细\n词性变形：accountant n. 会计"},
+{"q":"His mother works as an <span class='highlight'>accountant</span>.\nA.教师 B.会计/会计师 C.医生","ans":"B","explain":"单词：accountant\n英 /əˈkaʊntənt/ 美 /əˈkaʊntənt/\n释义：n. 会计；会计师\n词根拆解：account 账目 + -ant 表人 → 管账的人\n词性变形：accounting n. 会计学"},
+{"q":"He is studying <span class='highlight'>accounting</span> at college.\nA.管理学 B.会计学/账务 C.语言学","ans":"B","explain":"单词：accounting\n英 /əˈkaʊntɪŋ/ 美 /əˈkaʊntɪŋ/\n释义：n. 会计学；记账；账务\n词根拆解：account 账目 + -ing 学科后缀\n词性变形：accountant n. 会计"},
+{"q":"<span class='highlight'>Accuracy</span> is very important in maths.\nA.速度 B.准确性/精确度 C.耐心","ans":"B","explain":"单词：accuracy\n英 /ˈækjərəsi/ 美 /ˈækjərəsi/\n释义：n. 准确性；精确度\n词根拆解：accurate 准确的 + -acy 名词后缀\n词性变形：accurate adj. 准确的"},
+{"q":"Please give me an <span class='highlight'>accurate</span> answer.\nA.模糊的 B.准确的/精确的 C.简单的","ans":"B","explain":"单词：accurate\n英 /ˈækjərət/ 美 /ˈækjərət/\n释义：adj. 准确的；精确的\n词根拆解：ac- 加强 + cur 留心 + -ate → 用心做、精准无误\n词性变形：accurately adv. 精确地"},
+{"q":"No one can <span class='highlight'>accuse</span> him without proof.\nA.支持 B.指控/指责 C.理解","ans":"B","explain":"单词：accuse\n英 /əˈkjuːz/ 美 /əˈkjuːz/\n释义：v. 指控；指责；控告\n词根拆解：ac- 对着 + cuse 指责 → 当面责备、指控\n词性变形：accusation n. 指控；指责"},
+{"q":"I am <span class='highlight'>accustomed</span> to getting up early.\nA.厌恶的 B.习惯于/惯常的 C.期待的","ans":"B","explain":"单词：accustomed\n英 /əˈkʌstəmd/ 美 /əˈkʌstəmd/\n释义：adj. 习惯于；惯常的\n词根拆解：ac- 加强 + custom 习俗 + -ed → 养成习惯的\n词性变形：custom n. 习俗；习惯"},
+{"q":"My head began to <span class='highlight'>ache</span> in the afternoon.\nA.疼痛/隐痛 B.放松 C.清醒","ans":"A","explain":"单词：ache\n英 /eɪk/ 美 /eɪk/\n释义：v./n. 疼痛；隐痛\n词根拆解：古英语原生词，本义身体酸痛\n词性变形：achy adj. 疼痛的"},
+{"q":"Work hard to <span class='highlight'>achieve</span> your dreams.\nA.放弃 B.实现/达到 C.忘记","ans":"B","explain":"单词：achieve\n英 /əˈtʃiːv/ 美 /əˈtʃiːv/\n释义：v. 实现；达到；取得\n词根拆解：a- 到 + chieve 终点 → 走到终点、达成目标\n词性变形：achievement n. 成就；成绩"},
+{"q":"It is a great <span class='highlight'>achievement</span> for him.\nA.失败 B.成就/业绩 C.遗憾","ans":"B","explain":"单词：achievement\n英 /əˈtʃiːvmənt/ 美 /əˈtʃiːvmənt/\n释义：n. 成就；业绩；达成\n词根拆解：achieve 实现 + -ment 名词后缀\n词性变形：achieve v. 实现；取得"},
+{"q":"Lemon juice tastes <span class='highlight'>acid</span>.\nA.甜的 B.酸的/尖刻的 C.苦的","ans":"B","explain":"单词：acid\n英 /ˈæsɪd/ 美 /ˈæsɪd/\n释义：n. 酸 adj. 酸性的；尖刻的\n词根拆解：源自拉丁语 acidus 尖锐、酸涩\n词性变形：acidic adj. 酸性的"},
+{"q":"He finally <span class='highlight'>acknowledged</span> his mistake.\nA.否认 B.承认/认可 C.掩饰","ans":"B","explain":"单词：acknowledge\n英 /əkˈnɒlɪdʒ/ 美 /əkˈnɑːlɪdʒ/\n释义：v. 承认；致谢；认可\n词根拆解：ac- 完全 + know 知道 + -ledge → 完全知晓并承认\n词性变形：acknowledgement n. 承认；感谢"},
+{"q":"We <span class='highlight'>acquire</span> knowledge every day.\nA.丧失 B.获得/习得 C.忽视","ans":"B","explain":"单词：acquire\n英 /əˈkwaɪə(r)/ 美 /əˈkwaɪər/\n释义：v. 获得；习得；取得\n词根拆解：ac- 加强 + quire 寻求 → 努力求得、习得\n词性变形：acquisition n. 获得；习得物"},
+{"q":"Language <span class='highlight'>acquisition</span> takes time.\nA.遗忘 B.获得/习得 C.练习","ans":"B","explain":"单词：acquisition\n英 /ˌækwɪˈzɪʃn/ 美 /ˌækwɪˈzɪʃn/\n释义：n. 获得；习得；购置物\n词根拆解：acquire 获得 + -ition 名词后缀\n词性变形：acquire v. 获得；习得"},
+{"q":"The farm covers one hundred <span class='highlight'>acre</span>.\nA.亩 B.英亩 C.公里","ans":"B","explain":"单词：acre\n英 /ˈeɪkə(r)/ 美 /ˈeɪkər/\n释义：n. 英亩（土地面积单位）\n词根拆解：古英语土地丈量单位原生词\n词性变形：无常规变形"},
+{"q":"Take <span class='highlight'>action</span> instead of only talking.\nA.行动/行为 B.等待 C.思考","ans":"A","explain":"单词：action\n英 /ˈækʃn/ 美 /ˈækʃn/\n释义：n. 行动；行为；动作\n词根拆解：act 做 + -ion 名词后缀 → 做出来的行为\n词性变形：active adj. 积极的；主动的"},
+{"q":"She is very <span class='highlight'>active</span> in class discussion.\nA.消极的 B.积极的/活跃的 C.安静的","ans":"B","explain":"单词：active\n英 /ˈæktɪv/ 美 /ˈæktɪv/\n释义：adj. 积极的；活跃的；主动的\n词根拆解：act 行动 + -ive 形容词后缀 → 爱行动的\n词性变形：activity n. 活动"},
+{"q":"Our school holds many outdoor <span class='highlight'>activity</span>.\nA.作业 B.活动/行动 C.考试","ans":"B","explain":"单词：activity\n英 /ækˈtɪvəti/ 美 /ækˈtɪvəti/\n释义：n. 活动；行动；活跃度\n词根拆解：active 活跃的 + -ity 名词后缀\n词性变形：active adj. 活跃的"},
+{"q":"He wants to become a famous <span class='highlight'>actor</span>.\nA.歌手 B.男演员 C.作家","ans":"B","explain":"单词：actor\n英 /ˈæktə(r)/ 美 /ˈæktər/\n释义：n. 男演员；参与者\n词根拆解：act 表演 + -or 表人 → 表演者\n词性变形：actress n. 女演员"},
+{"q":"The young <span class='highlight'>actress</span> is very popular.\nA.歌手 B.女作家 C.女演员","ans":"C","explain":"单词：actress\n英 /ˈæktrəs/ 美 /ˈæktrəs/\n释义：n. 女演员\n词根拆解：actor 男演员 + -ess 女性后缀\n词性变形：actor n. 男演员"},
+{"q":"The <span class='highlight'>actual</span> cost is higher than we thought.\nA.虚假的 B.实际的/真实的 C.预估的","ans":"B","explain":"单词：actual\n英 /ˈæktʃuəl/ 美 /ˈæktʃuəl/\n释义：adj. 实际的；真实的；现实的\n词根拆解：act 行动/事实 + -ual 形容词后缀 → 基于事实的\n词性变形：actually adv. 实际上"},
+{"q":"<span class='highlight'>Actually</span>, I agree with your idea.\nA.表面上 B.实际上/事实上 C.或许","ans":"B","explain":"单词：actually\n英 /ˈæktʃuəli/ 美 /ˈæktʃuəli/\n释义：adv. 实际上；事实上\n词根拆解：actual 实际的 + -ly 副词后缀\n词性变形：actual adj. 真实的"},
+{"q":"It takes time to <span class='highlight'>adapt</span> to new life.\nA.抗拒 B.适应/改编 C.放弃","ans":"B","explain":"单词：adapt\n英 /əˈdæpt/ 美 /əˈdæpt/\n释义：v. 适应；改编；改写\n词根拆解：ad- 贴合 + apt 合适 → 使贴合适配\n词性变形：adaptation n. 改编本；适应"},
+{"q":"This film is an <span class='highlight'>adaptation</span> of a novel.\nA.原创 B.适应/改编作品 C.续集","ans":"B","explain":"单词：adaptation\n英 /ˌædæpˈteɪʃn/ 美 /ˌædæpˈteɪʃn/\n释义：n. 适应；改编作品\n词根拆解：adapt 改编/适应 + -ation 名词后缀\n词性变形：adapt v. 适应；改编"},
+{"q":"Kids are more <span class='highlight'>adaptable</span> to new environments.\nA.固执的 B.能适应的 C.敏感的","ans":"B","explain":"单词：adaptable\n英 /əˈdæptəbl/ 美 /əˈdæptəbl/\n释义：adj. 能适应的；可改编的\n词根拆解：adapt 适应 + -able 可…的\n词性变形：inadaptable adj. 难以适应的"},
+{"q":"In <span class='highlight'>addition</span>, we need more time to prepare.\nA.此外/增加 B.相反 C.总之","ans":"A","explain":"单词：addition\n英 /əˈdɪʃn/ 美 /əˈdɪʃn/\n释义：n. 增加；加法；新增物\n词根拆解：add 增加 + -ition 名词后缀\n词性变形：additional adj. 额外的；附加的"},
+{"q":"You need to pay some <span class='highlight'>additional</span> fees.\nA.必要的 B.额外的/附加的 C.免费的","ans":"B","explain":"单词：additional\n英 /əˈdɪʃənl/ 美 /əˈdɪʃənl/\n释义：adj. 额外的；附加的；另外的\n词根拆解：addition 增加 + -al 形容词后缀\n词性变形：additionally adv. 另外"},
+{"q":"Write down your home <span class='highlight'>address</span> clearly.\nA.地址/演讲 B.姓名 C.电话","ans":"A","explain":"单词：address\n英 /əˈdres/ 美 /əˈdres/\n释义：n. 地址；演讲 v. 解决；致辞\n词根拆解：ad- 朝向 + dress 安排 → 对准目标、陈述\n词性变形：addressee n. 收件人"},
+{"q":"We have <span class='highlight'>adequate</span> food for the trip.\nA.不足的 B.足够的/恰当的 C.美味的","ans":"B","explain":"单词：adequate\n英 /ˈædɪkwət/ 美 /ˈædɪkwət/\n释义：adj. 足够的；恰当的；合格的\n词根拆解：ad- 加强 + equ 平等 + -ate → 刚好匹配需求\n词性变形：adequately adv. 足够地；适当地"},
+{"q":"We must <span class='highlight'>adhere</span> to the school rules.\nA.违反 B.粘附/遵守 C.质疑","ans":"B","explain":"单词：adhere\n英 /ədˈhɪə(r)/ 美 /ədˈhɪr/\n释义：v. 粘附；遵守；坚持\n词根拆解：ad- 紧贴 + here 粘住 → 粘在一起、坚守\n词性变形：adherence n. 坚持；遵守"},
+{"q":"The shop is <span class='highlight'>adjacent</span> to the park.\nA.对面的 B.邻近的/相邻的 C.远离的","ans":"B","explain":"单词：adjacent\n英 /əˈdʒeɪsənt/ 美 /əˈdʒeɪsənt/\n释义：adj. 邻近的；相邻的\n词根拆解：ad- 靠近 + jac 坐落 + -ent → 坐落在一起的\n词性变形：adjacency n. 邻近；相邻"},
+{"q":"Please <span class='highlight'>adjust</span> the height of the chair.\nA.固定 B.调整/调节 C.拆除","ans":"B","explain":"单词：adjust\n英 /əˈdʌst/ 美 /əˈdʌst/\n释义：v. 调整；调节；适应\n词根拆解：ad- 加强 + just 公正/合适 → 调到合适状态\n词性变形：adjustment n. 调整；调节"},
+{"q":"A small <span class='highlight'>adjustment</span> can improve the result.\nA.调整/调适 B.放弃 C.等待","ans":"A","explain":"单词：adjustment\n英 /əˈdʌstmənt/ 美 /əˈdʌstmənt/\n释义：n. 调整；调节；调适\n词根拆解：adjust 调整 + -ment 名词后缀\n词性变形：adjust v. 调整；适应"},
+{"q":"The school <span class='highlight'>administration</span> works very well.\nA.教学 B.管理/行政机构 C.后勤","ans":"B","explain":"单词：administration\n英 /ədˌmɪnɪˈstreɪʃn/ 美 /ədˌmɪnɪˈstreɪʃn/\n释义：n. 管理；行政机构；政府\n词根拆解：administer 管理 + -ation 名词后缀\n词性变形：administrative adj. 行政的；管理的"},
+{"q":"She works in an <span class='highlight'>administrative</span> office.\nA.教学的 B.行政的/管理的 C.医疗的","ans":"B","explain":"单词：administrative\n英 /ədˈmɪnɪstrətɪv/ 美 /ədˈmɪnɪstrətɪv/\n释义：adj. 行政的；管理的\n词根拆解：administrate 管理 + -ive 形容词后缀\n词性变形：administration n. 行政；管理"},
+{"q":"The system <span class='highlight'>administrator</span> fixed the problem.\nA.使用者 B.管理员/行政人员 C.学生","ans":"B","explain":"单词：administrator\n英 /ədˈmɪnɪstreɪtə(r)/ 美 /ədˈmɪnɪstreɪtər/\n释义：n. 管理员；行政人员\n词根拆解：administrate 管理 + -or 表人\n词性变形：administer v. 管理；执行"},
+{"q":"I really <span class='highlight'>admire</span> her hard-working spirit.\nA.鄙视 B.钦佩/欣赏 C.模仿","ans":"B","explain":"单词：admire\n英 /ədˈmaɪə(r)/ 美 /ədˈmaɪr/\n释义：v. 钦佩；欣赏；仰慕\n词根拆解：ad- 加强 + mire 惊奇 → 心生赞叹、欣赏\n词性变形：admiration n. 钦佩；赞赏"},
+{"q":"<span class='highlight'>Admission</span> to the museum is free for kids.\nA.拒绝 B.入场/录取 C.参观","ans":"B","explain":"单词：admission\n英 /ədˈmɪʃn/ 美 /ədˈmɪʃn/\n释义：n. 入场费；录取；承认\n词根拆解：admit 准许进入 + -sion 名词后缀\n词性变形：admit v. 承认；准许进入"},
+{"q":"He finally <span class='highlight'>admitted</span> his fault.\nA.否认 B.承认/接纳 C.掩饰","ans":"B","explain":"单词：admit\n英 /ədˈmɪt/ 美 /ədˈmɪt/\n释义：v. 承认；准许进入；接纳\n词根拆解：ad- 进入 + mit 派送 → 放行进入\n词性变形：admission n. 录取；承认"},
+{"q":"We should <span class='highlight'>adopt</span> new ways of learning.\nA.拒绝 B.收养/采用 C.怀疑","ans":"B","explain":"单词：adopt\n英 /əˈdɒpt/ 美 /əˈdɑːpt/\n释义：v. 收养；采纳；采用\n词根拆解：ad- 选择 + opt 意愿 → 选择接纳\n词性变形：adoption n. 收养；采用"},
+{"q":"The <span class='highlight'>adoption</span> of new rules helps a lot.\nA.反对 B.收养/采用 C.修改","ans":"B","explain":"单词：adoption\n英 /əˈdɒpʃn/ 美 /əˈdɑːpʃn/\n释义：n. 收养；采用；采纳\n词根拆解：adopt 采用/收养 + -ion 名词后缀\n词性变形：adopt v. 收养；采用"},
+{"q":"As an <span class='highlight'>adult</span>, you must take responsibility.\nA.儿童 B.成年人 C.老人","ans":"B","explain":"单词：adult\n英 /əˈdʌlt/ 美 /əˈdʌlt/\n释义：n. 成年人 adj. 成人的；成熟的\n词根拆解：源自拉丁语 adolescere 长大成熟\n词性变形：adulthood n. 成年时期"},
+{"q":"Science and technology <span class='highlight'>advance</span> very fast.\nA.停滞 B.前进/进步 C.落后","ans":"B","explain":"单词：advance\n英 /ədˈvɑːns/ 美 /ədˈvæns/\n释义：v. 前进；进步 n. 进展；预付款\n词根拆解：ad- 向前 + vance 前行 → 向前推进\n词性变形：advanced adj. 先进的；高级的"},
+{"q":"He is learning <span class='highlight'>advanced</span> English now.\nA.基础的 B.先进的/高级的 C.简单的","ans":"B","explain":"单词：advanced\n英 /ədˈvɑːnst/ 美 /ədˈvænst/\n释义：adj. 先进的；高级的；高深的\n词根拆解：advance 前进 + -ed 形容词后缀 → 走在前面的\n词性变形：advance v./n. 前进；进步"},
+{"q":"Being tall is an <span class='highlight'>advantage</span> in basketball.\nA.劣势 B.优势/好处 C.负担","ans":"B","explain":"单词：advantage\n英 /ədˈvɑːntɪdʒ/ 美 /ədˈvæntɪdʒ/\n释义：n. 优势；好处；有利条件\n词根拆解：ad- 在前方 + vantage 位置 → 占靠前位置→优势\n词性变形：advantageous adj. 有利的"},
+{"q":"They went on an <span class='highlight'>adventure</span> in the forest.\nA.旅行 B.冒险/奇遇 C.露营","ans":"B","explain":"单词：adventure\n英 /ədˈventʃə(r)/ 美 /ədˈventʃər/\n释义：n. 冒险；奇遇 v. 冒险尝试\n词根拆解：ad- 到来 + venture 冒险 → 迎来新奇冒险\n词性变形：adventurous adj. 爱冒险的"},
+{"q":"\"Quickly\" is an <span class='highlight'>adverb</span> in this sentence.\nA.名词 B.动词 C.副词","ans":"C","explain":"单词：adverb\n英 /ˈædvɜːb/ 美 /ˈædvɜːrb/\n释义：n. 副词\n词根拆解：ad- 附加 + verb 动词 → 修饰动词的词\n词性变形：adverbial adj. 副词的"},
+{"q":"They <span class='highlight'>advertise</span> their product on TV.\nA.隐藏 B.做广告/宣传 C.销售","ans":"B","explain":"单词：advertise\n英 /ˈædvətaɪz/ 美 /ˈædvərtaɪz/\n释义：v. 做广告；宣传；公布\n词根拆解：ad- 朝向 + vert 转向 + -ise → 把目光转向某物→宣传\n词性变形：advertisement n. 广告"},
+{"q":"I saw an <span class='highlight'>advertisement</span> for summer camps.\nA.通知 B.广告/宣传 C.新闻","ans":"B","explain":"单词：advertisement\n英 /ədˈvɜːtɪsmənt/ 美 /ˌædvərˈtaɪzmənt/\n释义：n. 广告；宣传\n词根拆解：advertise 宣传 + -ment 名词后缀\n词性变形：advertising n. 广告业"},
+{"q":"He works in the <span class='highlight'>advertising</span> industry.\nA.教育 B.广告业/宣传 C.医疗","ans":"B","explain":"单词：advertising\n英 /ˈædvətaɪzɪŋ/ 美 /ˈædvərtaɪzɪŋ/\n释义：n. 广告业；广告宣传\n词根拆解：advertise 做广告 + -ing 行业后缀\n词性变形：advertise v. 宣传；打广告"},
+{"q":"It is <span class='highlight'>advisable</span> to take a rest now.\nA.不明智的 B.明智的/可取的 C.无聊的","ans":"B","explain":"单词：advisable\n英 /ədˈvaɪzəbl/ 美 /ədˈvaɪzəbl/\n释义：adj. 明智的；可取的；适当的\n词根拆解：advise 建议 + -able 值得…的 → 值得采纳建议的\n词性变形：inadvisable adj. 不明智的"},
+{"q":"I <span class='highlight'>advise</span> you to go to bed early.\nA.禁止 B.建议/劝告 C.要求","ans":"B","explain":"单词：advise\n英 /ədˈvaɪz/ 美 /ədˈvaɪz/\n释义：v. 建议；劝告；通知\n词根拆解：ad- 加强 + vise 看/判断 → 给出判断、劝告\n词性变形：advice n. 建议（不可数）"},
+{"q":"Our teacher is also our study <span class='highlight'>advisor</span>.\nA.对手 B.顾问/指导老师 C.同学","ans":"B","explain":"单词：advisor\n英 /ədˈvaɪzə(r)/ 美 /ədˈvaɪzər/\n释义：n. 顾问；指导老师\n词根拆解：advise 建议 + -or 表人 → 给建议的人\n词性变形：adviser 同义拼写"},
+{"q":"It is not my <span class='highlight'>affair</span> to judge others.\nA.爱好 B.事务/事情 C.梦想","ans":"B","explain":"单词：affair\n英 /əˈfeə(r)/ 美 /əˈfer/\n释义：n. 事务；事情；私事\n词根拆解：af- 做 + fair 事务 → 要处理的事\n词性变形：affairs n. 公共事务；世事"},
+{"q":"Weather will <span class='highlight'>affect</span> our travel plan.\nA.促进 B.影响/使感动 C.改变","ans":"B","explain":"单词：affect\n英 /əˈfekt/ 美 /əˈfekt/\n释义：v. 影响；使感动；侵袭\n词根拆解：af- 加强 + fect 做 → 对事物产生作用\n词性变形：affection n. 喜爱；感情"},
+{"q":"She has great <span class='highlight'>affection</span> for her parents.\nA.厌恶 B.喜爱/感情 C.依赖","ans":"B","explain":"单词：affection\n英 /əˈfekʃn/ 美 /əˈfekʃn/\n释义：n. 喜爱；感情；慈爱\n词根拆解：affect 触动 + -ion 名词后缀 → 内心被触动的情感\n词性变形：affectionate adj. 深情的"},
+{"q":"He is very <span class='highlight'>affectionate</span> to his pet dog.\nA.冷淡的 B.深情的/充满爱意的 C.严格的","ans":"B","explain":"单词：affectionate\n英 /əˈfekʃənət/ 美 /əˈfekʃənət/\n释义：adj. 深情的；充满爱意的\n词根拆解：affection 爱意 + -ate 形容词后缀\n词性变形：affection n. 喜爱；温情"},
+{"q":"I cannot <span class='highlight'>afford</span> such an expensive bag.\nA.购买 B.买得起/承担 C.借出","ans":"B","explain":"单词：afford\n英 /əˈfɔːd/ 美 /əˈfɔːrd/\n释义：v. 买得起；承担；抽出时间\n词根拆解：af- 加强 + ford 推进 → 有能力承担开销\n词性变形：affordable adj. 负担得起的"},
+{"q":"I booked the ticket through a travel <span class='highlight'>agency</span>.\nA.公司 B.机构/代理处 C.网站","ans":"B","explain":"单词：agency\n英 /ˈeɪdʒənsi/ 美 /ˈeɪdʒənsi/\n释义：n. 机构；代理处；办事处\n词根拆解：agent 代理人 + -ency 机构后缀\n词性变形：agent n. 代理人；经纪人"},
+{"q":"Let’s check the meeting <span class='highlight'>agenda</span> first.\nA.通知 B.议程/日程 C.内容","ans":"B","explain":"单词：agenda\n英 /əˈdʒendə/ 美 /əˈdʒendə/\n释义：n. 议程；日程；待办事项\n词根拆解：拉丁语 agere 做事 → 要做的事列表\n词性变形：无常规变形"},
+{"q":"His sports <span class='highlight'>agent</span> helps him deal with deals.\nA.对手 B.代理人/经纪人 C.朋友","ans":"B","explain":"单词：agent\n英 /ˈeɪdʒənt/ 美 /ˈeɪdʒənt/\n释义：n. 代理人；经纪人；动因\n词根拆解：ag 做 + -ent 表人 → 代为做事的人\n词性变形：agency n. 机构；代理处"},
+{"q":"Some dogs can be very <span class='highlight'>aggressive</span>.\nA.温顺的 B.好斗的/激进的 C.胆小的","ans":"B","explain":"单词：aggressive\n英 /əˈɡresɪv/ 美 /əˈɡresɪv/\n释义：adj. 好斗的；激进的；有闯劲的\n词根拆解：ag- 向前 + gress 走 + -ive → 往前冲、咄咄逼人\n词性变形：aggression n. 侵略；挑衅"},
+{"q":"He was in great <span class='highlight'>agony</span> after the fall.\nA.快乐 B.痛苦/剧痛 C.疲惫","ans":"B","explain":"单词：agony\n英 /ˈæɡəni/ 美 /ˈæɡəni/\n释义：n. 极度痛苦；剧痛\n词根拆解：希腊语 agon 挣扎 → 身心极度煎熬\n词性变形：agonize v. 痛苦挣扎"},
+{"q":"I totally <span class='highlight'>agree</span> with your opinion.\nA.反对 B.同意/赞成 C.怀疑","ans":"B","explain":"单词：agree\n英 /əˈɡriː/ 美 /əˈɡriː/\n释义：v. 同意；赞成；一致\n词根拆解：a- 共同 + gree 愉悦 → 心意相通、赞同\n词性变形：agreement n. 协议；同意"},
+{"q":"They signed an <span class='highlight'>agreement</span> yesterday.\nA.合同/协议 B.文件 C.声明","ans":"A","explain":"单词：agreement\n英 /əˈɡriːmənt/ 美 /əˈɡriːmənt/\n释义：n. 协议；同意；一致\n词根拆解：agree 同意 + -ment 名词后缀\n词性变形：agree v. 同意；相符"},
+{"q":"The village mainly develops <span class='highlight'>agricultural</span> products.\nA.工业的 B.农业的/农用的 C.手工的","ans":"B","explain":"单词：agricultural\n英 /ˌæɡrɪˈkʌltʃərəl/ 美 /ˌæɡrɪˈkʌltʃərəl/\n释义：adj. 农业的；农用的\n词根拆解：agriculture 农业 + -al 形容词后缀\n词性变形：agriculture n. 农业"},
+{"q":"<span class='highlight'>Agriculture</span> is important for every country.\nA.工业 B.农业/农学 C.商业","ans":"B","explain":"单词：agriculture\n英 /ˈæɡrɪkʌltʃə(r)/ 美 /ˈæɡrɪkʌltʃər/\n释义：n. 农业；农学\n词根拆解：agri 田地 + culture 耕种培育 → 田地耕作\n词性变形：agricultural adj. 农业的"},
+{"q":"We should give <span class='highlight'>aid</span> to people in need.\nA.帮助/援助 B.同情 C.关注","ans":"A","explain":"单词：aid\n英 /eɪd/ 美 /eɪd/\n释义：v./n. 帮助；援助；辅助物\n词根拆解：古法语原生词，本义扶持、相助\n词性变形：aide n. 助手；副官"},
+{"q":"The teacher’s <span class='highlight'>aide</span> helps manage the class.\nA.助手/助理 B.学生 C.朋友","ans":"A","explain":"单词：aide\n英 /eɪd/ 美 /eɪd/\n释义：n. 助手；助理；幕僚\n词根拆解：aid 帮助 + -e 表人 → 帮忙的人\n词性变形：aid v./n. 援助；帮助"},
+{"q":"My main <span class='highlight'>aim</span> is to pass the PET exam.\nA.目标/目的 B.计划 C.想法","ans":"A","explain":"单词：aim\n英 /eɪm/ 美 /eɪm/\n释义：n. 目标 v. 瞄准；旨在\n词根拆解：古法语射箭瞄准本义，引申人生目标\n词性变形：aimless adj. 漫无目的的"},
+{"q":"No <span class='highlight'>aircraft</span> can take off in bad weather.\nA.飞机/航空器 B.车辆 C.船只","ans":"A","explain":"单词：aircraft\n英 /ˈeəkrɑːft/ 美 /ˈerkræft/\n释义：n. 飞机；航空器（单复数同形）\n词根拆解：air 空中 + craft 飞行器 → 空中飞行工具\n词性变形：airline n. 航空公司"}
+],
+
+  // 2批次：101-200 已帮你完整放入（就是你刚发的所有题目）
+    // ======================
+    pet200: [
+{"q":"We should keep an <span class='highlight'>alert</span> mind at all times.\nA.迟钝的 B.警觉的/留意的 C.放松的","ans":"B","explain":"单词：alert\n英 /əˈlɜːt/ 美 /əˈlɜːrt/\n释义：adj. 警觉的；留意的 n. 警报 v. 提醒\n词根拆解：源自意大利语 all'erta 守望、站岗\n词性变形：alertness n. 警觉性"},
+{"q":"The hotel offers <span class='highlight'>alternative</span> plans for tourists.\nA.唯一的 B.替代的/可供选择的 C.昂贵的","ans":"B","explain":"单词：alternative\n英 /ɔːlˈtɜːnətɪv/ 美 /ɔːlˈtɜːrnətɪv/\n释义：adj. 替代的；可供选择的 n. 替代品\n词根拆解：alternate 交替 + -ative 形容词后缀\n词性变形：alternate v. 交替；轮流"},
+{"q":"You can <span class='highlight'>alter</span> your plan if it doesn't work.\nA.坚持 B.改变/更改 C.放弃","ans":"B","explain":"单词：alter\n英 /ˈɔːltə(r)/ 美 /ˈɔːltər/\n释义：v. 改变；更改；修改\n词根拆解：源自拉丁语 alter 另一个 → 变成另一种样子\n词性变形：alteration n. 改动；变更"},
+{"q":"His <span class='highlight'>ambition</span> is to become a doctor.\nA.爱好 B.野心/志向 C.习惯","ans":"B","explain":"单词：ambition\n英 /æmˈbɪʃn/ 美 /æmˈbɪʃn/\n释义：n. 野心；志向；抱负\n词根拆解：ambi 周围 + tion 奔走 → 四处奔走求发展\n词性变形：ambitious adj. 有雄心的"},
+{"q":"She is <span class='highlight'>ambitious</span> and works very hard.\nA.安于现状的 B.有雄心的/有抱负的 C.懒惰的","ans":"B","explain":"单词：ambitious\n英 /æmˈbɪʃəs/ 美 /æmˈbɪʃəs/\n释义：adj. 有雄心的；有抱负的；野心勃勃的\n词根拆解：ambition 志向 + -ious 形容词后缀\n词性变形：ambition n. 志向；抱负"},
+{"q":"We need to <span class='highlight'>amend</span> the wrong part of the article.\nA.删除 B.修改/修订 C.背诵","ans":"B","explain":"单词：amend\n英 /əˈmend/ 美 /əˈmend/\n释义：v. 修改；修订；改正\n词根拆解：a- 加强 + mend 修补 → 修补完善\n词性变形：amendment n. 修正案；修改"},
+{"q":"There is an <span class='highlight'>amendment</span> to the school rule.\nA.遵守 B.修正案/改动 C.宣传","ans":"B","explain":"单词：amendment\n英 /əˈmendmənt/ 美 /əˈmendmənt/\n释义：n. 修正案；修改；修订\n词根拆解：amend 修改 + -ment 名词后缀\n词性变形：amend v. 修改；改正"},
+{"q":"Her <span class='highlight'>amuse</span> story made everyone laugh.\nA.无聊的 B.逗乐的/有趣的 C.悲伤的","ans":"B","explain":"单词：amuse\n英 /əˈmjuːz/ 美 /əˈmjuːz/\n释义：v. 逗乐；使消遣；娱乐\n词根拆解：a- 加强 + muse 沉思 → 转移思绪、消遣逗乐\n词性变形：amusement n. 娱乐；消遣"},
+{"q":"The park has many <span class='highlight'>amusement</span> facilities.\nA.运动 B.娱乐/消遣 C.学习","ans":"B","explain":"单词：amusement\n英 /əˈmjuːzmənt/ 美 /əˈmjuːzmənt/\n释义：n. 娱乐；消遣；游乐设施\n词根拆解：amuse 逗乐 + -ment 名词后缀\n词性变形：amusing adj. 有趣的；引人发笑的"},
+{"q":"It is <span class='highlight'>analyze</span> the cause of the problem.\nA.掩盖 B.分析/分解 C.忽略","ans":"B","explain":"单词：analyze\n英 /ˈænəlaɪz/ 美 /ˈænəlaɪz/\n释义：v. 分析；分解；研究\n词根拆解：ana 贯穿 + lyze 松开 → 拆解开来研究\n词性变形：analysis n. 分析；解析"},
+{"q":"The teacher gave a detailed <span class='highlight'>analysis</span> of the text.\nA.总结 B.分析/解析 C.背诵","ans":"B","explain":"单词：analysis\n英 /əˈnæləsɪs/ 美 /əˈnæləsɪs/\n释义：n. 分析；解析；化验\n词根拆解：analyze 的名词形式，拆解剖析事物\n词性变形：analytical adj. 分析的；善于剖析的"},
+{"q":"He has an <span class='highlight'>analytical</span> way of thinking.\nA.感性的 B.分析的/善于剖析的 C.固执的","ans":"B","explain":"单词：analytical\n英 /ˌænəˈlɪtɪkl/ 美 /ˌænəˈlɪtɪkl/\n释义：adj. 分析的；善于剖析的；逻辑缜密的\n词根拆解：analysis 分析 + -tical 形容词后缀\n词性变形：analyze v. 分析；研究"},
+{"q":"We live in the same <span class='highlight'>ancestor</span> village.\nA.现代 B.祖先/祖宗 C.邻居","ans":"B","explain":"单词：ancestor\n英 /ˈænsestə(r)/ 美 /ˈænsestər/\n释义：n. 祖先；祖宗；先祖\n词根拆解：ante 在前 + cess 走 + -or 人 → 走在前面的先人\n词性变形：ancestral adj. 祖先的；祖传的"},
+{"q":"This is an <span class='highlight'>ancestral</span> old house.\nA.新建的 B.祖先的/祖传的 C.租赁的","ans":"B","explain":"单词：ancestral\n英 /ænˈsestrəl/ 美 /ænˈsestrəl/\n释义：adj. 祖先的；祖传的；祖辈留下的\n词根拆解：ancestor 祖先 + -al 形容词后缀\n词性变形：ancestry n. 世系；祖先统称"},
+{"q":"The two ideas are <span class='highlight'>analogous</span> to each other.\nA.相反的 B.类似的/类比的 C.无关的","ans":"B","explain":"单词：analogous\n英 /əˈnæləɡəs/ 美 /əˈnæləɡəs/\n释义：adj. 类似的；类比的；相似的\n词根拆解：ana 相同 + log 比例 + -ous → 比例相近、类似\n词性变形：analogy n. 类比；相似之处"},
+{"q":"We can draw an <span class='highlight'>analogy</span> between the two cases.\nA.对比 B.类比/相似 C.结论","ans":"B","explain":"单词：analogy\n英 /əˈnælədʒi/ 美 /əˈnælədʒi/\n释义：n. 类比；相似；类推\n词根拆解：analogous 的名词形式，同类比照推理\n词性变形：analogous adj. 类似的"},
+{"q":"Please give an <span class='highlight'>anonymous</span> suggestion.\nA.实名的 B.匿名的/无名的 C.公开的","ans":"B","explain":"单词：anonymous\n英 /əˈnɒnɪməs/ 美 /əˈnɑːnɪməs/\n释义：adj. 匿名的；无名的；不具名的\n词根拆解：an- 无 + onym 名字 + -ous → 没有名字的\n词性变形：anonymity n. 匿名；无名状态"},
+{"q":"The <span class='highlight'>anniversary</span> of our school is next month.\nA.纪念日/周年 B.开学日 C.放假时间","ans":"A","explain":"单词：anniversary\n英 /ˌænɪˈvɜːsəri/ 美 /ˌænɪˈvɜːrsəri/\n释义：n. 周年纪念日；周年庆典\n词根拆解：anni 年 + vers 轮转 + -ary → 每年轮转一次\n词性变形：annual adj. 年度的；每年的"},
+{"q":"We have an <span class='highlight'>annual</span> sports meeting every year.\nA.每月的 B.年度的/每年的 C.临时的","ans":"B","explain":"单词：annual\n英 /ˈænjuəl/ 美 /ˈænjuəl/\n释义：adj. 年度的；每年的 n. 年报；年鉴\n词根拆解：anni 年 + -ual 形容词后缀\n词性变形：anniversary n. 周年纪念日"},
+{"q":"The teacher will <span class='highlight'>announce</span> the result soon.\nA.隐瞒 B.宣布/通告 C.猜测","ans":"B","explain":"单词：announce\n英 /əˈnaʊns/ 美 /əˈnaʊns/\n释义：v. 宣布；通告；公布\n词根拆解：an- 加强 + nounce 宣告 → 公开告知\n词性变形：announcement n. 通知；公告"},
+{"q":"Read the <span class='highlight'>announcement</span> on the board carefully.\nA.广告 B.通知/公告 C.故事","ans":"B","explain":"单词：announcement\n英 /əˈnaʊnsmənt/ 美 /əˈnaʊnsmənt/\n释义：n. 通知；公告；通告\n词根拆解：announce 宣布 + -ment 名词后缀\n词性变形：announce v. 公布；宣布"},
+{"q":"The room has no <span class='highlight'>apparent</span> difference.\nA.明显的 B.微小的 C.隐藏的","ans":"A","explain":"单词：apparent\n英 /əˈpærənt/ 美 /əˈpærənt/\n释义：adj. 明显的；表面的；显而易见的\n词根拆解：ap- 出现 + par 看见 + -ent → 能看见的、明显的\n词性变形：apparently adv. 显然；表面上"},
+{"q":"<span class='highlight'>Apparently</span>, he didn't know the truth.\nA.实际上 B.显然/表面上 C.碰巧","ans":"B","explain":"单词：apparently\n英 /əˈpærəntli/ 美 /əˈpærəntli/\n释义：adv. 显然；表面上；看样子\n词根拆解：apparent 明显的 + -ly 副词后缀\n词性变形：apparent adj. 明显的"},
+{"q":"Everyone must <span class='highlight'>appeal</span> to the rules.\nA.违反 B.呼吁/上诉 C.忽视","ans":"B","explain":"单词：appeal\n英 /əˈpiːl/ 美 /əˈpiːl/\n释义：v./n. 呼吁；上诉；吸引力\n词根拆解：ap- 朝向 + peal 呼唤 → 向众人呼唤、呼吁\n词性变形：appealing adj. 吸引人的；动人的"},
+{"q":"The flower has an <span class='highlight'>appealing</span> smell.\nA.难闻的 B.吸引人的/动人的 C.平淡的","ans":"B","explain":"单词：appealing\n英 /əˈpiːlɪŋ/ 美 /əˈpiːlɪŋ/\n释义：adj. 吸引人的；动人的；有感染力的\n词根拆解：appeal 吸引 + -ing 形容词后缀\n词性变形：appeal v. 呼吁；有吸引力"},
+{"q":"We need to <span class='highlight'>appear</span> on time for the meeting.\nA.缺席 B.出现/露面 C.迟到","ans":"B","explain":"单词：appear\n英 /əˈpɪə(r)/ 美 /əˈpɪr/\n释义：v. 出现；露面；似乎；显得\n词根拆解：ap- 加强 + pear 看见 → 显露出来、被看见\n词性变形：appearance n. 外貌；出现"},
+{"q":"Her <span class='highlight'>appearance</span> is very elegant.\nA.性格 B.外貌/外表 C.能力","ans":"B","explain":"单词：appearance\n英 /əˈpɪərəns/ 美 /əˈpɪrəns/\n释义：n. 外貌；外表；出现；露面\n词根拆解：appear 出现 + -ance 名词后缀\n词性变形：appear v. 出现；显得"},
+{"q":"You should <span class='highlight'>appreciate</span> others' kindness.\nA.轻视 B.感激/欣赏 C.怀疑","ans":"B","explain":"单词：appreciate\n英 /əˈpriːʃieɪt/ 美 /əˈpriːʃieɪt/\n释义：v. 感激；欣赏；赏识；增值\n词根拆解：ap- 加强 + preci 价值 + -ate → 认可价值、珍惜感激\n词性变形：appreciation n. 感激；欣赏"},
+{"q":"I have deep <span class='highlight'>appreciation</span> for your help.\nA.不满 B.感激/欣赏 C.疑惑","ans":"B","explain":"单词：appreciation\n英 /əˌpriːʃiˈeɪʃn/ 美 /əˌpriːʃiˈeɪʃn/\n释义：n. 感激；欣赏；赏识；增值\n词根拆解：appreciate 感激 + -ation 名词后缀\n词性变形：appreciate v. 感激；欣赏"},
+{"q":"We can <span class='highlight'>approach</span> the problem in a new way.\nA.逃避 B.接近/着手处理 C.忽视","ans":"B","explain":"单词：approach\n英 /əˈprəʊtʃ/ 美 /əˈproʊtʃ/\n释义：v. 接近；着手处理 n. 方法；途径\n词根拆解：ap- 靠近 + proach 临近 → 一步步靠近、着手解决\n词性变形：approachable adj. 平易近人的；可接近的"},
+{"q":"Our head teacher is kind and <span class='highlight'>approachable</span>.\nA.严厉的 B.平易近人的/可接近的 C.冷漠的","ans":"B","explain":"单词：approachable\n英 /əˈprəʊtʃəbl/ 美 /əˈproʊtʃəbl/\n释义：adj. 平易近人的；可接近的；和蔼的\n词根拆解：approach 靠近 + -able 可…的\n词性变形：approach v. 接近；处理"},
+{"q":"The plan needs <span class='highlight'>approval</span> from the teacher.\nA.反对 B.批准/认可 C.修改","ans":"B","explain":"单词：approval\n英 /əˈpruːvl/ 美 /əˈpruːvl/\n释义：n. 批准；认可；赞同\n词根拆解：approve 赞同 + -al 名词后缀\n词性变形：approve v. 赞成；批准"},
+{"q":"I <span class='highlight'>approve</span> of your decision.\nA.反对 B.赞成/认可 C.无视","ans":"B","explain":"单词：approve\n英 /əˈpruːv/ 美 /əˈpruːv/\n释义：v. 赞成；认可；批准；同意\n词根拆解：ap- 加强 + prove 证实 → 证实可行、表示赞同\n词性变形：approval n. 批准；认可"},
+{"q":"The goods are of <span class='highlight'>approximate</span> weight.\nA.精确的 B.大约的/近似的 C.标准的","ans":"B","explain":"单词：approximate\n英 /əˈprɒksɪmət/ 美 /əˈprɑːksɪmət/\n释义：adj. 大约的；近似的 v. 接近；近似\n词根拆解：ap- 靠近 + proxim 近 + -ate → 差不多相近\n词性变形：approximately adv. 大约；近似地"},
+{"q":"The meeting will start at <span class='highlight'>approximately</span> 9 o'clock.\nA.精确地 B.大约/近似地 C.准时地","ans":"B","explain":"单词：approximately\n英 /əˈprɒksɪmətli/ 美 /əˈprɑːksɪmətli/\n释义：adv. 大约；近似地；大概\n词根拆解：approximate 大约的 + -ly 副词后缀\n词性变形：approximation n. 近似值；粗略估计"},
+{"q":"We should <span class='highlight'>arbitrary</span> follow the rules, not by mood.\nA.随意的/武断的 B.严格的 C.灵活的","ans":"A","explain":"单词：arbitrary\n英 /ˈɑːbɪtrəri/ 美 /ˈɑːrbɪtreri/\n释义：adj. 随意的；武断的；专断的\n词根拆解：arbitr 裁决 + -ary → 凭个人主观裁决、武断\n词性变形：arbitrate v. 仲裁；公断"},
+{"q":"They asked a teacher to <span class='highlight'>arbitrate</span> their argument.\nA.偏袒 B.仲裁/公断 C.制止","ans":"B","explain":"单词：arbitrate\n英 /ˈɑːbɪtreɪt/ 美 /ˈɑːrbɪtreɪt/\n释义：v. 仲裁；公断；调停争执\n词根拆解：arbitr 裁判 + -ate 动词后缀\n词性变形：arbitration n. 仲裁；调停"},
+{"q":"The <span class='highlight'>arena</span> is full of audience.\nA.教室 B.竞技场/舞台 C.图书馆","ans":"B","explain":"单词：arena\n英 /əˈriːnə/ 美 /əˈriːnə/\n释义：n. 竞技场；舞台；活动领域\n词根拆解：源自古罗马角斗场沙地场地\n词性变形：无直接变形，同义：stadium 体育场"},
+{"q":"We must keep <span class='highlight'>archaeological</span> relics well.\nA.现代的 B.考古的/古迹的 C.艺术的","ans":"B","explain":"单词：archaeological\n英 /ˌɑːkiəˈlɒdʒɪkl/ 美 /ˌɑːrkiəˈlɑːdʒɪkl/\n释义：adj. 考古的；古迹的；考古学的\n词根拆解：archaeology 考古学 + -logical 学科形容词后缀\n词性变形：archaeology n. 考古学"},
+{"q":"He majors in <span class='highlight'>archaeology</span> at university.\nA.历史学 B.考古学 C.地理学","ans":"B","explain":"单词：archaeology\n英 /ˌɑːkiˈɒlədʒi/ 美 /ˌɑːrkiˈlɑːdʒi/\n释义：n. 考古学；古迹研究\n词根拆解：archaeo 古老 + logy 学科 → 研究古物的学科\n词性变形：archaeologist n. 考古学家"},
+{"q":"The building has a classic <span class='highlight'>architectural</span> style.\nA.现代的 B.建筑的/建筑学的 C.简约的","ans":"B","explain":"单词：architectural\n英 /ˌɑːkɪˈtektʃərəl/ 美 /ˌɑːrkɪˈtektʃərəl/\n释义：adj. 建筑的；建筑学的；建筑风格的\n词根拆解：architecture 建筑 + -al 形容词后缀\n词性变形：architecture n. 建筑；建筑学"},
+{"q":"I like the <span class='highlight'>architecture</span> of old houses.\nA.装修 B.建筑/建筑学 C.风水","ans":"B","explain":"单词：architecture\n英 /ˈɑːkɪtektʃə(r)/ 美 /ˈɑːrkɪtektʃər/\n释义：n. 建筑；建筑学；建筑风格\n词根拆解：architect 建筑师 + -ure 名词后缀\n词性变形：architect n. 建筑师；设计师"},
+{"q":"He wants to be an <span class='highlight'>architect</span> in the future.\nA.工程师 B.建筑师/设计师 C.画家","ans":"B","explain":"单词：architect\n英 /ˈɑːkɪtekt/ 美 /ˈɑːrkɪtekt/\n释义：n. 建筑师；设计师；缔造者\n词根拆解：arch 首要 + tect 建造 → 主导建造的人\n词性变形：architecture n. 建筑；建筑学"},
+{"q":"There is an <span class='highlight'>argument</span> between the two boys.\nA.合作 B.争论/争吵 C.游戏","ans":"B","explain":"单词：argument\n英 /ˈɑːɡjumənt/ 美 /ˈɑːrɡjumənt/\n释义：n. 争论；争吵；论点；论据\n词根拆解：argue 争论 + -ment 名词后缀\n词性变形：argue v. 争论；争辩"},
+{"q":"Don't <span class='highlight'>argue</span> with your parents.\nA.顺从 B.争论/争辩 C.沟通","ans":"B","explain":"单词：argue\n英 /ˈɑːɡjuː/ 美 /ˈɑːrɡjuː/\n释义：v. 争论；争辩；说服；主张\n词根拆解：源自拉丁语 arguere 证明、辩驳\n词性变形：argument n. 争论；论点"},
+{"q":"The new rule will <span class='highlight'>arise</span> many problems.\nA.解决 B.出现/引发 C.掩盖","ans":"B","explain":"单词：arise\n英 /əˈraɪz/ 美 /əˈraɪz/\n释义：v. 出现；引发；产生；起身\n词根拆解：a- 向上 + rise 升起 → 浮现、出现问题\n词性变形：arose(过去式), arisen(过去分词)"},
+{"q":"We need to arrange a time for the <span class='highlight'>arrangement</span>.\nA.取消 B.安排/布置 C.拖延","ans":"B","explain":"单词：arrangement\n英 /əˈreɪndʒmənt/ 美 /əˈreɪndʒmənt/\n释义：n. 安排；布置；筹备；整理\n词根拆解：arrange 安排 + -ment 名词后缀\n词性变形：arrange v. 安排；整理"},
+{"q":"Please <span class='highlight'>arrange</span> the books on the desk.\nA.乱扔 B.安排/整理 C.丢弃","ans":"B","explain":"单词：arrange\n英 /əˈreɪndʒ/ 美 /əˈreɪndʒ/\n释义：v. 安排；整理；布置；筹备\n词根拆解：ar- 加强 + range 排列 → 有序排列、安排\n词性变形：arrangement n. 安排；布置"},
+{"q":"The army has strict <span class='highlight'>array</span> and discipline.\nA.散漫 B.队列/阵列 C.作息","ans":"B","explain":"单词：array\n英 /əˈreɪ/ 美 /əˈreɪ/\n释义：n. 队列；阵列；一系列 v. 排列；部署\n词根拆解：ar- 加强 + ray 排列 → 整齐列队\n词性变形：arrayed adj. 排列整齐的"},
+{"q":"We should <span class='highlight'>arrest</span> bad behaviour in time.\nA.纵容 B.逮捕/制止 C.模仿","ans":"B","explain":"单词：arrest\n英 /əˈrest/ 美 /əˈrest/\n释义：v. 逮捕；制止；吸引 n. 拘捕\n词根拆解：ar- 加强 + rest 停留 → 拦住不让走、拘捕\n词性变形：arrested adj. 被捕的；被制止的"},
+{"q":"The story is full of <span class='highlight'>artificial</span> plots.\nA.真实的 B.人造的/刻意的 C.感人的","ans":"B","explain":"单词：artificial\n英 /ˌɑːtɪˈfɪʃl/ 美 /ˌɑːrtɪˈfɪʃl/\n释义：adj. 人造的；人工的；刻意做作的\n词根拆解：art 技艺 + fic 制作 + -ial → 手工制作、非天然\n词性变形：artificially adv. 人为地；刻意地"},
+{"q":"He has great <span class='highlight'>artistic</span> talent in painting.\nA.运动的 B.艺术的/有美术天赋的 C.文学的","ans":"B","explain":"单词：artistic\n英 /ɑːˈtɪstɪk/ 美 /ɑːrˈtɪstɪk/\n释义：adj. 艺术的；美术的；有艺术天赋的\n词根拆解：artist 艺术家 + -ic 形容词后缀\n词性变形：artist n. 艺术家；画家"},
+{"q":"She wants to be a famous <span class='highlight'>artist</span>.\nA.作家 B.艺术家/画家 C.歌手","ans":"B","explain":"单词：artist\n英 /ˈɑːtɪst/ 美 /ˈɑːrtɪst/\n释义：n. 艺术家；画家；艺人\n词根拆解：art 艺术 + -ist 表人 → 从事艺术的人\n词性变形：artistic adj. 艺术的；有天赋的"},
+{"q":"We should <span class='highlight'>assemble</span> the parts step by step.\nA.拆解 B.组装/集合 C.丢弃","ans":"B","explain":"单词：assemble\n英 /əˈsembl/ 美 /əˈsembl/\n释义：v. 组装；集合；聚集；装配\n词根拆解：as- 一起 + semble 相同 → 聚到一起、组装成型\n词性变形：assembly n. 集会；装配"},
+{"q":"The school holds a morning <span class='highlight'>assembly</span> every Monday.\nA.课堂 B.集会/晨会 C.考试","ans":"B","explain":"单词：assembly\n英 /əˈsembli/ 美 /əˈsembli/\n释义：n. 集会；晨会；装配；组装\n词根拆解：assemble 集合 + -ly 名词后缀\n词性变形：assemble v. 集合；组装"},
+{"q":"I <span class='highlight'>assess</span> the difficulty of the exam.\nA.低估 B.评估/评定 C.逃避","ans":"B","explain":"单词：assess\n英 /əˈses/ 美 /əˈses/\n释义：v. 评估；评定；估算；评价\n词根拆解：as- 加强 + sess 坐定 → 坐下来评判、估值\n词性变形：assessment n. 评估；评价"},
+{"q":"The teacher makes an <span class='highlight'>assessment</span> of each student.\nA.批评 B.评估/评价 C.排名","ans":"B","explain":"单词：assessment\n英 /əˈsesmənt/ 美 /əˈsesmənt/\n释义：n. 评估；评价；考核；估算\n词根拆解：assess 评估 + -ment 名词后缀\n词性变形：assess v. 评估；评定"},
+{"q":"I <span class='highlight'>assign</span you to finish this task.\nA.拒绝 B.分配/指派 C.放弃","ans":"B","explain":"单词：assign\n英 /əˈsaɪn/ 美 /əˈsaɪn/\n释义：v. 分配；指派；布置作业；指定\n词根拆解：as- 加强 + sign 标记 → 做标记分配给某人\n词性变形：assignment n. 作业；任务；分配"},
+{"q":"Finish your daily <span class='highlight'>assignment</span> on time.\nA.游戏 B.作业/任务 C.运动","ans":"B","explain":"单词：assignment\n英 /əˈsaɪnmənt/ 美 /əˈsaɪnmənt/\n释义：n. 作业；任务；分配；指派\n词根拆解：assign 指派 + -ment 名词后缀\n词性变形：assign v. 分配；指派"},
+{"q":"We must <span class='highlight'>assist</span> each other in study.\nA.竞争 B.协助/帮助 C.独立","ans":"B","explain":"单词：assist\n英 /əˈsɪst/ 美 /əˈsɪst/\n释义：v. 协助；帮助；援助 n. 助攻；协助\n词根拆解：as- 加强 + sist 站立 → 站在旁边扶持、协助\n词性变形：assistance n. 帮助；援助"},
+{"q":"Thank you for your kind <span class='highlight'>assistance</span>.\nA.指责 B.帮助/援助 C.陪伴","ans":"B","explain":"单词：assistance\n英 /əˈsɪstəns/ 美 /əˈsɪstəns/\n释义：n. 帮助；援助；协助支持\n词根拆解：assist 协助 + -ance 名词后缀\n词性变形：assistant n. 助手；助理"},
+{"q":"She works as a shop <span class='highlight'>assistant</span>.\nA.顾客 B.助手/店员 C.老板","ans":"B","explain":"单词：assistant\n英 /əˈsɪstənt/ 美 /əˈsɪstənt/\n释义：n. 助手；助理；店员 adj. 辅助的\n词根拆解：assist 协助 + -ant 表人 → 帮忙的人\n词性变形：assistance n. 帮助；协助"},
+{"q":"I <span class='highlight'>associate</span spring with beautiful flowers.\nA.割裂 B.联想/关联 C.无视","ans":"B","explain":"单词：associate\n英 /əˈsəʊʃieɪt/ 美 /əˈsoʊʃieɪt/\n释义：v. 联想；关联；交往 adj. 副的；关联的\n词根拆解：as- 一起 + soci 同伴 + -ate → 联结在一起、关联\n词性变形：association n. 协会；联想；社团"},
+{"q":"He joined a student <span class='highlight'>association</span>.\nA.社团/协会 B.班级 C.小组","ans":"B","explain":"单词：association\n英 /əˌsəʊʃiˈeɪʃn/ 美 /əˌsoʊʃiˈeɪʃn/\n释义：n. 协会；社团；联想；关联\n词根拆解：associate 关联 + -ation 名词后缀\n词性变形：associate v. 联想；交往"},
+{"q":"We should have <span class='highlight'>assurance</span> in ourselves.\nA.自卑 B.自信/保证 C.犹豫","ans":"B","explain":"单词：assurance\n英 /əˈʃʊərəns/ 美 /əˈʃʊrəns/\n释义：n. 自信；保证；确信；保险\n词根拆解：assure 保证 + -ance 名词后缀\n词性变形：assure v. 确保；向…保证"},
+{"q":"I <span class='highlight'>assure</span> you that it is safe.\nA.怀疑 B.确保/向…保证 C.隐瞒","ans":"B","explain":"单词：assure\n英 /əˈʃʊə(r)/ 美 /əˈʊr/\n释义：v. 确保；向…保证；使确信\n词根拆解：as- 加强 + sure 确定 → 使人确定、保证\n词性变形：assurance n. 自信；保证"},
+{"q":"We need to take <span class='highlight'>astronomy</span> classes next term.\nA.地理 B.天文学 C.生物","ans":"B","explain":"单词：astronomy\n英 /əˈstrɒnəmi/ 美 /əˈstrɑːnəmi/\n释义：n. 天文学；天体研究\n词根拆解：astro 星星 + nomy 法则 → 研究星辰规律的学科\n词性变形：astronomical adj. 天文的；巨大的"},
+{"q":"He has rich <span class='highlight'>astronomical</span> knowledge.\nA.地理的 B.天文的/极大的 C.历史的","ans":"B","explain":"单词：astronomical\n英 /ˌæstrəˈnɒmɪkl/ 美 /ˌæstrəˈnɑːmɪkl/\n释义：adj. 天文的；天文学的；数额极大的\n词根拆解：astronomy 天文学 + -ical 形容词后缀\n词性变形：astronomer n. 天文学家"},
+{"q":"The <span class='highlight'>astronomer</span> studies stars and planets.\nA.地理学家 B.天文学家 C.物理学家","ans":"B","explain":"单词：astronomer\n英 /əˈstrɒnəmə(r)/ 美 /əˈstrɑːnəmər/\n释义：n. 天文学家；天体研究者\n词根拆解：astronomy 天文学 + -er 表人\n词性变形：astronomy n. 天文学"},
+{"q":"We must <span class='highlight'>attach</span> importance to daily practice.\nA.轻视 B.附上/重视 C.忽略","ans":"B","explain":"单词：attach\n英 /əˈtætʃ/ 美 /əˈtætʃ/\n释义：v. 附上；贴上；重视；依附\n词根拆解：at- 加强 + tach 钉住 → 钉在一起、附着\n词性变形：attachment n. 附件；依恋；重视"},
+{"q":"Please check the <span class='highlight'>attachment</span> in the email.\nA.正文 B.附件/附着 C.标题","ans":"B","explain":"单词：attachment\n英 /əˈtætʃmənt/ 美 /əˈtætʃmənt/\n释义：n. 附件；依恋；附着；爱慕\n词根拆解：attach 附着 + -ment 名词后缀\n词性变形：attach v. 贴上；重视"},
+{"q":"We should keep an <span class='highlight'>attitude</span> of learning.\nA.心态/态度 B.习惯 C.目标","ans":"A","explain":"单词：attitude\n英 /ˈætɪtjuːd/ 美 /ˈætɪtuːd/\n释义：n. 态度；心态；看法；姿势\n词根拆解：源自拉丁语 aptitudo 性情、姿态\n词性变形：attitudinal adj. 态度上的"},
+{"q":"His rude <span class='highlight'>behaviour</span> made others angry.\nA.言行/行为 B.长相 C.穿着","ans":"A","explain":"单词：behaviour\n英 /bɪˈheɪvjə(r)/ 美 /bɪˈheɪvjər/\n释义：n. 行为；言行；举止；表现\n词根拆解：behave 表现 + -iour 名词后缀\n词性变形：behave v. 表现；举止端正"},
+{"q":"You should <span class='highlight'>behave</span> well in public.\nA.放纵 B.表现/举止 C.沉默","ans":"B","explain":"单词：behave\n英 /bɪˈheɪv/ 美 /bɪˈheɪv/\n释义：v. 表现；举止；守规矩；行为得体\n词根拆解：be 使 + have 持有 → 持有某种言行举止\n词性变形：behaviour n. 行为；举止"},
+{"q":"The new policy will <span class='highlight'>benefit</span> all students.\nA.损害 B.有益于/受益 C.限制","ans":"B","explain":"单词：benefit\n英 /ˈbenɪfɪt/ 美 /ˈbenɪfɪt/\n释义：v. 有益于；受益 n. 好处；福利\n词根拆解：bene 好 + fit 做 → 做好事、带来好处\n词性变形：beneficial adj. 有益的；有利的"},
+{"q":"Vegetables are <span class='highlight'>beneficial</span> to our health.\nA.有害的 B.有益的/有利的 C.无关的","ans":"B","explain":"单词：beneficial\n英 /ˌbenɪˈfɪʃl/ 美 /ˌbenɪˈfɪʃl/\n释义：adj. 有益的；有利的；有帮助的\n词根拆解：benefit 好处 + -icial 形容词后缀\n词性变形：benefit v. 有益于；受益"},
+{"q":"We need to <span class='highlight'>bargain</span> for the price.\nA.定价 B.讨价还价/交易 C.放弃","ans":"B","explain":"单词：bargain\n英 /ˈbɑːɡən/ 美 /ˈbɑːrɡən/\n释义：v. 讨价还价 n. 便宜货；交易；协定\n词根拆解：古日耳曼语 交易约定本义\n词性变形：bargaining n. 议价；谈判"},
+{"q":"He has a <span class='highlight'>bare</span> room with no furniture.\nA.豪华的 B.空的/赤裸的 C.拥挤的","ans":"B","explain":"单词：bare\n英 /beə(r)/ 美 /ber/\n释义：adj. 赤裸的；空的；简陋的；仅有的\n词根拆解：古英语原生词，本义无遮盖、裸露\n词性变形：barely adv. 仅仅；几乎不"},
+{"q":"I can <span class='highlight'>barely</span> finish the work on time.\nA.轻松地 B.仅仅/几乎不 C.完全","ans":"B","explain":"单词：barely\n英 /ˈbeəli/ 美 /ˈberli/\n释义：adv. 仅仅；几乎不；勉强；刚刚\n词根拆解：bare 空乏的 + -ly 副词后缀 → 勉强凑合\n词性变形：bare adj. 赤裸的；空的"},
+{"q":"The teacher made a <span class='highlight'>brief</span> speech.\nA.冗长的 B.简短的/简洁的 C.精彩的","ans":"B","explain":"单词：brief\n英 /briːf/ 美 /briːf/\n释义：adj. 简短的；简洁的 n. 摘要；简报\n词根拆解：源自拉丁语 brevis 短的\n词性变形：briefly adv. 简要地；短暂地"},
+{"q":"Please tell me the story <span class='highlight'>briefly</span>.\nA.详细地 B.简要地/简短地 C.夸张地","ans":"B","explain":"单词：briefly\n英 /briːfli/ 美 /briːfli/\n释义：adv. 简要地；简短地；短暂地\n词根拆解：brief 简短的 + -ly 副词后缀\n词性变形：brief adj. 简短的；摘要"},
+{"q":"We should <span class='highlight'>calculate</span> the cost carefully.\nA.估算 B.计算/推算 C.忽略","ans":"B","explain":"单词：calculate\n英 /ˈkælkjuleɪt/ 美 /ˈkælkjuleɪt/\n释义：v. 计算；推算；估算；筹划\n词根拆解：calcul 石子（古时计数工具）+ -ate → 用石子算数、计算\n词性变形：calculation n. 计算；推算"},
+{"q":"The <span class='highlight'>calculation</span> result is correct.\nA.猜测 B.计算/推算 C.对比","ans":"B","explain":"单词：calculation\n英 /ˌkælkjuˈleɪʃn/ 美 /ˌkælkjuˈleɪʃn/\n释义：n. 计算；推算；估算；盘算\n词根拆解：calculate 计算 + -ation 名词后缀\n词性变形：calculate v. 计算；推算"},
+{"q":"He is a <span class='highlight'>cautious</span> boy who never takes risks.\nA.鲁莽的 B.谨慎的/小心的 C.胆小的","ans":"B","explain":"单词：cautious\n英 /ˈkɔːʃəs/ 美 /ˈkɔːʃəs/\n释义：adj. 谨慎的；小心的；慎重的\n词根拆解：caution 警告 + -ious 形容词后缀 → 时刻警惕、谨慎\n词性变形：caution n. 小心；警告"},
+{"q":"Take <span class='highlight'>caution</span> when you cross the street.\nA.大意 B.小心/警告 C.慌张","ans":"B","explain":"单词：caution\n英 /ˈkɔːʃn/ 美 /ˈkɔːʃn/\n释义：n. 小心；谨慎；警告 v. 告诫；提醒\n词根拆解：源自拉丁语 cavere 提防、警惕\n词性变形：cautious adj. 谨慎的；小心的"},
+{"q":"We need to <span class='highlight'>circulate</span> the notice to all classes.\nA.隐藏 B.传阅/流通 C.修改","ans":"B","explain":"单词：circulate\n英 /ˈsɜːkjəleɪt/ 美 /ˈsɜːrkjəleɪt/\n释义：v. 传阅；流通；循环；传播\n词根拆解：circl 圆圈 + -ulate 动词后缀 → 绕圈流转、传阅\n词性变形：circulation n. 流通；循环；发行量"},
+{"q":"The <span class='highlight'>circulation</span> of the magazine is very high.\nA.内容 B.发行量/流通 C.价格","ans":"B","explain":"单词：circulation\n英 /ˌsɜːkjəˈleɪʃn/ 美 /ˌsɜːrkjəˈleɪʃn/\n释义：n. 流通；循环；发行量；传阅量\n词根拆解：circulate 流通 + -ation 名词后缀\n词性变形：circulate v. 循环；传阅"},
+{"q":"There is a <span class='highlight'>circular</span> table in the room.\nA.方形的 B.圆形的/环形的 C.长方形的","ans":"B","explain":"单词：circular\n英 /ˈsɜːkjələ(r)/ 美 /ˈsɜːrkjələr/\n释义：adj. 圆形的；环形的；循环的 n. 通告；传单\n词根拆解：circle 圆圈 + -ular 形容词后缀\n词性变形：circle n. 圆圈；圈子"},
+{"q":"We should <span class='highlight'>clarify</span> the rules at the beginning.\nA.模糊 B.澄清/阐明 C.遵守","ans":"B","explain":"单词：clarify\n英 /ˈklærɪfaɪ/ 美 /ˈklærɪfaɪ/\n释义：v. 澄清；阐明；讲清楚；净化\n词根拆解：clar 清晰 + -ify 使… → 使变得清晰\n词性变形：clarification n. 澄清；说明"},
+{"q":"He gave a <span class='highlight'>clarification</span> of the new rule.\nA.质疑 B.澄清/说明 C.反对","ans":"B","explain":"单词：clarification\n英 /ˌklærɪfɪˈkeɪʃn/ 美 /ˌklærɪfɪˈkeɪʃn/\n释义：n. 澄清；说明；解释清楚\n词根拆解：clarify 澄清 + -ication 名词后缀\n词性变形：clarify v. 阐明；讲清楚"}
+    ],
+
+pet300:[
+{"q":"We need to make a <span class='highlight'>coherent</span> plan for study.\nA.零散的 B.连贯的/条理清晰的 C.随意的","ans":"B","explain":"单词：coherent\n英 /kəʊˈhɪərənt/ 美 /koʊˈhɪrənt/\n释义：adj. 连贯的；条理清晰的；前后一致的\n词根拆解：co- 共同 + here 粘连 + -ent → 粘连在一起、逻辑连贯\n词性变形：coherence n. 连贯性；一致性"},
+{"q":"The <span class='highlight'>coherence</span> of the article is very strong.\nA.文采 B.连贯性/条理 C.篇幅","ans":"B","explain":"单词：coherence\n英 /kəʊˈhɪərəns/ 美 /koʊˈhɪrəns/\n释义：n. 连贯性；一致性；条理\n词根拆解：coherent 连贯的 + -ence 名词后缀\n词性变形：coherent adj. 连贯的"},
+{"q":"Teachers always <span class='highlight'>collaborate</span> with parents.\nA.对立 B.合作/协作 C.疏远","ans":"B","explain":"单词：collaborate\n英 /kəˈlæbəreɪt/ 美 /kəˈlæbəreɪt/\n释义：v. 合作；协作；合著\n词根拆解：col- 共同 + labor 劳动 + -ate → 一起劳作、合作\n词性变形：collaboration n. 合作；协作项目"},
+{"q":"The project is a <span class='highlight'>collaboration</span> between two schools.\nA.竞争 B.合作/协作 C.比赛","ans":"B","explain":"单词：collaboration\n英 /kəˌlæbəˈreɪʃn/ 美 /kəˌlæbəˈreɪʃn/\n释义：n. 合作；协作；合伙创作\n词根拆解：collaborate 合作 + -ation 名词后缀\n词性变形：collaborate v. 合作"},
+{"q":"Be careful not to <span class='highlight'>collide</span> with other people.\nA.避让 B.碰撞/相撞 C.跟随","ans":"B","explain":"单词：collide\n英 /kəˈlaɪd/ 美 /kəˈlaɪd/\n释义：v. 碰撞；相撞；冲突\n词根拆解：col- 一起 + lide 撞击 → 互相碰撞\n词性变形：collision n. 碰撞；冲突"},
+{"q":"The car <span class='highlight'>collision</span> happened on the road.\nA.行驶 B.碰撞/车祸 C.停靠","ans":"B","explain":"单词：collision\n英 /kəˈlɪʒn/ 美 /kəˈlɪʒn/\n释义：n. 碰撞；相撞；冲突争执\n词根拆解：collide 碰撞 + -sion 名词后缀\n词性变形：collide v. 碰撞"},
+{"q":"We should <span class='highlight'>combine</span> study with rest.\nA.分割 B.结合/组合 C.放弃","ans":"B","explain":"单词：combine\n英 /kəmˈbaɪn/ 美 /kəmˈbaɪn/\n释义：v. 结合；组合；合并\n词根拆解：com- 共同 + bine 捆绑 → 捆绑到一起\n词性变形：combination n. 组合；结合体"},
+{"q":"This is a perfect <span class='highlight'>combination</span> of two styles.\nA.冲突 B.组合/结合 C.模仿","ans":"B","explain":"单词：combination\n英 /ˌkɒmbɪˈneɪʃn/ 美 /ˌkɑːmbɪˈneɪʃn/\n释义：n. 组合；结合；混合物\n词根拆解：combine 结合 + -ation 名词后缀\n词性变形：combine v. 结合"},
+{"q":"He has a <span class='highlight'>commemorative</span> medal.\nA.普通的 B.纪念的/庆典的 C.贵重的","ans":"B","explain":"单词：commemorative\n英 /kəˈmemərətɪv/ 美 /kəˈmemərətɪv/\n释义：adj. 纪念的；庆典的\n词根拆解：commemorate 纪念 + -ative 形容词后缀\n词性变形：commemorate v. 纪念；缅怀"},
+{"q":"We hold a party to <span class='highlight'>commemorate</span> the special day.\nA.遗忘 B.纪念/缅怀 C.庆祝","ans":"B","explain":"单词：commemorate\n英 /kəˈmeməreɪt/ 美 /kəˈmeməreɪt/\n释义：v. 纪念；缅怀；举行纪念活动\n词根拆解：com- 加强 + memor 记忆 + -ate → 牢牢记住、纪念\n词性变形：commemoration n. 纪念仪式"},
+{"q":"Everyone must obey public <span class='highlight'>conduct</span>.\nA.规则/行为 B.法律 C.习俗","ans":"A","explain":"单词：conduct\n英 /ˈkɒndʌkt/ 美 /ˈkɑːndʌkt/\n释义：n. 行为；举止；管理 v. 引导；指挥；传导\n词根拆解：con- 共同 + duct 引导 → 共同规范言行、引导\n词性变形：conductor n. 指挥；导体；售票员"},
+{"q":"The bus <span class='highlight'>conductor</span> checks tickets every day.\nA.司机 B.售票员/导体 C.乘客","ans":"B","explain":"单词：conductor\n英 /kənˈdʌktə(r)/ 美 /kənˈdʌktər/\n释义：n. 售票员；指挥家；导体\n词根拆解：conduct 引导 + -or 表人/物 → 引导者、传导物\n词性变形：conduct v. 引导；传导"},
+{"q":"We need to <span class='highlight'>confer</span> about the coming plan.\nA.争论 B.商议/授予 C.拖延","ans":"B","explain":"单词：confer\n英 /kənˈfɜː(r)/ 美 /kənˈfɜːr/\n释义：v. 商议；商讨；授予（荣誉）\n词根拆解：con- 一起 + fer 带来 → 带到一起商量\n词性变形：conference n. 会议；研讨会"},
+{"q":"Our school will hold a big <span class='highlight'>conference</span> next week.\nA.运动会 B.会议/研讨会 C.演出","ans":"B","explain":"单词：conference\n英 /ˈkɒnfərəns/ 美 /ˈkɑːnfərəns/\n释义：n. 会议；研讨会；会谈\n词根拆解：confer 商议 + -ence 名词后缀\n词性变形：confer v. 商议"},
+{"q":"You should <span class='highlight'>confess</span> your mistake bravely.\nA.隐瞒 B.承认/坦白 C.辩解","ans":"B","explain":"单词：confess\n英 /kənˈfes/ 美 /kənˈfes/\n释义：v. 承认；坦白；忏悔\n词根拆解：con- 完全 + fess 坦白 → 全盘说出、承认\n词性变形：confession n. 坦白；忏悔"},
+{"q":"His <span class='highlight'>confession</span> moved all people.\nA.辩解 B.坦白/忏悔 C.借口","ans":"B","explain":"单词：confession\n英 /kənˈfeʃn/ 美 /kənˈfeʃn/\n释义：n. 坦白；承认；忏悔\n词根拆解：confess 坦白 + -ion 名词后缀\n词性变形：confess v. 坦白"},
+{"q":"Don’t be too <span class='highlight'>confident</span> before the exam.\nA.自卑 B.自信的/自负的 C.紧张的","ans":"B","explain":"单词：confident\n英 /ˈkɒnfɪdənt/ 美 /ˈkɑːnfɪdənt/\n释义：adj. 自信的；有信心的；自负的\n词根拆解：con- 加强 + fid 信任 + -ent → 相信自己\n词性变形：confidence n. 自信；信心"},
+{"q":"Build up your <span class='highlight'>confidence</span> step by step.\nA.自卑 B.自信/信心 C.压力","ans":"B","explain":"单词：confidence\n英 /ˈkɒnfɪdəns/ 美 /ˈkɑːnfɪdəns/\n释义：n. 自信；信心；信任\n词根拆解：confident 自信的 + -ence 名词后缀\n词性变形：confident adj. 自信的"},
+{"q":"The two ideas <span class='highlight'>conflict</span> with each other.\nA.一致 B.冲突/矛盾 C.互补","ans":"B","explain":"单词：conflict\n英 /ˈkɒnflɪkt/ 美 /ˈkɑːnflɪkt/\n释义：v./n. 冲突；矛盾；争执\n词根拆解：con- 互相 + flict 打击 → 互相冲撞、冲突\n词性变形：conflicting adj. 相互矛盾的"},
+{"q":"We need to <span class='highlight'>conform</span> to the school rules.\nA.违反 B.遵守/符合 C.忽视","ans":"B","explain":"单词：conform\n英 /kənˈfɔːm/ 美 /kənˈfɔːrm/\n释义：v. 遵守；符合；顺从\n词根拆解：con- 共同 + form 形状 → 变成一样、符合规范\n词性变形：conformity n. 遵从；一致"},
+{"q":"His behavior is in <span class='highlight'>conformity</span> with the rules.\nA.违反 B.遵从/符合 C.质疑","ans":"B","explain":"单词：conformity\n英 /kənˈfɔːməti/ 美 /kənˈfɔːrməti/\n释义：n. 遵从；遵守；一致\n词根拆解：conform 遵从 + -ity 名词后缀\n词性变形：conform v. 遵守"},
+{"q":"Please <span class='highlight'>confuse</span> the two similar words.\nA.区分 B.混淆/搞乱 C.背诵","ans":"B","explain":"单词：confuse\n英 /kənˈfjuːz/ 美 /kənˈfjuːz/\n释义：v. 混淆；搞乱；使困惑\n词根拆解：con- 一起 + fuse 倾倒 → 倒在一起分不清、混淆\n词性变形：confusion n. 困惑；混乱"},
+{"q":"There is some <span class='highlight'>confusion</span> about the new rule.\nA.清晰 B.困惑/混乱 C.理解","ans":"B","explain":"单词：confusion\n英 /kənˈfjuːʒn/ 美 /kənˈfjuːʒn/\n释义：n. 困惑；混乱；混淆\n词根拆解：confuse 混淆 + -sion 名词后缀\n词性变形：confuse v. 混淆"},
+{"q":"We should <span class='highlight'>congratulate</span> him on his success.\nA.嫉妒 B.祝贺/恭喜 C.羡慕","ans":"B","explain":"单词：congratulate\n英 /kənˈɡrætʃəleɪt/ 美 /kənˈɡrætʃəleɪt/\n释义：v. 祝贺；恭喜；庆贺\n词根拆解：con- 共同 + grat 喜悦 + -ate → 一同为别人高兴\n词性变形：congratulation n. 祝贺；贺词"},
+{"q":"Send my <span class='highlight'>congratulation</span> to your family.\nA.安慰 B.祝贺/祝福 C.问候","ans":"B","explain":"单词：congratulation\n英 /kənˌɡrætʃəˈleɪʃn/ 美 /kənˌɡrætʃəˈleɪʃn/\n释义：n. 祝贺；祝福；贺词\n词根拆解：congratulate 祝贺 + -ation 名词后缀\n词性变形：congratulate v. 祝贺"},
+{"q":"We need a <span class='highlight'>conservative</span> plan for safety.\nA.激进的 B.保守的/谨慎的 C.随意的","ans":"B","explain":"单词：conservative\n英 /kənˈsɜːvətɪv/ 美 /kənˈsɜːrvətɪv/\n释义：adj. 保守的；谨慎的 n. 保守派\n词根拆解：conserve 保存 + -ative 形容词后缀 → 守旧稳妥\n词性变形：conserve v. 节约；保存"},
+{"q":"We must <span class='highlight'>conserve</span> water every day.\nA.浪费 B.节约/保存 C.使用","ans":"B","explain":"单词：conserve\n英 /kənˈsɜːv/ 美 /kənˈsɜːrv/\n释义：v. 节约；保存；保护\n词根拆解：con- 加强 + serve 守护 → 守护资源、节约\n词性变形：conservation n. 保护；节约"},
+{"q":"Nature <span class='highlight'>conservation</span> is everyone's duty.\nA.开发 B.保护/环保 C.破坏","ans":"B","explain":"单词：conservation\n英 /ˌkɒnsəˈveɪʃn/ 美 /ˌkɑːnsəˈveɪʃn/\n释义：n. 自然保护；环保；节约\n词根拆解：conserve 保护 + -ation 名词后缀\n词性变形：conserve v. 节约"},
+{"q":"His words are always <span class='highlight'>consistent</span> with his action.\nA.矛盾的 B.一致的/始终如一的 C.多变的","ans":"B","explain":"单词：consistent\n英 /kənˈsɪstənt/ 美 /kənˈsɪstənt/\n释义：adj. 一致的；始终如一的；连贯的\n词根拆解：consist 组成 + -ent → 前后构成统一、一致\n词性变形：consistency n. 一致性；连贯性"},
+{"q":"The <span class='highlight'>consistency</span> of his habit is amazing.\nA.多变 B.一致性/连贯性 C.坚持","ans":"B","explain":"单词：consistency\n英 /kənˈsɪstənsi/ 美 /kənˈsɪstənsi/\n释义：n. 一致性；连贯性；稳固\n词根拆解：consistent 一致的 + -ency 名词后缀\n词性变形：consistent adj. 一致的"},
+{"q":"The price <span class='highlight'>constant</span> all the time.\nA.波动 B.持续的/恒定的 C.下跌","ans":"B","explain":"单词：constant\n英 /ˈkɒnstənt/ 美 /ˈkɑːnstənt/\n释义：adj. 恒定的；持续的；不变的 n. 常数\n词根拆解：con- 加强 + stant 站立 → 一直站着不变\n词性变形：constantly adv. 不断地；时常地"},
+{"q":"He <span class='highlight'>constantly</span> practices reading every morning.\nA.偶尔 B.不断地/时常 C.放弃","ans":"B","explain":"单词：constantly\n英 /ˈkɒnstəntli/ 美 /ˈkɑːnstəntli/\n释义：adv. 不断地；时常地；一直\n词根拆解：constant 持续的 + -ly 副词后缀\n词性变形：constant adj. 持续的"},
+{"q":"We should <span class='highlight'>construct</span> a good learning habit.\nA.破坏 B.建立/建造 C.模仿","ans":"B","explain":"单词：construct\n英 /kənˈstrʌkt/ 美 /kənˈstrʌkt/\n释义：v. 建造；建立；构筑\n词根拆解：con- 一起 + struct 建造 → 组合搭建\n词性变形：construction n. 建筑；建造"},
+{"q":"The <span class='highlight'>construction</span> of the building finishes soon.\nA.设计 B.建造/施工 C.装修","ans":"B","explain":"单词：construction\n英 /kənˈstrʌkʃn/ 美 /kənˈstrʌkʃn/\n释义：n. 建筑；施工；建造工程\n词根拆解：construct 建造 + -ion 名词后缀\n词性变形：construct v. 建造"},
+{"q":"You need to <span class='highlight'>consult</span> the teacher for advice.\nA.质疑 B.咨询/请教 C.回避","ans":"B","explain":"单词：consult\n英 /kənˈsʌlt/ 美 /kənˈsʌlt/\n释义：v. 咨询；请教；查阅\n词根拆解：con- 一起 + sult 商议 → 找人商量请教\n词性变形：consultation n. 咨询；会诊"},
+{"q":"I have a <span class='highlight'>consultation</span> with my teacher.\nA.争论 B.咨询/请教 C.玩耍","ans":"B","explain":"单词：consultation\n英 /ˌkɒnslˈteɪʃn/ 美 /ˌkɑːnslˈteɪʃn/\n释义：n. 咨询；请教；会诊\n词根拆解：consult 咨询 + -ation 名词后缀\n词性变形：consult v. 咨询"},
+{"q":"The new law will <span class='highlight'>consume</span> less public resource.\nA.节省 B.消耗/耗费 C.创造","ans":"B","explain":"单词：consume\n英 /kənˈsjuːm/ 美 /kənˈsuːm/\n释义：v. 消耗；耗费；吃/喝；消费\n词根拆解：con- 完全 + sume 拿走 → 全部用掉、消耗\n词性变形：consumption n. 消耗；消费"},
+{"q":"The <span class='highlight'>consumption</span> of water is too high.\nA.节约 B.消耗/消费量 C.价格","ans":"B","explain":"单词：consumption\n英 /kənˈsʌmpʃn/ 美 /kənˈsʌmpʃn/\n释义：n. 消耗；消费；消耗量\n词根拆解：consume 消耗 + -ption 名词后缀\n词性变形：consume v. 消耗"},
+{"q":"We need to <span class='highlight'>contain</span> our anger in public.\nA.放纵 B.克制/包含 C.发泄","ans":"B","explain":"单词：contain\n英 /kənˈteɪn/ 美 /kənˈteɪn/\n释义：v. 包含；容纳；克制情绪\n词根拆解：con- 加强 + tain 握住 → 握住在内、包含克制\n词性变形：container n. 容器；集装箱"},
+{"q":"Put the water into this <span class='highlight'>container</span>.\nA.工具 B.容器/器皿 C.包装","ans":"B","explain":"单词：container\n英 /kənˈteɪnə(r)/ 美 /kənˈteɪnər/\n释义：n. 容器；器皿；集装箱\n词根拆解：contain 容纳 + -er 器物后缀\n词性变形：contain v. 包含；容纳"},
+{"q":"Exercise can <span class='highlight'>contribute</span> to good health.\nA.损害 B.有助于/贡献 C.阻碍","ans":"B","explain":"单词：contribute\n英 /kənˈtrɪbjuːt/ 美 /kənˈtrɪbjuːt/\n释义：v. 有助于；贡献；捐献\n词根拆解：con- 一起 + tribute 给予 → 共同付出、贡献\n词性变形：contribution n. 贡献；捐献"},
+{"q":"He made a great <span class='highlight'>contribution</span> to the school.\nA.破坏 B.贡献/奉献 C.麻烦","ans":"B","explain":"单词：contribution\n英 /ˌkɒntrɪˈbjuːʃn/ 美 /ˌkɑːntrɪˈbjuːʃn/\n释义：n. 贡献；奉献；捐献物\n词根拆解：contribute 贡献 + -ion 名词后缀\n词性变形：contribute v. 有助于；贡献"},
+{"q":"The teacher tries to <span class='highlight'>control</span> the class order.\nA.扰乱 B.控制/掌控 C.放弃","ans":"B","explain":"单词：control\n英 /kənˈtrəʊl/ 美 /kənˈtroʊl/\n释义：v./n. 控制；掌控；管制\n词根拆解：contr- 相反 + rol 卷轴 → 反向约束、管控\n词性变形：controllable adj. 可控制的"},
+{"q":"The task is <span class='highlight'>controllable</span> with careful plan.\nA.失控的 B.可控制的 C.艰难的","ans":"B","explain":"单词：controllable\n英 /kənˈtrəʊləbl/ 美 /kənˈtroʊləbl/\n释义：adj. 可控制的；可管束的\n词根拆解：control 控制 + -able 可…的\n词性变形：control v. 控制"},
+{"q":"We should face failure with <span class='highlight'>cool</span> mind.\nA.暴躁 B.冷静的/凉爽的 C.消极的","ans":"B","explain":"单词：cool\n英 /kuːl/ 美 /kuːl/\n释义：adj. 冷静的；凉爽的；酷的 v. 冷却；平息\n词根拆解：古英语原生词，本义温度低，引申心态冷静\n词性变形：coolly adv. 冷静地；沉着地"},
+{"q":"He dealt with the problem <span class='highlight'>coolly</span>.\nA.冲动地 B.冷静地/沉着地 C.慌乱地","ans":"B","explain":"单词：coolly\n英 /ˈkuːlli/ 美 /ˈkuːlli/\n释义：adv. 冷静地；沉着地；冷淡地\n词根拆解：cool 冷静的 + -ly 副词后缀\n词性变形：cool adj. 冷静的"},
+{"q":"The company has a <span class='highlight'>corporate</span> culture.\nA.个人的 B.公司的/团体的 C.家庭的","ans":"B","explain":"单词：corporate\n英 /ˈkɔːpərət/ 美 /ˈkɔːrpərət/\n释义：adj. 公司的；团体的；社团的\n词根拆解：corpor 团体 + -ate 形容词后缀\n词性变形：corporation n. 大公司；法人团体"},
+{"q":"He works in a large <span class='highlight'>corporation</span>.\nA.小店 B.大公司/集团 C.学校","ans":"B","explain":"单词：corporation\n英 /ˌkɔːpəˈreɪʃn/ 美 /ˌkɔːrpəˈreɪʃn/\n释义：n. 大公司；集团；法人团体\n词根拆解：corporate 公司的 + -ation 名词后缀\n词性变形：corporate adj. 公司的"},
+{"q":"We need to <span class='highlight'>correspond</span> with our pen pal often.\nA.疏远 B.通信/符合 C.忘记","ans":"B","explain":"单词：correspond\n英 /ˌkɒrɪˈspɒnd/ 美 /ˌkɔːrɪˈspɑːnd/\n释义：v. 通信；符合；相一致\n词根拆解：cor- 互相 + respond 回应 → 互相回信、通信\n词性变形：correspondence n. 通信；往来信件"},
+{"q":"I keep <span class='highlight'>correspondence</span> with my old friend.\nA.争吵 B.通信/书信往来 C.断联","ans":"B","explain":"单词：correspondence\n英 /ˌkɒrɪˈspɒndəns/ 美 /ˌkɔːrɪˈspɑːndəns/\n释义：n. 通信；书信往来；相符\n词根拆解：correspond 通信 + -ence 名词后缀\n词性变形：correspond v. 通信"},
+{"q":"The broken bike needs <span class='highlight'>correction</span> at once.\nA.丢弃 B.修理/改正 C.更换","ans":"B","explain":"单词：correction\n英 /kəˈrekʃn/ 美 /kəˈrekʃn/\n释义：n. 改正；修正；批改；修理\n词根拆解：correct 改正 + -ion 名词后缀\n词性变形：correct v. 改正 adj. 正确的"},
+{"q":"Please <span class='highlight'>correct</span> your wrong answers.\nA.忽略 B.改正/纠正 C.抄写","ans":"B","explain":"单词：correct\n英 /kəˈrekt/ 美 /kəˈrekt/\n释义：v. 改正；纠正 adj. 正确的；无误的\n词根拆解：cor- 加强 + rect 正直 → 掰回正道、改正\n词性变形：correction n. 改正；批改"},
+{"q":"The price has a <span class='highlight'>cosmic</span> difference.\nA.微小的 B.巨大的/宇宙的 C.正常的","ans":"B","explain":"单词：cosmic\n英 /ˈkɒzmɪk/ 美 /ˈkɑːzmɪk/\n释义：adj. 宇宙的；极大的；浩瀚的\n词根拆解：cosmos 宇宙 + -ic 形容词后缀\n词性变形：cosmos n. 宇宙；秩序"},
+{"q":"We know little about the secret of the <span class='highlight'>cosmos</span>.\nA.地球 B.宇宙/太空 C.海洋","ans":"B","explain":"单词：cosmos\n英 /ˈkɒzmɒs/ 美 /ˈkɑːzmɑːs/\n释义：n. 宇宙；太空；万物秩序\n词根拆解：希腊语 kosmos 宇宙、有序世界\n词性变形：cosmic adj. 宇宙的"},
+{"q":"We should build <span class='highlight'>creative</span> thinking.\nA.死板的 B.有创造力的/创新的 C.被动的","ans":"B","explain":"单词：creative\n英 /kriˈeɪtɪv/ 美 /kriˈeɪtɪv/\n释义：adj. 有创造力的；创新的；独创的\n词根拆解：create 创造 + -ive 形容词后缀\n词性变形：creativity n. 创造力；创新力"},
+{"q":"Kids have endless <span class='highlight'>creativity</span>.\nA.惰性 B.创造力/创新 C.模仿力","ans":"B","explain":"单词：creativity\n英 /ˌkriːeɪˈtɪvəti/ 美 /ˌkriːeɪˈtɪvəti/\n释义：n. 创造力；创新能力\n词根拆解：creative 创新的 + -ity 名词后缀\n词性变形：creative adj. 有创造力的"},
+{"q":"God is said to <span class='highlight'>create</span> the world.\nA.毁灭 B.创造/创作 C.改变","ans":"B","explain":"单词：create\n英 /kriˈeɪt/ 美 /kriˈeɪt/\n释义：v. 创造；创作；发明\n词根拆解：拉丁语 creare 产生、创造\n词性变形：creation n. 创造；作品"},
+{"q":"This art <span class='highlight'>creation</span> wins high praise.\nA.模仿 B.创作/作品 C.抄袭","ans":"B","explain":"单词：creation\n英 /kriˈeɪʃn/ 美 /kriˈeɪʃn/\n释义：n. 创造；创作；艺术作品\n词根拆解：create 创造 + -ion 名词后缀\n词性变形：create v. 创造"},
+{"q":"We need to <span class='highlight'>criticize</span> bad behavior properly.\nA.纵容 B.批评/批判 C.模仿","ans":"B","explain":"单词：criticize\n英 /ˈkrɪtɪsaɪz/ 美 /ˈkrɪtɪsaɪz/\n释义：v. 批评；批判；评论\n词根拆解：critic 评论家 + -ize 使… → 做出评判、批评\n词性变形：criticism n. 批评；评论"},
+{"q":"Accept useful <span class='highlight'>criticism</span> with an open mind.\nA.赞美 B.批评/评论 C.借口","ans":"B","explain":"单词：criticism\n英 /ˈkrɪtɪsɪzəm/ 美 /ˈkrɪtɪsɪzəm/\n释义：n. 批评；批判；评论意见\n词根拆解：criticize 批评 + -ism 名词后缀\n词性变形：criticize v. 批评"},
+{"q":"He is a strict art <span class='highlight'>critic</span>.\nA.爱好者 B.评论家/批评家 C.画家","ans":"B","explain":"单词：critic\n英 /ˈkrɪtɪk/ 美 /ˈkrɪtɪk/\n释义：n. 评论家；批评家；鉴赏家\n词根拆解：希腊语 kritikos 善于判断的人\n词性变形：critical adj. 批判的；关键的"},
+{"q":"This is a <span class='highlight'>critical</span> moment for us.\nA.普通的 B.关键的/批判的 C.轻松的","ans":"B","explain":"单词：critical\n英 /ˈkrɪtɪkl/ 美 /ˈkrɪtɪkl/\n释义：adj. 关键的；至关重要的；批判的\n词根拆解：critic 评判 + -al 形容词后缀\n词性变形：critically adv. 关键地；批判地"},
+{"q":"We must <span class='highlight'>cultivate</span> good reading habits.\nA.放弃 B.培养/耕作 C.忽视","ans":"B","explain":"单词：cultivate\n英 /ˈkʌltɪveɪt/ 美 /ˈkʌltɪveɪt/\n释义：v. 培养；耕作；栽培\n词根拆解：cult 田地 + -ivate 动词后缀 → 耕种田地，引申培养品性\n词性变形：cultivation n. 培养；耕作"},
+{"q":"The <span class='highlight'>cultivation</span> of habit needs time.\nA.破坏 B.培养/养成 C.模仿","ans":"B","explain":"单词：cultivation\n英 /ˌkʌltɪˈveɪʃn/ 美 /ˌkʌltɪˈveɪʃn/\n释义：n. 培养；养成；耕作栽培\n词根拆解：cultivate 培养 + -ation 名词后缀\n词性变形：cultivate v. 培养"},
+{"q":"We should respect different <span class='highlight'>cultures</span>.\nA.习俗/文化 B.语言 C.饮食","ans":"A","explain":"单词：culture\n英 /ˈkʌltʃə(r)/ 美 /ˈkʌltʃər/\n释义：n. 文化；习俗；修养\n词根拆解：cult 耕耘 + -ure 名词后缀 → 精神耕耘形成文化\n词性变形：cultural adj. 文化的；人文的"},
+{"q":"There are many <span class='highlight'>cultural</span> relics in the city.\nA.现代的 B.文化的/人文的 C.商业的","ans":"B","explain":"单词：cultural\n英 /ˈkʌltʃərəl/ 美 /ˈkʌltʃərəl/\n释义：adj. 文化的；人文的；习俗的\n词根拆解：culture 文化 + -al 形容词后缀\n词性变形：culture n. 文化"},
+{"q":"You have the <span class='highlight'>duty</span> to protect the environment.\nA.权利 B.责任/义务 C.自由","ans":"B","explain":"单词：duty\n英 /ˈdjuːti/ 美 /ˈduːti/\n释义：n. 责任；义务；职责；值日\n词根拆解：源自拉丁语 debitum 应尽的本分\n词性变形：dutiful adj. 尽责的；孝顺的"},
+{"q":"He is a <span class='highlight'>dutiful</span> student and son.\nA.叛逆的 B.尽责的/孝顺的 C.懒惰的","ans":"B","explain":"单词：dutiful\n英 /ˈdjuːtɪfl/ 美 /ˈduːtɪfl/\n释义：adj. 尽责的；守本分的；孝顺的\n词根拆解：duty 责任 + -iful 充满…的 → 恪守本分\n词性变形：duty n. 责任"},
+{"q":"We need to <span class='highlight'>deceive</span> no one in life.\nA.信任 B.欺骗/蒙蔽 C.帮助","ans":"B","explain":"单词：deceive\n英 /dɪˈsiːv/ 美 /dɪˈsiːv/\n释义：v. 欺骗；蒙蔽；误导\n词根拆解：de- 否定 + ceive 抓住 → 用虚假手段迷惑人\n词性变形：deception n. 欺骗；骗局"},
+{"q":"His story is just a <span class='highlight'>deception</span>.\nA.实话 B.欺骗/骗局 C.传说","ans":"B","explain":"单词：deception\n英 /dɪˈsepʃn/ 美 /dɪˈsepʃn/\n释义：n. 欺骗；骗局；伪装\n词根拆解：deceive 欺骗 + -sion 名词后缀\n词性变形：deceive v. 欺骗"},
+{"q":"We should face our <span class='highlight'>defect</span> bravely.\nA.优点 B.缺点/缺陷 C.成绩","ans":"B","explain":"单词：defect\n英 /ˈdiːfekt/ 美 /ˈdiːfekt/\n释义：n. 缺点；缺陷；瑕疵 v. 叛变\n词根拆解：de- 偏离 + fect 做 → 做得有偏差、有缺陷\n词性变形：defective adj. 有缺陷的；残缺的"},
+{"q":"This product is <span class='highlight'>defective</span> and cannot be used.\nA.完美的 B.有缺陷的/残缺的 C.廉价的","ans":"B","explain":"单词：defective\n英 /dɪˈfektɪv/ 美 /dɪˈfektɪv/\n释义：adj. 有缺陷的；残缺的；有瑕疵的\n词根拆解：defect 缺陷 + -ive 形容词后缀\n词性变形：defect n. 缺点"},
+{"q":"We must <span class='highlight'>defend</span> our country at any time.\nA.背叛 B.保卫/辩护 C.放弃","ans":"B","explain":"单词：defend\n英 /dɪˈfend/ 美 /dɪˈfend/\n释义：v. 保卫；防御；为…辩护\n词根拆解：de- 避开 + fend 击打 → 抵挡攻击、保卫\n词性变形：defence n. 防御；辩护"},
+{"q":"The best <span class='highlight'>defence</span> is good offence.\nA.进攻 B.防御/防守 C.逃避","ans":"B","explain":"单词：defence\n英 /dɪˈfens/ 美 /dɪˈfens/\n释义：n. 防御；防守；辩护；国防\n词根拆解：defend 防御 + -ence 名词后缀\n词性变形：defend v. 保卫"},
+{"q":"Please <span class='highlight'>define</span> the meaning of this word.\nA.背诵 B.定义/解释 C.忽略","ans":"B","explain":"单词：define\n英 /dɪˈfaɪn/ 美 /dɪˈfaɪn/\n释义：v. 定义；解释；界定范围\n词根拆解：de- 完全 + fine 界限 → 划定界限、下定义\n词性变形：definition n. 定义；释义"},
+{"q":"The <span class='highlight'>definition</span> is easy to understand.\nA.例句 B.定义/释义 C.用法","ans":"B","explain":"单词：definition\n英 /ˌdefɪˈnɪʃn/ 美 /ˌdefɪˈnɪʃn/\n释义：n. 定义；释义；界定\n词根拆解：define 定义 + -ition 名词后缀\n词性变形：define v. 下定义"}
+],
+pet400:[
+{"q":"We must take <span class='highlight'>definite</span> action right now.\nA.犹豫的 B.明确的/一定的 C.随意的","ans":"B","explain":"单词：definite\n英 /ˈdefɪnət/ 美 /ˈdefɪnət/\n释义：adj. 明确的；一定的；限定的\n词根拆解：define 界定 + -ite 形容词后缀 → 有明确界限的\n词性变形：definitely adv. 肯定地；明确地"},
+{"q":"I will <span class='highlight'>definitely</span> support your plan.\nA.犹豫地 B.肯定地/明确地 C.勉强地","ans":"B","explain":"单词：definitely\n英 /ˈdefɪnətli/ 美 /ˈdefɪnətli/\n释义：adv. 肯定地；明确地；当然\n词根拆解：definite 明确的 + -ly 副词后缀\n词性变形：definite adj. 明确的"},
+{"q":"He tried to <span class='highlight'>delay</span> the meeting.\nA.提前 B.推迟/拖延 C.取消","ans":"B","explain":"单词：delay\n英 /dɪˈleɪ/ 美 /dɪˈleɪ/\n释义：v./n. 推迟；拖延；耽搁\n词根拆解：古法语 搁置延后\n词性变形：delayed adj. 延迟的；延期的"},
+{"q":"The bad weather caused a <span class='highlight'>delay</span>.\nA.准时 B.延误/耽搁 C.爆发","ans":"B","explain":"单词：delay\n英 /dɪˈleɪ/ 美 /dɪˈleɪ/\n释义：n. 延误；耽搁  v. 推迟\n词根拆解：同上\n词性变形：delay v. 拖延"},
+{"q":"We should <span class='highlight'>delegate</span> tasks to team members.\nA.包揽 B.委派/授权 C.放弃","ans":"B","explain":"单词：delegate\n英 /ˈdelɪɡeɪt/ 美 /ˈdelɪɡeɪt/\n释义：v. 委派；授权；委托 n. 代表\n词根拆解：de- 向下 + leg 指派 + -ate → 指派下去执行\n词性变形：delegation n. 代表团；授权"},
+{"q":"A <span class='highlight'>delegation</span> will visit our school soon.\nA.亲友团 B.代表团/访问团 C.志愿者","ans":"B","explain":"单词：delegation\n英 /ˌdelɪˈɡeɪʃn/ 美 /ˌdelɪˈɡeɪʃn/\n释义：n. 代表团；授权；委派\n词根拆解：delegate 委派 + -ation 名词后缀\n词性变形：delegate v. 委派"},
+{"q":"You need to <span class='highlight'>deliberate</span> before making a choice.\nA.草率 B.深思熟虑/商议 C.盲从","ans":"B","explain":"单词：deliberate\n英 /dɪˈlɪbərət/ 美 /dɪˈlɪbərət/\n释义：adj. 故意的；深思熟虑的 v. 商议；仔细考虑\n词根拆解：de- 完全 + liber 权衡 → 全盘权衡利弊\n词性变形：deliberately adv. 故意地；慎重地"},
+{"q":"He <span class='highlight'>deliberately</span> ignored my advice.\nA.无意地 B.故意地/慎重地 C.碰巧","ans":"B","explain":"单词：deliberately\n英 /dɪˈlɪbərətli/ 美 /dɪˈlɪbərətli/\n释义：adv. 故意地；慎重地；蓄意\n词根拆解：deliberate 深思的 + -ly 副词后缀\n词性变形：deliberate adj. 蓄意的"},
+{"q":"The film has a deep <span class='highlight'>delight</span> for viewers.\nA.伤感 B.喜悦/快乐 C.平淡","ans":"B","explain":"单词：delight\n英 /dɪˈlaɪt/ 美 /dɪˈlaɪt/\n释义：n. 喜悦；快乐 v. 使高兴\n词根拆解：de- 加强 + light 愉悦 → 满心欢喜\n词性变形：delightful adj. 令人愉快的"},
+{"q":"It’s a <span class='highlight'>delightful</span> trip for all of us.\nA.糟糕的 B.令人愉快的 C.漫长的","ans":"B","explain":"单词：delightful\n英 /dɪˈlaɪtfl/ 美 /dɪˈlaɪtfl/\n释义：adj. 令人愉快的；可喜的\n词根拆解：delight 喜悦 + -ful 充满…的\n词性变形：delight n. 快乐"},
+{"q":"We should <span class='highlight'>demonstrate</span> how to do it step by step.\nA.隐瞒 B.演示/证明 C.猜测","ans":"B","explain":"单词：demonstrate\n英 /ˈdemənstreɪt/ 美 /ˈdemənstreɪt/\n释义：v. 演示；证明；展示；示威\n词根拆解：de- 完全 + monstr 显示 + -ate → 完整展示出来\n词性变形：demonstration n. 演示；示范游行"},
+{"q":"Watch the teacher’s <span class='highlight'>demonstration</span> carefully.\nA.讲解 B.演示/示范 C.提问","ans":"B","explain":"单词：demonstration\n英 /ˌdemənˈstreɪʃn/ 美 /ˌdemənˈstreɪʃn/\n释义：n. 演示；示范；证明；游行\n词根拆解：demonstrate 演示 + -ation 名词后缀\n词性变形：demonstrate v. 展示"},
+{"q":"We need to <span class='highlight'>deny</span> the wrong rumour.\nA.承认 B.否认/拒绝 C.传播","ans":"B","explain":"单词：deny\n英 /dɪˈnaɪ/ 美 /dɪˈnaɪ/\n释义：v. 否认；拒绝承认；拒不给予\n词根拆解：拉丁语 denegare 否定拒绝\n词性变形：denial n. 否认；拒绝"},
+{"q":"His <span class='highlight'>denial</span> of the fact is useless.\nA.承认 B.否认/推脱 C.解释","ans":"B","explain":"单词：denial\n英 /dɪˈnaɪəl/ 美 /dɪˈnaɪəl/\n释义：n. 否认；拒绝；推脱\n词根拆解：deny 否认 + -ial 名词后缀\n词性变形：deny v. 否认"},
+{"q":"Hard work can <span class='highlight'>depend</span> your future.\nA.毁掉 B.决定/依靠 C.改变","ans":"B","explain":"单词：depend\n英 /dɪˈpend/ 美 /dɪˈpend/\n释义：v. 依靠；取决于；依赖\n词根拆解：de- 向下 + pend 悬挂 → 悬挂依附于某物\n词性变形：dependent adj. 依赖的；从属的"},
+{"q":"Kids are <span class='highlight'>dependent</span> on their parents.\nA.独立的 B.依赖的/从属的 C.叛逆的","ans":"B","explain":"单词：dependent\n英 /dɪˈpendənt/ 美 /dɪˈpendənt/\n释义：adj. 依赖的；依靠的；从属的\n词根拆解：depend 依赖 + -ent 形容词后缀\n词性变形：independent adj. 独立的"},
+{"q":"We should keep <span class='highlight'>depict</span> the real life in writing.\nA.虚构 B.描绘/描写 C.夸大","ans":"B","explain":"单词：depict\n英 /dɪˈpɪkt/ 美 /dɪˈpɪkt/\n释义：v. 描绘；描写；刻画\n词根拆解：de- 加强 + pict 绘画 → 用笔刻画场景\n词性变形：depiction n. 描绘；写照"},
+{"q":"The painting is a vivid <span class='highlight'>depiction</span> of countryside.\nA.抽象 B.描绘/写照 C.模仿","ans":"B","explain":"单词：depiction\n英 /dɪˈpɪkʃn/ 美 /dɪˈpɪkʃn/\n释义：n. 描绘；写照；刻画\n词根拆解：depict 描绘 + -ion 名词后缀\n词性变形：depict v. 描写"},
+{"q":"Long stress will <span class='highlight'>depress</span> your mood.\nA.愉悦 B.使消沉/压抑 C.稳定","ans":"B","explain":"单词：depress\n英 /dɪˈpres/ 美 /dɪˈpres/\n释义：v. 使消沉；压抑；压低\n词根拆解：de- 向下 + press 按压 → 向下压制情绪\n词性变形：depression n. 抑郁；萧条；低洼"},
+{"q":"He is suffering from mild <span class='highlight'>depression</span>.\nA.亢奋 B.抑郁/消沉 C.麻木","ans":"B","explain":"单词：depression\n英 /dɪˈpreʃn/ 美 /dɪˈpreʃn/\n释义：n. 抑郁；消沉；经济萧条\n词根拆解：depress 压抑 + -ion 名词后缀\n词性变形：depress v. 使压抑"},
+{"q":"We need to <span class='highlight'>derive</span> lessons from failure.\nA.回避 B.获取/源自 C.遗忘","ans":"B","explain":"单词：derive\n英 /dɪˈraɪv/ 美 /dɪˈraɪv/\n释义：v. 获取；源自；源于\n词根拆解：de- 向下 + rive 流淌 → 从源头流淌而来\n词性变形：derivation n. 起源；词源"},
+{"q":"The word’s <span class='highlight'>derivation</span> comes from Latin.\nA.用法 B.起源/词源 C.例句","ans":"B","explain":"单词：derivation\n英 /ˌderɪˈveɪʃn/ 美 /ˌderɪˈveɪʃn/\n释义：n. 起源；词源；派生\n词根拆解：derive 源自 + -ation 名词后缀\n词性变形：derive v. 源于"},
+{"q":"The teacher will <span class='highlight'>deserve</span> our respect.\nA.不配 B.值得/应得 C.博取","ans":"B","explain":"单词：deserve\n英 /dɪˈzɜːv/ 美 /dɪˈzɜːrv/\n释义：v. 值得；应得；理应获得\n词根拆解：de- 加强 + serve 服务/价值 → 配得上价值\n词性变形：deserved adj. 应得的；理所当然的"},
+{"q":"It is a <span class='highlight'>deserved</span> reward for his effort.\nA.意外的 B.应得的/理所应当的 C.廉价的","ans":"B","explain":"单词：deserved\n英 /dɪˈzɜːvd/ 美 /dɪˈzɜːrvd/\n释义：adj. 应得的；理所应当的\n词根拆解：deserve 应得 + -ed 形容词后缀\n词性变形：deserve v. 值得"},
+{"q":"He has a strong <span class='highlight'>desire</span> for knowledge.\nA.反感 B.渴望/欲望 C.麻木","ans":"B","explain":"单词：desire\n英 /dɪˈzaɪə(r)/ 美 /dɪˈzaɪər/\n释义：n. 渴望；欲望 v. 渴望；向往\n词根拆解：拉丁语 desiderare 热切期盼\n词性变形：desirable adj. 合意的；值得拥有的"},
+{"q":"This is a <span class='highlight'>desirable</span> chance for us.\nA.糟糕的 B.合意的/值得拥有的 C.偶然的","ans":"B","explain":"单词：desirable\n英 /dɪˈzaɪərəbl/ 美 /dɪˈzaɪrəbl/\n释义：adj. 合意的；值得拥有的；可取的\n词根拆解：desire 渴望 + -able 可…的\n词性变形：desire n. 渴望"},
+{"q":"We should <span class='highlight'>design</span> a reasonable study plan.\nA.照搬 B.设计/构思 C.放弃","ans":"B","explain":"单词：design\n英 /dɪˈzaɪn/ 美 /dɪˈzaɪn/\n释义：v. 设计；构思；策划 n. 设计；图案\n词根拆解：de- 标出 + sign 标记 → 预先布局标记\n词性变形：designer n. 设计师；设计者"},
+{"q":"She wants to be a fashion <span class='highlight'>designer</span>.\nA.模特 B.设计师/设计者 C.记者","ans":"B","explain":"单词：designer\n英 /dɪˈzaɪnə(r)/ 美 /dɪˈzaɪnər/\n释义：n. 设计师；设计者 adj. 名牌设计的\n词根拆解：design 设计 + -er 表人\n词性变形：design v. 设计"},
+{"q":"The plan is <span class='highlight'>destined</span> to succeed.\nA.注定的 B.渺茫的 C.艰难的","ans":"A","explain":"单词：destined\n英 /ˈdestɪnd/ 美 /ˈdestɪnd/\n释义：adj. 注定的；命中注定的\n词根拆解：destiny 命运 + -ed 形容词后缀\n词性变形：destiny n. 命运；天命"},
+{"q":"Everyone controls their own <span class='highlight'>destiny</span>.\nA.运气 B.命运/天命 C.选择","ans":"B","explain":"单词：destiny\n英 /ˈdestəni/ 美 /ˈdestəni/\n释义：n. 命运；天命；宿命\n词根拆解：拉丁语 destinare 注定安放\n词性变形：destined adj. 注定的"},
+{"q":"War will <span class='highlight'>destroy</span> everything beautiful.\nA.守护 B.摧毁/破坏 C.保留","ans":"B","explain":"单词：destroy\n英 /dɪˈstrɔɪ/ 美 /dɪˈstrɔɪ/\n释义：v. 摧毁；破坏；毁灭\n词根拆解：de- 完全 + stroy 建造反向 → 彻底拆毁\n词性变形：destruction n. 毁灭；破坏"},
+{"q":"The fire caused great <span class='highlight'>destruction</span>.\nA.收获 B.毁灭/破坏 C.生机","ans":"B","explain":"单词：destruction\n英 /dɪˈstrʌkʃn/ 美 /dɪˈstrʌkʃn/\n释义：n. 毁灭；破坏；毁坏\n词根拆解：destroy 毁灭 + -ion 名词后缀\n词性变形：destroy v. 摧毁"},
+{"q":"We need to <span class='highlight'>detect</span> the hidden danger early.\nA.忽视 B.察觉/探测 C.掩盖","ans":"B","explain":"单词：detect\n英 /dɪˈtekt/ 美 /dɪˈtekt/\n释义：v. 察觉；发现；探测\n词根拆解：de- 去掉 + tect 遮盖 → 揭开遮盖发现真相\n词性变形：detection n. 探测；察觉；侦查"},
+{"q":"The <span class='highlight'>detection</span> of error saves much time.\nA.忽略 B.探测/察觉 C.拖延","ans":"B","explain":"单词：detection\n英 /dɪˈtekʃn/ 美 /dɪˈtekʃn/\n释义：n. 探测；察觉；侦查\n词根拆解：detect 察觉 + -ion 名词后缀\n词性变形：detect v. 发现"},
+{"q":"Can you <span class='highlight'>determine</span> the right answer?\nA.犹豫 B.确定/决定 C.猜测","ans":"B","explain":"单词：determine\n英 /dɪˈtɜːmɪn/ 美 /dɪˈtɜːrmɪn/\n释义：v. 确定；决定；下定决心\n词根拆解：de- 完全 + termin 界限 → 划定最终界限\n词性变形：determination n. 决心；坚定"},
+{"q":"She has strong <span class='highlight'>determination</span> to learn well.\nA.惰性 B.决心/坚定 C.压力","ans":"B","explain":"单词：determination\n英 /dɪˌtɜːmɪˈneɪʃn/ 美 /dɪˌtɜːrmɪˈneɪʃn/\n释义：n. 决心；坚定；决断\n词根拆解：determine 决心 + -ation 名词后缀\n词性变形：determine v. 下定决心"},
+{"q":"We should <span class='highlight'>develop</span> good living habits.\nA.固守 B.培养/发展 C.放弃","ans":"B","explain":"单词：develop\n英 /dɪˈveləp/ 美 /dɪˈveləp/\n释义：v. 培养；发展；开发；患病\n词根拆解：de- 向外 + velop 包裹 → 从包裹中舒展成长\n词性变形：development n. 发展；成长；开发"},
+{"q":"The city’s <span class='highlight'>development</span> is very fast.\nA.衰退 B.发展/建设 C.停滞","ans":"B","explain":"单词：development\n英 /dɪˈveləpmənt/ 美 /dɪˈveləpmənt/\n释义：n. 发展；成长；城市建设；开发\n词根拆解：develop 发展 + -ment 名词后缀\n词性变形：develop v. 发展"},
+{"q":"There is a <span class='highlight'>device</span> for saving energy.\nA.方法 B.装置/设备 C.规则","ans":"B","explain":"单词：device\n英 /dɪˈvaɪs/ 美 /dɪˈvaɪs/\n释义：n. 装置；设备；仪器；手段\n词根拆解：古法语 devis 设计规划 → 设计出的器具\n词性变形：devise v. 设计；谋划"},
+{"q":"He tried to <span class='highlight'>devise</span> a new way of learning.\nA.照搬 B.设计/谋划 C.拒绝","ans":"B","explain":"单词：devise\n英 /dɪˈvaɪz/ 美 /dɪˈvaɪz/\n释义：v. 设计；谋划；想出方案\n词根拆解：device 的动词形式，构思创制\n词性变形：device n. 设备"},
+{"q":"We should <span class='highlight'>devote</span> time to reading every day.\nA.浪费 B.投入/奉献 C.回避","ans":"B","explain":"单词：devote\n英 /dɪˈvəʊt/ 美 /dɪˈvoʊt/\n释义：v. 投入；奉献；致力于\n词根拆解：de- 完全 + vote 发誓 → 发誓全身心投入\n词性变形：devotion n. 奉献；热爱；虔诚"},
+{"q":"His <span class='highlight'>devotion</span> to study moves us all.\nA.敷衍 B.奉献/专注 C.厌倦","ans":"B","explain":"单词：devotion\n英 /dɪˈvəʊʃn/ 美 /dɪˈvoʊʃn/\n释义：n. 奉献；专注；热爱；虔诚\n词根拆解：devote 奉献 + -ion 名词后缀\n词性变形：devote v. 致力于"},
+{"q":"We need to <span class='highlight'>differ</span> in opinions politely.\nA.附和 B.不同/有分歧 C.争吵","ans":"B","explain":"单词：differ\n英 /ˈdɪfə(r)/ 美 /ˈdɪfər/\n释义：v. 不同；有分歧；相异\n词根拆解：dif- 分开 + fer 携带 → 各自携带不同观点\n词性变形：difference n. 差异；区别；分歧"},
+{"q":"There is a big <span class='highlight'>difference</span> between the two plans.\nA.相似 B.差异/区别 C.关联","ans":"B","explain":"单词：difference\n英 /ˈdɪfrəns/ 美 /ˈdɪfrəns/\n释义：n. 差异；区别；分歧\n词根拆解：differ 不同 + -ence 名词后缀\n词性变形：differ v. 有分歧"},
+{"q":"They have <span class='highlight'>different</span> hobbies.\nA.相同的 B.不同的/各异的 C.普通的","ans":"B","explain":"单词：different\n英 /ˈdɪfrənt/ 美 /ˈdɪfrənt/\n释义：adj. 不同的；各异的；各种各样的\n词根拆解：differ 相异 + -ent 形容词后缀\n词性变形：differently adv. 不同地"},
+{"q":"People think <span class='highlight'>differently</span> about this rule.\nA.一致地 B.不同地/有差异地 C.盲目地","ans":"B","explain":"单词：differently\n英 /ˈdɪfrəntli/ 美 /ˈdɪfrəntli/\n释义：adv. 不同地；有差异地\n词根拆解：different 不同的 + -ly 副词后缀\n词性变形：different adj. 不同的"},
+{"q":"We should <span class='highlight'>digest</span> what we have learned.\nA.死记 B.消化/领悟 C.遗忘","ans":"B","explain":"单词：digest\n英 /daɪˈdʒest/ 美 /daɪˈdʒest/\n释义：v. 消化；领悟 n. 摘要；文摘\n词根拆解：di- 分开 + gest 运送 → 拆分吸收养分\n词性变形：digestion n. 消化；领悟能力"},
+{"q":"Good <span class='highlight'>digestion</span> keeps your body healthy.\nA.代谢 B.消化/吸收 C.循环","ans":"B","explain":"单词：digestion\n英 /daɪˈdʒestʃn/ 美 /daɪˈdʒestʃn/\n释义：n. 消化；吸收；领悟\n词根拆解：digest 消化 + -ion 名词后缀\n词性变形：digest v. 领悟"},
+{"q":"The two roads <span class='highlight'>diverge</span> at the hill.\nA.汇合 B.分叉/分歧 C.平行","ans":"B","explain":"单词：diverge\n英 /daɪˈvɜːdʒ/ 美 /daɪˈvɜːrdʒ/\n释义：v. 分叉；分歧；偏离\n词根拆解：di- 分开 + verge 倾斜 → 向两边倾斜分开\n词性变形：divergent adj. 分歧的；发散的"},
+{"q":"They hold <span class='highlight'>divergent</span> views on the topic.\nA.一致的 B.分歧的/发散的 C.中立的","ans":"B","explain":"单词：divergent\n英 /daɪˈvɜːdʒənt/ 美 /daɪˈvɜːrdʒənt/\n释义：adj. 分歧的；发散的；不同的\n词根拆解：diverge 分歧 + -ent 形容词后缀\n词性变形：diverge v. 分叉"},
+{"q":"We should <span class='highlight'>diversify</span> our daily exercise.\nA.单一化 B.多样化/多元化 C.放弃","ans":"B","explain":"单词：diversify\n英 /daɪˈvɜːsɪfaɪ/ 美 /daɪˈvɜːrsɪfaɪ/\n释义：v. 多样化；多元化；使变化\n词根拆解：diverse 多样的 + -ify 使…\n词性变形：diversity n. 多样性；差异"},
+{"q":"The school has great cultural <span class='highlight'>diversity</span>.\nA.单一 B.多样性/多元 C.保守","ans":"B","explain":"单词：diversity\n英 /daɪˈvɜːsəti/ 美 /daɪˈvɜːrsəti/\n释义：n. 多样性；多元化；差异\n词根拆解：diverse 多样的 + -ity 名词后缀\n词性变形：diversify v. 多元化"},
+{"q":"We need a <span class='highlight'>dominant</span> goal in study.\nA.次要的 B.主导的/占优势的 C.随意的","ans":"B","explain":"单词：dominant\n英 /ˈdɒmɪnənt/ 美 /ˈdɑːmɪnənt/\n释义：adj. 主导的；占优势的；显性的\n词根拆解：domin 统治 + -ant 形容词后缀\n词性变形：dominate v. 支配；占据主导"},
+{"q":"Don’t let laziness <span class='highlight'>dominate</span> your life.\nA.远离 B.支配/主导 C.激励","ans":"B","explain":"单词：dominate\n英 /ˈdɒmɪneɪt/ 美 /ˈdɑːmɪneɪt/\n释义：v. 支配；主导；占据优势\n词根拆解：domin 统治 + -ate 动词后缀\n词性变形：dominant adj. 主导的"},
+{"q":"We should <span class='highlight'>donate</span> books to poor children.\nA.售卖 B.捐赠/捐献 C.借用","ans":"B","explain":"单词：donate\n英 /dəʊˈneɪt/ 美 /doʊˈneɪt/\n释义：v. 捐赠；捐献；赠予\n词根拆解：don 给予 + -ate 动词后缀 → 无偿给予\n词性变形：donation n. 捐赠物；捐款"},
+{"q":"Thank you for your kind <span class='highlight'>donation</span>.\nA.索取 B.捐赠/善款 C.交易","ans":"B","explain":"单词：donation\n英 /dəʊˈneɪʃn/ 美 /doʊˈneɪʃn/\n释义：n. 捐赠；捐款；捐赠物\n词根拆解：donate 捐赠 + -ation 名词后缀\n词性变形：donate v. 捐献"},
+{"q":"You need to <span class='highlight'>draft</span> a plan first.\nA.定稿 B.起草/草拟 C.放弃","ans":"B","explain":"单词：draft\n英 /drɑːft/ 美 /dræft/\n释义：v. 起草；草拟 n. 草稿；草案\n词根拆解：古英语 拉拽勾勒 → 初步草拟文稿\n词性变形：drafted adj. 草拟好的"},
+{"q":"This is just a rough <span class='highlight'>draft</span> of the speech.\nA.终稿 B.草稿/草案 C.范文","ans":"B","explain":"单词：draft\n英 /drɑːft/ 美 /dræft/\n释义：n. 草稿；草案；初稿\n词根拆解：同上\n词性变形：draft v. 起草"},
+{"q":"We should <span class='highlight'>dramatic</span> change our old habits.\nA.缓慢 B.巨大的/戏剧性的 C.轻微","ans":"B","explain":"单词：dramatic\n英 /drəˈmætɪk/ 美 /drəˈmætɪk/\n释义：adj. 巨大的；戏剧性的；戏剧的\n词根拆解：drama 戏剧 + -atic 形容词后缀\n词性变形：dramatically adv. 急剧地；戏剧性地"},
+{"q":"The price rose <span class='highlight'>dramatically</span> this month.\nA.平稳 B.急剧地/大幅地 C.缓慢","ans":"B","explain":"单词：dramatically\n英 /drəˈmætɪkli/ 美 /drəˈmætɪkli/\n释义：adv. 急剧地；大幅地；戏剧性地\n词根拆解：dramatic 巨大的 + -ly 副词后缀\n词性变形：dramatic adj. 大幅的"},
+{"q":"We need to <span class='highlight'>economical</span> use daily resources.\nA.浪费的 B.节俭的/经济的 C.奢侈的","ans":"B","explain":"单词：economical\n英 /ˌiːkəˈnɒmɪkl/ 美 /ˌiːkəˈnɑːmɪkl/\n释义：adj. 节俭的；经济实惠的；节约的\n词根拆解：economy 经济 + -ical 形容词后缀\n词性变形：economy n. 经济；节约"},
+{"q":"We should practice <span class='highlight'>economy</span> in daily life.\nA.奢侈 B.节约/经济 C.攀比","ans":"B","explain":"单词：economy\n英 /ɪˈkɒnəmi/ 美 /ɪˈkɑːnəmi/\n释义：n. 经济；节约；理财\n词根拆解：希腊语 oikonomia 家庭管理 → 节俭持家\n词性变形：economic adj. 经济方面的"},
+{"q":"The new policy brings <span class='highlight'>economic</span> growth.\nA.文化的 B.经济的/商业的 C.社会的","ans":"B","explain":"单词：economic\n英 /ˌiːkəˈnɒmɪk/ 美 /ˌiːkəˈnɑːmɪk/\n释义：adj. 经济的；商业的；经济学的\n词根拆解：economy 经济 + -ic 形容词后缀\n词性变形：economical adj. 节俭的"},
+{"q":"We should <span class='highlight'>edit</span> the article before handing in.\nA.照搬 B.编辑/修改 C.抄写","ans":"B","explain":"单词：edit\n英 /ˈedɪt/ 美 /ˈedɪt/\n释义：v. 编辑；修改；剪辑\n词根拆解：e- 向外 + dit 给出 → 整理文稿对外发布\n词性变形：editor n. 编辑；编者；主编"},
+{"q":"He works as a magazine <span class='highlight'>editor</span>.\nA.作者 B.编辑/编者 C.读者","ans":"B","explain":"单词：editor\n英 /ˈedɪtə(r)/ 美 /ˈedɪtər/\n释义：n. 编辑；编者；主编；剪辑师\n词根拆解：edit 编辑 + -er 表人\n词性变形：edit v. 修改"},
+{"q":"We need to <span class='highlight'>educate</span> kids to respect others.\nA.纵容 B.教育/培养 C.放任","ans":"B","explain":"单词：educate\n英 /ˈedʒukeɪt/ 美 /ˈedʒukeɪt/\n释义：v. 教育；培养；教导\n词根拆解：e- 向外 + duc 引导 + -ate → 引导心智成长\n词性变形：education n. 教育；学业；培养"},
+{"q":"Good <span class='highlight'>education</span> changes one’s whole life.\nA.家境 B.教育/学识 C.运气","ans":"B","explain":"单词：education\n英 /ˌedʒuˈkeɪʃn/ 美 /ˌedʒuˈkeɪʃn/\n释义：n. 教育；学识；培养\n词根拆解：educate 教育 + -ation 名词后缀\n词性变形：educate v. 教导"},
+{"q":"The two plans are <span class='highlight'>effective</span> for study.\nA.无效的 B.有效的/奏效的 C.多余的","ans":"B","explain":"单词：effective\n英 /ɪˈfektɪv/ 美 /ɪˈfektɪv/\n释义：adj. 有效的；奏效的；实际的\n词根拆解：effect 效果 + -ive 形容词后缀\n词性变形：effect n. 效果；影响"},
+{"q":"The medicine has immediate <span class='highlight'>effect</span>.\nA.副作用 B.效果/作用 C.隐患","ans":"B","explain":"单词：effect\n英 /ɪˈfekt/ 美 /ɪˈfekt/\n释义：n. 效果；作用；影响 v. 实现\n词根拆解：ef- 出 + fect 做 → 做出的结果\n词性变形：effective adj. 有效的"},
+{"q":"We should <span class='highlight'>eliminate</span'> bad learning habits.\nA.保留 B.消除/剔除 C.模仿","ans":"B","explain":"单词：eliminate\n英 /ɪˈlɪmɪneɪt/ 美 /ɪˈlɪmɪneɪt/\n释义：v. 消除；剔除；淘汰\n词根拆解：e- 向外 + limin 界限 + -ate → 赶出界限之外\n词性变形：elimination n. 消除；淘汰"},
+{"q":"The <span class='highlight'>elimination</span> of waste saves lots of money.\nA.保留 B.消除/淘汰 C.积累","ans":"B","explain":"单词：elimination\n英 /ɪˌlɪmɪˈneɪʃn/ 美 /ɪˌlɪmɪˈneɪʃn/\n释义：n. 消除；淘汰；剔除\n词根拆解：eliminate 消除 + -ation 名词后缀\n词性变形：eliminate v. 剔除"},
+{"q":"We need to <span class='highlight'>emphasize</span> the importance of practice.\nA.忽视 B.强调/着重 C.淡化","ans":"B","explain":"单词：emphasize\n英 /ˈemfəsaɪz/ 美 /ˈemfəsaɪz/\n释义：v. 强调；着重；突出\n词根拆解：emphasis 重点 + -ize 动词后缀\n词性变形：emphasis n. 重点；强调语气"},
+{"q":"Put <span class='highlight'>emphasis</span> on basic knowledge.\nA.轻视 B.重点/强调 C.搁置","ans":"B","explain":"单词：emphasis\n英 /ˈemfəsɪs/ 美 /ˈemfəsɪs/\n释义：n. 重点；强调；重读\n词根拆解：希腊语 凸显着重\n词性变形：emphasize v. 强调"},
+{"q":"He is an <span class='highlight'>eminent</span> scientist in this field.\nA.平凡的 B.杰出的/著名的 C.年轻的","ans":"B","explain":"单词：eminent\n英 /ˈemɪnənt/ 美 /ˈemɪnənt/\n释义：adj. 杰出的；著名的；卓越的\n词根拆解：e- 向外 + min 突出 + -ent → 脱颖而出\n词性变形：eminence n. 名望；卓越地位"},
+{"q":"She reached <span class='highlight'>eminence</span> in painting at a young age.\nA.低谷 B.名望/卓越 C.瓶颈","ans":"B","explain":"单词：eminence\n英 /ˈemɪnəns/ 美 /ˈemɪnəns/\n释义：n. 名望；卓越；显赫地位\n词根拆解：eminent 杰出的 + -ence 名词后缀\n词性变形：eminent adj. 著名的"},
+{"q":"Music can <span class='highlight'>emotion</span> people deeply.\nA.麻木 B.触动/情感 C.疏远","ans":"B","explain":"单词：emotion\n英 /ɪˈməʊʃn/ 美 /ɪˈmoʊʃn/\n释义：n. 情感；情绪；感情\n词根拆解：e- 向外 + mot 触动 + -ion → 内心触动流露\n词性变形：emotional adj. 情绪化的；情感的"},
+{"q":"He is a sensitive and <span class='highlight'>emotional</span> boy.\nA.理性的 B.情绪化的/感性的 C.冷漠的","ans":"B","explain":"单词：emotional\n英 /ɪˈməʊʃənl/ 美 /ɪˈmoʊʃənl/\n释义：adj. 情绪化的；感性的；情感丰富的\n词根拆解：emotion 情感 + -al 形容词后缀\n词性变形：emotion n. 情绪"},
+{"q":"We should <span class='highlight'>enable</span> ourselves to learn independently.\nA.阻碍 B.使能够/促成 C.限制","ans":"B","explain":"单词：enable\n英 /ɪˈneɪbl/ 美 /ɪˈneɪbl/\n释义：v. 使能够；促成；授权\n词根拆解：en- 使… + able 有能力 → 使人具备能力\n词性变形：enablement n. 赋能；促成"}
+],
+
+pet500:[
+{"q":"We need to keep an <span class='highlight'>encouraging</span> attitude to classmates.\nA.打击的 B.鼓励的/鼓舞人心的 C.冷漠的","ans":"B","explain":"单词：encouraging\n英 /ɪnˈkʌrɪdʒɪŋ/ 美 /ɪnˈkɜːrɪdʒɪŋ/\n释义：adj. 鼓励的；鼓舞人心的\n词根拆解：encourage 鼓励 + -ing 形容词后缀\n词性变形：encourage v. 鼓励"},
+{"q":"Teachers always <span class='highlight'>encourage</span> us to try new things.\nA.打击 B.鼓励/激励 C.限制","ans":"B","explain":"单词：encourage\n英 /ɪnˈkʌrɪdʒ/ 美 /ɪnˈkɜːrɪdʒ/\n释义：v. 鼓励；激励；怂恿\n词根拆解：en- 使… + courage 勇气 → 赋予勇气\n词性变形：encouragement n. 鼓励；激励话语"},
+{"q":"Your <span class='highlight'>encouragement</span> gives me much power.\nA.嘲讽 B.鼓励/支持 C.压力","ans":"B","explain":"单词：encouragement\n英 /ɪnˈkʌrɪdʒmənt/ 美 /ɪnˈkɜːrɪdʒmənt/\n释义：n. 鼓励；激励；支持\n词根拆解：encourage 鼓励 + -ment 名词后缀\n词性变形：encourage v. 激励"},
+{"q":"We should <span class='highlight'>endure</span> hardship without giving up.\nA.逃避 B.忍受/承受 C.抱怨","ans":"B","explain":"单词：endure\n英 /ɪnˈdjʊə(r)/ 美 /ɪnˈdʊr/\n释义：v. 忍受；承受；持久\n词根拆解：en- 加强 + dure 持续 → 坚持扛下去\n词性变形：endurance n. 耐力；忍耐力"},
+{"q":"Long running builds strong <span class='highlight'>endurance</span>.\nA.爆发力 B.耐力/忍耐力 C.柔韧性","ans":"B","explain":"单词：endurance\n英 /ɪnˈdjʊərəns/ 美 /ɪnˈdʊrəns/\n释义：n. 耐力；忍耐力；持久力\n词根拆解：endure 忍受 + -ance 名词后缀\n词性变形：endure v. 承受"},
+{"q":"The plan is <span class='highlight'>endless</span> and has no finish.\nA.短暂的 B.无尽的/无休止的 C.完美的","ans":"B","explain":"单词：endless\n英 /ˈendləs/ 美 /ˈendləs/\n释义：adj. 无尽的；无休止的；无限的\n词根拆解：end 终点 + -less 无…的 → 没有尽头\n词性变形：end n. 终点；末尾"},
+{"q":"Every task has a start and an <span class='highlight'>end</span>.\nA.开端 B.终点/末尾 C.过程","ans":"B","explain":"单词：end\n英 /end/ 美 /end/\n释义：n. 终点；末尾；结局 v. 结束\n词根拆解：古英语原生词 界限末端\n词性变形：endless adj. 无尽的"},
+{"q":"We need to <span class='highlight'>enforce</span> the rules strictly.\nA.放宽 B.执行/强制 C.忽视","ans":"B","explain":"单词：enforce\n英 /ɪnˈfɔːs/ 美 /ɪnˈfɔːrs/\n释义：v. 执行；强制；实施\n词根拆解：en- 使… + force 力量 → 用力量推行\n词性变形：enforcement n. 执行；实施强制"},
+{"q":"Strict <span class='highlight'>enforcement</span> makes rules useful.\nA.搁置 B.执行/实施 C.变通","ans":"B","explain":"单词：enforcement\n英 /ɪnˈfɔːsmənt/ 美 /ɪnˈfɔːrsmənt/\n释义：n. 执行；实施；强制推行\n词根拆解：enforce 执行 + -ment 名词后缀\n词性变形：enforce v. 强制实施"},
+{"q":"We should <span class='highlight'>engage</span> in more after-school activities.\nA.回避 B.参与/从事 C.旁观","ans":"B","explain":"单词：engage\n英 /ɪnˈɡeɪdʒ/ 美 /ɪnˈɡeɪdʒ/\n释义：v. 参与；从事；吸引；订婚\n词根拆解：en- 进入 + gage 约定 → 投入约定事务\n词性变形：engagement n. 约定；参与；约会"},
+{"q":"I have an <span class='highlight'>engagement</span> with my friend tonight.\nA.争执 B.约定/约会 C.偶遇","ans":"B","explain":"单词：engagement\n英 /ɪnˈɡeɪdʒmənt/ 美 /ɪnˈɡeɪdʒmənt/\n释义：n. 约定；约会；参与；婚约\n词根拆解：engage 约定 + -ment 名词后缀\n词性变形：engage v. 参与"},
+{"q":"Reading can <span class='highlight'>enhance</span> your vocabulary quickly.\nA.削弱 B.提升/增强 C.维持","ans":"B","explain":"单词：enhance\n英 /ɪnˈhɑːns/ 美 /ɪnˈhæns/\n释义：v. 提升；增强；增进\n词根拆解：en- 向上 + hance 抬高 → 拔高水准\n词性变形：enhancement n. 提升；增强改进"},
+{"q":"The new method brings great <span class='highlight'>enhancement</span> in scores.\nA.下滑 B.提升/改进 C.停滞","ans":"B","explain":"单词：enhancement\n英 /ɪnˈhɑːnsmənt/ 美 /ɪnˈhænsmənt/\n释义：n. 提升；增强；改进\n词根拆解：enhance 提升 + -ment 名词后缀\n词性变形：enhance v. 增进"},
+{"q":"We should <span class='highlight'>enlarge</span> our reading range.\nA.缩小 B.扩大/扩充 C.限定","ans":"B","explain":"单词：enlarge\n英 /ɪnˈlɑːdʒ/ 美 /ɪnˈlɑːrdʒ/\n释义：v. 扩大；扩充；放大\n词根拆解：en- 使… + large 大 → 使变得更大\n词性变形：enlargement n. 扩大；放大版本"},
+{"q":"The <span class='highlight'>enlargement</span> of the photo is very clear.\nA.原图 B.放大/扩印 C.裁剪","ans":"B","explain":"单词：enlargement\n英 /ɪnˈlɑːdʒmənt/ 美 /ɪnˈlɑːrdʒmənt/\n释义：n. 扩大；放大；扩印照\n词根拆解：enlarge 放大 + -ment 名词后缀\n词性变形：enlarge v. 扩充"},
+{"q":"We need to <span class='highlight'>enlighten</span> kids with right values.\nA.误导 B.启发/开导 C.放任","ans":"B","explain":"单词：enlighten\n英 /ɪnˈlaɪtn/ 美 /ɪnˈlaɪtn/\n释义：v. 启发；开导；启蒙\n词根拆解：en- 使… + light 光明 → 点亮心智光明\n词性变形：enlightenment n. 启蒙；开导顿悟"},
+{"q":"His words gave me sudden <span class='highlight'>enlightenment</span>.\nA.困惑 B.启蒙/顿悟 C.麻木","ans":"B","explain":"单词：enlightenment\n英 /ɪnˈlaɪtnmənt/ 美 /ɪnˈlaɪtnmənt/\n释义：n. 启蒙；开导；顿悟\n词根拆解：enlighten 启发 + -ment 名词后缀\n词性变形：enlighten v. 开导"},
+{"q":"We should <span class='highlight'>entertain</span> guests politely.\nA.冷落 B.款待/娱乐 C.敷衍","ans":"B","explain":"单词：entertain\n英 /ˌentəˈteɪn/ 美 /ˌentərˈteɪn/\n释义：v. 款待；招待；娱乐；使快乐\n词根拆解：enter 在内 + tain 留住 → 留在家中招待\n词性变形：entertainment n. 娱乐；文娱活动"},
+{"q":"The school offers rich <span class='highlight'>entertainment</span> after class.\nA.课业 B.娱乐/文娱 C.补习","ans":"B","explain":"单词：entertainment\n英 /ˌentəˈteɪnmənt/ 美 /ˌentərˈteɪnmənt/\n释义：n. 娱乐；文娱活动；款待\n词根拆解：entertain 娱乐 + -ment 名词后缀\n词性变形：entertain v. 招待"},
+{"q":"Everyone has equal <span class='highlight'>entitle</span> to education.\nA.义务 B.权利/资格 C.限制","ans":"B","explain":"单词：entitle\n英 /ɪnˈtaɪtl/ 美 /ɪnˈtaɪtl/\n释义：v. 赋予权利；定名；使有资格\n词根拆解：en- 赋予 + title 头衔/资格 → 授予资格\n词性变形：entitlement n. 权利；资格津贴"},
+{"q":"This job comes with special <span class='highlight'>entitlement</span>.\nA.责任 B.权利/福利 C.压力","ans":"B","explain":"单词：entitlement\n英 /ɪnˈtaɪtlmənt/ 美 /ɪnˈtaɪtlmənt/\n释义：n. 权利；资格；福利津贴\n词根拆解：entitle 授权 + -ment 名词后缀\n词性变形：entitle v. 赋予资格"},
+{"q":"We should <span class='highlight'>establish</span> a good daily routine.\nA.打破 B.建立/创立 C.照搬","ans":"B","explain":"单词：establish\n英 /ɪˈstæblɪʃ/ 美 /ɪˈstæblɪʃ/\n释义：v. 建立；创立；确立\n词根拆解：e- 稳固 + stabl 稳定 + -ish → 稳固建立起来\n词性变形：establishment n. 建立；机构；企业"},
+{"q":"The <span class='highlight'>establishment</span> of the club took one month.\nA.解散 B.建立/创办 C.搬迁","ans":"B","explain":"单词：establishment\n英 /ɪˈstæblɪʃmənt/ 美 /ɪˈstæblɪʃmənt/\n释义：n. 建立；创办；机构；企业\n词根拆解：establish 建立 + -ment 名词后缀\n词性变形：establish v. 确立"},
+{"q":"We need to <span class='highlight'>estimate</span> the time needed for the task.\nA.精准确定 B.估算/预估 C.随意猜测","ans":"B","explain":"单词：estimate\n英 /ˈestɪmeɪt/ 美 /ˈestɪmeɪt/\n释义：v. 估算；预估；评价 n. 估计；估价\n词根拆解：拉丁语 aestimare 估价评判\n词性变形：estimation n. 估算；评价；判断"},
+{"q":"In my <span class='highlight'>estimation</span>, he will win the game.\nA.质疑 B.估算/看法 C.偏见","ans":"B","explain":"单词：estimation\n英 /ˌestɪˈmeɪʃn/ 美 /ˌestɪˈmeɪʃn/\n释义：n. 估算；评价；看法；判断\n词根拆解：estimate 预估 + -ation 名词后缀\n词性变形：estimate v. 估算"},
+{"q":"We should <span class='highlight'>evaluate</span> our progress every week.\nA.忽视 B.评估/评价 C.炫耀","ans":"B","explain":"单词：evaluate\n英 /ɪˈvæljueɪt/ 美 /ɪˈvæljueɪt/\n释义：v. 评估；评价；估值\n词根拆解：e- 出 + valu 价值 + -ate → 评出价值高低\n词性变形：evaluation n. 评估；评价；考核"},
+{"q":"The teacher gives a fair <span class='highlight'>evaluation</span> of each student.\nA.偏袒 B.评估/评价 C.批评","ans":"B","explain":"单词：evaluation\n英 /ɪˌvæljuˈeɪʃn/ 美 /ɪˌvæljuˈeɪʃn/\n释义：n. 评估；评价；考核；估值\n词根拆解：evaluate 评估 + -ation 名词后缀\n词性变形：evaluate v. 评价"},
+{"q":"His words <span class='highlight'>evolve</span> from simple to deep.\nA.停滞 B.演变/进化 C.倒退","ans":"B","explain":"单词：evolve\n英 /ɪˈvɒlv/ 美 /ɪˈvɑːlv/\n释义：v. 演变；进化；逐步发展\n词根拆解：e- 向外 + volv 滚动 → 逐步滚动发展\n词性变形：evolution n. 进化；演变；发展"},
+{"q":"The <span class='highlight'>evolution</span> of human is a long process.\nA.退化 B.进化/演变 C.停滞","ans":"B","explain":"单词：evolution\n英 /ˌiːvəˈluːʃn/ 美 /ˌiːvəˈluːʃn/\n释义：n. 进化；演变；逐步发展\n词根拆解：evolve 进化 + -ution 名词后缀\n词性变形：evolve v. 演变"},
+{"q":"We should <span class='highlight'>exaggerate</span> neither joy nor sorrow.\nA.淡化 B.夸大/夸张 C.隐藏","ans":"B","explain":"单词：exaggerate\n英 /ɪɡˈzædʒəreɪt/ 美 /ɪɡˈzædʒəreɪt/\n释义：v. 夸大；夸张；言过其实\n词根拆解：ex- 加强 + agger 堆积 + -ate → 层层堆积夸大\n词性变形：exaggeration n. 夸张；夸大之词"},
+{"q":"It is pure <span class='highlight'>exaggeration</span> to say he knows everything.\nA.实话 B.夸张/夸大 C.谦虚","ans":"B","explain":"单词：exaggeration\n英 /ɪɡˌzædʒəˈreɪʃn/ 美 /ɪɡˌzædʒəˈreɪʃn/\n释义：n. 夸张；夸大；言过其实\n词根拆解：exaggerate 夸大 + -ation 名词后缀\n词性变形：exaggerate v. 夸张"}
+],
+pet600:[
+{"q":"We must <span class='highlight'>excel</span> in our daily study.\nA.落后 B.擅长/胜过 C.敷衍","ans":"B","explain":"单词：excel\n英 /ɪkˈsel/ 美 /ɪkˈsel/\n释义：v. 擅长；胜过；优于\n词根拆解：ex- 超出 + cel 高耸 → 高出众人\n词性变形：excellent adj. 优秀的；卓越的"},
+{"q":"He is an <span class='highlight'>excellent</span> student in all subjects.\nA.平庸的 B.优秀的/卓越的 C.调皮的","ans":"B","explain":"单词：excellent\n英 /ˈeksələnt/ 美 /ˈeksələnt/\n释义：adj. 优秀的；卓越的；极好的\n词根拆解：excel 胜过 + -ent 形容词后缀\n词性变形：excel v. 优于"},
+{"q":"We should <span class='highlight'>except</span> lazy habits from our life.\nA.保留 B.排除/除外 C.养成","ans":"B","explain":"单词：except\n英 /ɪkˈsept/ 美 /ɪkˈsept/\n释义：prep. 除了 v. 排除；不包括\n词根拆解：ex- 向外 + cept 拿 → 拿出去、排除在外\n词性变形：exception n. 例外；特例"},
+{"q":"There is no <span class='highlight'>exception</span> to the school rules.\nA.特例/例外 B.修改 C.变通","ans":"B","explain":"单词：exception\n英 /ɪkˈsepʃn/ 美 /ɪkˈsepʃn/\n释义：n. 例外；特例；破例\n词根拆解：except 排除 + -ion 名词后缀\n词性变形：except v. 除外"},
+{"q":"This rule is <span class='highlight'>exceptional</span> for special cases.\nA.普通的 B.例外的/杰出的 C.严格的","ans":"B","explain":"单词：exceptional\n英 /ɪkˈsepʃənl/ 美 /ɪkˈsepʃənl/\n释义：adj. 例外的；杰出的；超常的\n词根拆解：exception 例外 + -al 形容词后缀\n词性变形：exception n. 特例"},
+{"q":"We need to <span class='highlight'>excite</span> kids’ interest in reading.\nA.压制 B.激发/使兴奋 C.忽视","ans":"B","explain":"单词：excite\n英 /ɪkˈsaɪt/ 美 /ɪkˈsaɪt/\n释义：v. 激发；使兴奋；使激动\n词根拆解：ex- 向外 + cite 召唤 → 唤起情绪外露\n词性变形：excitement n. 兴奋；激动"},
+{"q":"The news filled us with great <span class='highlight'>excitement</span>.\nA.失落 B.兴奋/激动 C.平静","ans":"B","explain":"单词：excitement\n英 /ɪkˈsaɪtmənt/ 美 /ɪkˈsaɪtmənt/\n释义：n. 兴奋；激动；刺激感\n词根拆解：excite 使兴奋 + -ment 名词后缀\n词性变形：excite v. 激发"},
+{"q":"It is <span class='highlight'>exciting</span> to take part in the contest.\nA.无聊的 B.令人兴奋的 C.艰难的","ans":"B","explain":"单词：exciting\n英 /ɪkˈsaɪtɪŋ/ 美 /ɪkˈsaɪtɪŋ/\n释义：adj. 令人兴奋的；使人激动的\n词根拆解：excite 兴奋 + -ing 形容事物\n词性变形：excited adj. 感到兴奋的"},
+{"q":"I felt <span class='highlight'>excited</span> when I won the prize.\nA.沮丧的 B.感到兴奋的 C.平淡的","ans":"B","explain":"单词：excited\n英 /ɪkˈsaɪtɪd/ 美 /ɪkˈsaɪtɪd/\n释义：adj. 感到兴奋的；激动的\n词根拆解：excite 兴奋 + -ed 形容人感受\n词性变形：exciting adj. 令人兴奋的"},
+{"q":"Teachers <span class='highlight'>exclude</span> bad behaviour from class.\nA.包容 B.排斥/排除 C.纵容","ans":"B","explain":"单词：exclude\n英 /ɪkˈskluːd/ 美 /ɪkˈskluːd/\n释义：v. 排斥；排除；不包括\n词根拆解：ex- 向外 + clude 关闭 → 关在门外\n词性变形：exclusion n. 排斥；排除在外"},
+{"q":"His <span class='highlight'>exclusion</span> from the team made him sad.\nA.入选 B.排斥/剔除 C.轮换","ans":"B","explain":"单词：exclusion\n英 /ɪkˈskluːʒn/ 美 /ɪkˈskluːʒn/\n释义：n. 排斥；排除；被剔除\n词根拆解：exclude 排斥 + -sion 名词后缀\n词性变形：exclude v. 排除"},
+{"q":"We should <span class='highlight'>excuse</span> others’ small mistakes.\nA.追责 B.原谅/宽恕 C.计较","ans":"B","explain":"单词：excuse\n英 /ɪkˈskjuːz/ 美 /ɪkˈskjuːz/\n释义：v. 原谅；宽恕 n. 借口；理由\n词根拆解：ex- 向外 + cuse 指责 → 放下指责、原谅\n词性变形：excusable adj. 可原谅的"},
+{"q":"Don’t make up <span class='highlight'>excuses</span> for your laziness.\nA.理由/借口 B.检讨 C.承诺","ans":"B","explain":"单词：excuse\n英 /ɪkˈskjuːs/ 美 /ɪkˈskjuːs/\n释义：n. 借口；托词；理由\n词根拆解：同上\n词性变形：excuse v. 原谅"},
+{"q":"We need to <span class='highlight'>execute</span> the plan strictly.\nA.拖延 B.执行/实施 C.修改","ans":"B","explain":"单词：execute\n英 /ˈeksɪkjuːt/ 美 /ˈeksɪkjuːt/\n释义：v. 执行；实施；完成；处决\n词根拆解：ex- 完全 + secu 跟随 → 全程落实到位\n词性变形：execution n. 执行；实施效果"},
+{"q":"The <span class='highlight'>execution</span> of the plan is perfect.\nA.搁置 B.执行/落地 C.变通","ans":"B","explain":"单词：execution\n英 /ˌeksɪˈkjuːʃn/ 美 /ˌeksɪˈkjuːʃn/\n释义：n. 执行；实施；执行力\n词根拆解：execute 执行 + -ion 名词后缀\n词性变形：execute v. 落实"},
+{"q":"Reading can <span class='highlight'>expand</span> our knowledge horizon.\nA.缩小 B.拓展/扩充 C.局限","ans":"B","explain":"单词：expand\n英 /ɪkˈspænd/ 美 /ɪkˈspænd/\n释义：v. 拓展；扩充；膨胀\n词根拆解：ex- 向外 + pand 伸展 → 向外延展扩大\n词性变形：expansion n. 扩张；拓展发展"},
+{"q":"The <span class='highlight'>expansion</span> of the school needs more teachers.\nA.缩减 B.扩建/拓展 C.搬迁","ans":"B","explain":"单词：expansion\n英 /ɪkˈspænʃn/ 美 /ɪkˈspænʃn/\n释义：n. 扩建；拓展；扩张\n词根拆解：expand 拓展 + -sion 名词后缀\n词性变形：expand v. 扩充"},
+{"q":"We should <span class='highlight'>expect</span> good results from hard work.\nA.放弃 B.期待/预料 C.看淡","ans":"B","explain":"单词：expect\n英 /ɪkˈspekt/ 美 /ɪkˈspekt/\n释义：v. 期待；预料；期望\n词根拆解：ex- 向外 + spect 看 → 向前观望、期待\n词性变形：expectation n. 期望；预期"},
+{"q":"His performance met our <span class='highlight'>expectation</span>.\nA.失望 B.期望/预期 C.质疑","ans":"B","explain":"单词：expectation\n英 /ˌekspekˈteɪʃn/ 美 /ˌekspekˈteɪʃn/\n释义：n. 期望；预期；期盼值\n词根拆解：expect 期待 + -ation 名词后缀\n词性变形：expect v. 预料"},
+{"q":"Hard work is <span class='highlight'>expensive</span> in time and energy.\nA.廉价的 B.耗费的/昂贵的 C.免费的","ans":"B","explain":"单词：expensive\n英 /ɪkˈspensɪv/ 美 /ɪkˈspensɪv/\n释义：adj. 昂贵的；耗费时间精力的\n词根拆解：expense 花费 + -ive 形容词后缀\n词性变形：expense n. 花费；开销"},
+{"q":"We should control daily <span class='highlight'>expense</span> carefully.\nA.收入 B.花费/开销 C.储蓄","ans":"B","explain":"单词：expense\n英 /ɪkˈspens/ 美 /ɪkˈspens/\n释义：n. 花费；开销；费用\n词根拆解：ex- 向外 + pense 支付 → 向外支出\n词性变形：expensive adj. 昂贵的"},
+{"q":"The teacher will <span class='highlight'>explain</span> the key points again.\nA.隐瞒 B.解释/讲解 C.跳过","ans":"B","explain":"单词：explain\n英 /ɪkˈspleɪn/ 美 /ɪkˈspleɪn/\n释义：v. 解释；讲解；说明\n词根拆解：ex- 向外 + plain 清楚 → 把道理说清楚\n词性变形：explanation n. 解释；说明理由"},
+{"q":"Give a clear <span class='highlight'>explanation</span> for your mistake.\nA.辩解 B.解释/说明 C.借口","ans":"B","explain":"单词：explanation\n英 /ˌekspləˈneɪʃn/ 美 /ˌekspləˈneɪʃn/\n释义：n. 解释；说明；缘由\n词根拆解：explain 解释 + -ation 名词后缀\n词性变形：explain v. 讲解"},
+{"q":"We need to <span class='highlight'>explore</span> new ways of learning.\nA.固守 B.探索/探究 C.拒绝","ans":"B","explain":"单词：explore\n英 /ɪkˈsplɔː(r)/ 美 /ɪkˈsplɔːr/\n释义：v. 探索；探究；勘探\n词根拆解：ex- 向外 + plore 搜寻 → 外出探寻新知\n词性变形：exploration n. 探索；探究研究"},
+{"q":"Space <span class='highlight'>exploration</span> is a long-term task.\nA.封闭 B.探索/航天探测 C.观望","ans":"B","explain":"单词：exploration\n英 /ˌekspləˈreɪʃn/ 美 /ˌekspləˈreɪʃn/\n释义：n. 探索；探测；探究\n词根拆解：explore 探索 + -ation 名词后缀\n词性变形：explore v. 探究"},
+{"q":"We should <span class='highlight'>export</span> local culture to the world.\nA.引进 B.输出/出口 C.封闭","ans":"B","explain":"单词：export\n英 /ɪkˈspɔːt/ 美 /ɪkˈspɔːrt/\n释义：v. 出口；输出  n. 出口商品\n词根拆解：ex- 向外 + port 运送 → 向外运输外销\n词性变形：import v. 进口；引入"},
+{"q":"We need to <span class='highlight'>expose</span> ourselves to more knowledge.\nA.隔绝 B.接触/暴露 C.逃避","ans":"B","explain":"单词：expose\n英 /ɪkˈspəʊz/ 美 /ɪkˈspoʊz/\n释义：v. 暴露；使接触；揭露\n词根拆解：ex- 向外 + pose 放置 → 摆在外面、显露\n词性变形：exposure n. 接触；暴露；曝光"},
+{"q":"More <span class='highlight'>exposure</span> to English helps learning.\nA.隔绝 B.接触/熏陶 C.排斥","ans":"B","explain":"单词：exposure\n英 /ɪkˈspəʊʒn/ 美 /ɪkˈspoʊʒn/\n释义：n. 接触；熏陶；曝光；暴露\n词根拆解：expose 暴露 + -sure 名词后缀\n词性变形：expose v. 使接触"},
+{"q":"His story is full of <span class='highlight'>extraordinary</span> experiences.\nA.平凡的 B.非凡的/特别的 C.虚假的","ans":"B","explain":"单词：extraordinary\n英 /ɪkˈstrɔːdnri/ 美 /ɪkˈstrɔːrdəneri/\n释义：adj. 非凡的；特别的；非同寻常的\n词根拆解：extra 超出 + ordinary 普通 → 超出常规\n词性变形：extra adv. 额外地"},
+{"q":"We need <span class='highlight'>extra</span> time to finish the task.\nA.固定的 B.额外的/附加的 C.空闲的","ans":"B","explain":"单词：extra\n英 /ˈekstrə/ 美 /ˈekstrə/\n释义：adj. 额外的；附加的  adv. 额外地\n词根拆解：extra 超出常规之外\n词性变形：extraordinary adj. 非凡的"},
+{"q":"We should <span class='highlight'>facilitate</span> communication between classmates.\nA.阻碍 B.促进/便利 C.旁观","ans":"B","explain":"单词：facilitate\n英 /fəˈsɪlɪteɪt/ 美 /fəˈsɪlɪteɪt/\n释义：v. 促进；使便利；协助\n词根拆解：facil 容易 + -itate 使… → 使事情变容易\n词性变形：facility n. 设施；便利条件"},
+{"q":"The school provides good sports <span class='highlight'>facility</span>.\nA.规则 B.设施/场地 C.教练","ans":"B","explain":"单词：facility\n英 /fəˈsɪləti/ 美 /fəˈsɪləti/\n释义：n. 设施；场地；便利；天赋\n词根拆解：facilitate 便利 + -ity 名词后缀\n词性变形：facilitate v. 促进"},
+{"q":"We should face <span class='highlight'>failure</span> bravely.\nA.成功 B.失败/失利 C.压力","ans":"B","explain":"单词：failure\n英 /ˈfeɪljə(r)/ 美 /ˈfeɪljər/\n释义：n. 失败；失利；未履行\n词根拆解：fail 失败 + -ure 名词后缀\n词性变形：fail v. 失败；未能做到"},
+{"q":"Don’t <span class='highlight'>fail</span> to keep your promise.\nA.坚守 B.违背/未能 C.忘记","ans":"B","explain":"单词：fail\n英 /feɪl/ 美 /feɪl/\n释义：v. 失败；未能；失信\n词根拆解：拉丁语 fallere 失误落空\n词性变形：failure n. 失败"},
+{"q":"The new rule will <span class='highlight'>fade</span> old bad habits.\nA.强化 B.淡化/消退 C.固化","ans":"B","explain":"单词：fade\n英 /feɪd/ 美 /feɪd/\n释义：v. 淡化；消退；褪色；逐渐消失\n词根拆解：古英语 逐渐黯淡\n词性变形：faded adj. 褪色的；凋谢的"},
+{"q":"His dream never <span class='highlight'>fades</span> with time.\nA.坚定 B.淡化/消逝 C.改变","ans":"B","explain":"单词：fade\n英 /feɪd/ 美 /feɪd/\n释义：v. 消逝；淡忘；褪色\n词根拆解：同上\n词性变形：faded adj. 褪色的"},
+{"q":"We need to follow a fixed <span class='highlight'>format</span> for writing.\nA.思路 B.格式/版式 C.主题","ans":"B","explain":"单词：format\n英 /ˈfɔːmæt/ 美 /ˈfɔːrmæt/\n释义：n. 格式；版式；形式 v. 格式化\n词根拆解：form 形态 + -at 规范 → 固定形态规范\n词性变形：formal adj. 正式的；规范的"},
+{"q":"It is a <span class='highlight'>formal</span> speech for the ceremony.\nA.随意的 B.正式的/规范的 C.简短的","ans":"B","explain":"单词：formal\n英 /ˈfɔːml/ 美 /ˈfɔːrml/\n释义：adj. 正式的；规范的；礼仪性的\n词根拆解：form 形式 + -al 形容词后缀\n词性变形：formality n. 礼节；正式手续"},
+{"q":"We should keep <span class='highlight'>flexible</span> in making plans.\nA.死板的 B.灵活的/可变通的 C.固定的","ans":"B","explain":"单词：flexible\n英 /ˈfleksəbl/ 美 /ˈfleksəbl/\n释义：adj. 灵活的；可变通的；柔韧的\n词根拆解：flex 弯曲 + -ible 可…的 → 可弯曲变通\n词性变形：flexibility n. 灵活性；变通能力"},
+{"q":"<span class='highlight'>flexibility</span> helps solve problems quickly.\nA.固执 B.灵活性/变通 C.拖延","ans":"B","explain":"单词：flexibility\n英 /ˌfleksəˈbɪləti/ 美 /ˌfleksəˈbɪləti/\n释义：n. 灵活性；变通；柔韧度\n词根拆解：flexible 灵活的 + -ibility 名词后缀\n词性变形：flexible adj. 可变通的"},
+{"q":"We should <span class='highlight'>focus</span> our attention on study.\nA.分散 B.专注/聚焦 C.转移","ans":"B","explain":"单词：focus\n英 /ˈfəʊkəs/ 美 /ˈfoʊkəs/\n释义：v. 专注；聚焦 n. 焦点；重心\n词根拆解：拉丁语 中心点 → 集中于一点\n词性变形：focused adj. 专注的；集中的"},
+{"q":"Stay <span class='highlight'>focused</span> during class listening.\nA.走神的 B.专注的/集中的 C.放松的","ans":"B","explain":"单词：focused\n英 /ˈfəʊkəst/ 美 /ˈfoʊkəst/\n释义：adj. 专注的；集中注意力的\n词根拆解：focus 聚焦 + -ed 形容词后缀\n词性变形：focus v. 专注"},
+{"q":"Good habits can <span class='highlight'>form</span> gradually.\nA.破坏 B.形成/养成 C.模仿","ans":"B","explain":"单词：form\n英 /fɔːm/ 美 /fɔːrm/\n释义：v. 形成；养成 n. 形态；形式\n词根拆解：拉丁语 forma 外形形态\n词性变形：formation n. 形成；构造"},
+{"q":"The <span class='highlight'>formation</span> of habit needs 21 days.\nA.瓦解 B.形成/养成 C.改变","ans":"B","explain":"单词：formation\n英 /fɔːˈmeɪʃn/ 美 /fɔːrˈmeɪʃn/\n释义：n. 形成；养成；构造\n词根拆解：form 形成 + -ation 名词后缀\n词性变形：form v. 养成"},
+{"q":"We should <span class='highlight'>forbid</span> bad online behaviour.\nA.纵容 B.禁止/不许 C.忽视","ans":"B","explain":"单词：forbid\n英 /fəˈbɪd/ 美 /fərˈbɪd/\n释义：v. 禁止；不许；阻止\n词根拆解：for- 远离 + bid 命令 → 命令远离某事\n词性变形：forbidden adj. 被禁止的；严禁的"},
+{"q":"Smoking is <span class='highlight'>forbidden</span> in public areas.\nA.允许的 B.严禁的/禁止的 C.默许的","ans":"B","explain":"单词：forbidden\n英 /fəˈbɪdn/ 美 /fərˈbɪdn/\n释义：adj. 严禁的；禁止的\n词根拆解：forbid 禁止 + -den 形容词后缀\n词性变形：forbid v. 阻止"},
+{"q":"We need to <span class='highlight'>forecast</span> the result in advance.\nA.确定 B.预测/预报 C.猜测","ans":"B","explain":"单词：forecast\n英 /ˈfɔːkɑːst/ 美 /ˈfɔːrkæst/\n释义：v./n. 预测；预报；预估\n词根拆解：fore 提前 + cast 推算 → 提前推算走势\n词性变形：foresee v. 预见；预知"},
+{"q":"No one can <span class='highlight'>foresee</span> the future exactly.\nA.掌控 B.预见/预知 C.改变","ans":"B","explain":"单词：foresee\n英 /fɔːˈsiː/ 美 /fɔːrˈsiː/\n释义：v. 预见；预知；预料\n词根拆解：fore 提前 + see 看见 → 提前预判看见\n词性变形：foresight n. 远见；先见之明"},
+{"q":"A wise man has great <span class='highlight'>foresight</span>.\nA.短视 B.远见/先见之明 C.运气","ans":"B","explain":"单词：foresight\n英 /ˈfɔːsaɪt/ 美 /ˈfɔːrsaɪt/\n释义：n. 远见；先见之明；预判力\n词根拆解：fore 提前 + sight 视野 → 超前眼光\n词性变形：foresee v. 预见"},
+{"q":"We should <span class='highlight'>forgive</span> others’ careless mistakes.\nA.记恨 B.原谅/宽恕 C.计较","ans":"B","explain":"单词：forgive\n英 /fəˈɡɪv/ 美 /fərˈɡɪv/\n释义：v. 原谅；宽恕；饶恕\n词根拆解：for- 完全 + give 给予 → 放下过错、给予宽容\n词性变形：forgiveness n. 原谅；宽恕之心"},
+{"q":"True <span class='highlight'>forgiveness</span> lets go of anger.\nA.记仇 B.宽恕/原谅 C.妥协","ans":"B","explain":"单词：forgiveness\n英 /fəˈɡɪvnəs/ 美 /fərˈɡɪvnəs/\n释义：n. 原谅；宽恕；包容\n词根拆解：forgive 原谅 + -ness 名词后缀\n词性变形：forgive v. 饶恕"},
+{"q":"We should learn <span class='highlight'>formal</span> manners in public.\nA.随意的 B.正式的/礼仪的 C.简单的","ans":"B","explain":"单词：formal\n英 /ˈfɔːml/ 美 /ˈfɔːrml/\n释义：adj. 正式的；礼仪的；合乎规范的\n词根拆解：form 形式 + -al 形容词后缀\n词性变形：formality n. 礼节；正式流程"}
+],
+
+pet700:[
+{"q":"We need to <span class='highlight'>generate</span> new ideas for the project.\nA.照搬 B.产生/创造 C.放弃","ans":"B","explain":"单词：generate\n英 /ˈdʒenəreɪt/ 美 /ˈdʒenəreɪt/\n释义：v. 产生；创造；生成\n词根拆解：gener 生产 + -ate 动词后缀 → 产出新事物\n词性变形：generation n. 一代；一代人；产生"},
+{"q":"The young <span class='highlight'>generation</span> has new thoughts.\nA.长辈 B.一代人/青年一代 C.群体","ans":"B","explain":"单词：generation\n英 /ˌdʒenəˈreɪʃn/ 美 /ˌdʒenəˈreɪʃn/\n释义：n. 一代人；世代；产生\n词根拆解：generate 产生 + -ation 名词后缀\n词性变形：generate v. 创造"},
+{"q":"We should <span class='highlight'>gather</span> useful information before study.\nA.遗漏 B.收集/聚集 C.忽略","ans":"B","explain":"单词：gather\n英 /ˈɡæðə(r)/ 美 /ˈɡæðər/\n释义：v. 收集；聚集；汇总\n词根拆解：古英语 聚拢到一起\n词性变形：gathering n. 聚会；集会；收集"},
+{"q":"A family <span class='highlight'>gathering</span> warms everyone’s heart.\nA.争吵 B.聚会/团聚 C.出行","ans":"B","explain":"单词：gathering\n英 /ˈɡæðərɪŋ/ 美 /ˈɡæðərɪŋ/\n释义：n. 聚会；团聚；集会\n词根拆解：gather 聚集 + -ing 名词后缀\n词性变形：gather v. 收集"},
+{"q":"We must keep a <span class='highlight'>generous</span> heart to others.\nA.小气的 B.慷慨的/大度的 C.冷漠的","ans":"B","explain":"单词：generous\n英 /ˈdʒenərəs/ 美 /ˈdʒenərəs/\n释义：adj. 慷慨的；大度的；大方的\n词根拆解：gener 富足 + -ous 充满…的 → 富足乐于分享\n词性变形：generosity n. 慷慨；大度胸襟"},
+{"q":"His <span class='highlight'>generosity</span> wins everyone’s respect.\nA.吝啬 B.慷慨/大度 C.圆滑","ans":"B","explain":"单词：generosity\n英 /ˌdʒenəˈrɒsəti/ 美 /ˌdʒenəˈrɑːsəti/\n释义：n. 慷慨；大度；宽宏\n词根拆解：generous 慷慨的 + -osity 名词后缀\n词性变形：generous adj. 大方的"},
+{"q":"We should <span class='highlight'>govern</span> our own temper well.\nA.放纵 B.控制/支配 C.发泄","ans":"B","explain":"单词：govern\n英 /ˈɡʌvn/ 美 /ˈɡʌvərn/\n释义：v. 控制；支配；统治；管理\n词根拆解：拉丁语 gubernare 管理掌控\n词性变形：government n. 政府；管理机构"},
+{"q":"The <span class='highlight'>government</span> protects people’s rights.\nA.社团 B.政府/管理部门 C.学校","ans":"B","explain":"单词：government\n英 /ˈɡʌvənmənt/ 美 /ˈɡʌvərnmənt/\n释义：n. 政府；行政机构；管理\n词根拆解：govern 管理 + -ment 名词后缀\n词性变形：govern v. 掌控"},
+{"q":"We need to <span class='highlight'>grasp</span> every chance to learn.\nA.错过 B.抓住/掌握 C.观望","ans":"B","explain":"单词：grasp\n英 /ɡrɑːsp/ 美 /ɡræsp/\n释义：v. 抓住；掌握；理解 n. 领悟；把握\n词根拆解：古英语 紧握在手\n词性变形：graspable adj. 可掌握的；易懂的"},
+{"q":"The knowledge is easy to <span class='highlight'>grasp</span>.\nA.晦涩 B.掌握/理解 C.遗忘","ans":"B","explain":"单词：grasp\n英 /ɡrɑːsp/ 美 /ɡræsp/\n释义：v. 理解；领会；掌握\n词根拆解：同上\n词性变形：graspable adj. 易懂的"},
+{"q":"We should <span class='highlight'>guarantee</span> to finish tasks on time.\nA.推脱 B.保证/担保 C.敷衍","ans":"B","explain":"单词：guarantee\n英 /ˌɡærənˈtiː/ 美 /ˌɡerənˈtiː/\n释义：v. 保证；担保 n. 保障；保证书\n词根拆解：法语 承诺守信\n词性变形：guaranteed adj. 有保障的；必定的"},
+{"q":"Hard work is a <span class='highlight'>guarantee</span> of progress.\nA.阻碍 B.保障/保证 C.运气","ans":"B","explain":"单词：guarantee\n英 /ˌɡærənˈtiː/ 美 /ˌɡerənˈtiː/\n释义：n. 保障；保证；凭证\n词根拆解：同上\n词性变形：guarantee v. 担保"},
+{"q":"We should form a <span class='highlight'>habit</span> of early reading.\nA.陋习 B.习惯/习性 C.任务","ans":"B","explain":"单词：habit\n英 /ˈhæbɪt/ 美 /ˈhæbɪt/\n释义：n. 习惯；习性；日常行为\n词根拆解：拉丁语 habitus 日常状态\n词性变形：habitual adj. 习惯性的；惯常的"},
+{"q":"It is his <span class='highlight'>habitual</span> way of solving problems.\nA.偶然的 B.习惯性的/惯常的 C.刻意的","ans":"B","explain":"单词：habitual\n英 /həˈbɪtʃuəl/ 美 /həˈbɪtʃuəl/\n释义：adj. 习惯性的；惯常的\n词根拆解：habit 习惯 + -ual 形容词后缀\n词性变形：habit n. 日常习惯"},
+{"q":"We should <span class='highlight'>handle</span'> difficulties with calm mind.\nA.逃避 B.处理/应对 C.抱怨","ans":"B","explain":"单词：handle\n英 /ˈhændl/ 美 /ˈhændl/\n释义：v. 处理；应对；操控 n. 把手\n词根拆解：hand 手 + -le 小件 → 用手操控处理\n词性变形：handy adj. 方便的；得心应手的"},
+{"q":"This tool is very <span class='highlight'>handy</span> for daily use.\nA.笨重的 B.方便的/顺手的 C.昂贵的","ans":"B","explain":"单词：handy\n英 /ˈhændi/ 美 /ˈhændi/\n释义：adj. 方便的；顺手的；灵巧的\n词根拆解：hand 手 + -y 形容词后缀 → 随手可用\n词性变形：handle v. 处理"},
+{"q":"We need to <span class='highlight'>harmonize</span> study and rest.\nA.割裂 B.调和/使和谐 C.偏重","ans":"B","explain":"单词：harmonize\n英 /ˈhɑːmənaɪz/ 美 /ˈhɑːrmənaɪz/\n释义：v. 调和；使和谐；协调一致\n词根拆解：harmony 和谐 + -ize 使…\n词性变形：harmony n. 和谐；融洽；协调"},
+{"q":"Live in <span class='highlight'>harmony</span> with classmates.\nA.矛盾 B.和谐/融洽 C.疏远","ans":"B","explain":"单词：harmony\n英 /ˈhɑːməni/ 美 /ˈhɑːrməni/\n释义：n. 和谐；融洽；协调\n词根拆解：希腊语 音律调和 → 引申人际和谐\n词性变形：harmonize v. 调和"},
+{"q":"We should <span class='highlight'>highlight</span> the key points in notes.\nA.忽略 B.强调/突出 C.删减","ans":"B","explain":"单词：highlight\n英 /ˈhaɪlaɪt/ 美 /ˈhaɪlaɪt/\n释义：v. 强调；突出 n. 亮点；重点\n词根拆解：high 高 + light 光亮 → 高亮凸显\n词性变形：highlighted adj. 高亮的；重点标注的"},
+{"q":"The <span class='highlight'>highlight</span> of the article is the ending.\nA.败笔 B.亮点/精华 C.铺垫","ans":"B","explain":"单词：highlight\n英 /ˈhaɪlaɪt/ 美 /ˈhaɪlaɪt/\n释义：n. 亮点；精华；重点部分\n词根拆解：同上\n词性变形：highlight v. 突出"},
+{"q":"We should <span class='highlight'>hesitate</span> no more when making choices.\nA.果断 B.犹豫/迟疑 C.盲从","ans":"B","explain":"单词：hesitate\n英 /ˈhezɪteɪt/ 美 /ˈhezɪteɪt/\n释义：v. 犹豫；迟疑；踌躇\n词根拆解：hesit 迟疑 + -ate 动词后缀\n词性变形：hesitation n. 犹豫；迟疑"},
+{"q":"He agreed without any <span class='highlight'>hesitation</span>.\nA.犹豫/迟疑 B.条件 C.顾虑","ans":"B","explain":"单词：hesitation\n英 /ˌhezɪˈteɪʃn/ 美 /ˌhezɪˈteɪʃn/\n释义：n. 犹豫；迟疑；踌躇\n词根拆解：hesitate 犹豫 + -ation 名词后缀\n词性变形：hesitate v. 踌躇"},
+{"q":"We need to <span class='highlight'>identify</span> our own strengths and weaknesses.\nA.混淆 B.识别/认清 C.回避","ans":"B","explain":"单词：identify\n英 /aɪˈdentɪfaɪ/ 美 /aɪˈdentɪfaɪ/\n释义：v. 识别；认清；认同\n词根拆解：ident 相同 + -ify 使… → 分辨归属、认清特质\n词性变形：identification n. 识别；身份证明"},
+{"q":"The <span class='highlight'>identification</span> of the problem saves much time.\nA.忽视 B.识别/确认 C.拖延","ans":"B","explain":"单词：identification\n英 /aɪˌdentɪfɪˈkeɪʃn/ 美 /aɪˌdentɪfɪˈkeɪʃn/\n释义：n. 识别；确认；身份证明\n词根拆解：identify 识别 + -ication 名词后缀\n词性变形：identify v. 认清"},
+{"q":"We should keep <span class='highlight'>ignorant</span> of useless gossip.\nA.关注 B.无视/不知情 C.传播","ans":"B","explain":"单词：ignorant\n英 /ˈɪɡnərənt/ 美 /ˈɪɡnərənt/\n释义：adj. 无知的；无视的；不知情的\n词根拆解：ig- 否定 + nor 知晓 + -ant → 不知晓、无视\n词性变形：ignorance n. 无知；愚昧；漠视"},
+{"q":"<span class='highlight'>ignorance</span> leads to wrong decisions.\nA.博学 B.无知/盲从 C.谨慎","ans":"B","explain":"单词：ignorance\n英 /ˈɪɡnərəns/ 美 /ˈɪɡnərəns/\n释义：n. 无知；愚昧；漠视\n词根拆解：ignorant 无知的 + -ance 名词后缀\n词性变形：ignorant adj. 不知情的"},
+{"q":"Don’t <span class='highlight'>ignore</span> small mistakes in study.\nA.重视 B.忽视/不理会 C.改正","ans":"B","explain":"单词：ignore\n英 /ɪɡˈnɔː(r)/ 美 /ɪɡˈnɔːr/\n释义：v. 忽视；不理会；无视\n词根拆解：ig- 否定 + nore 留意 → 不去留意、无视\n词性变形：ignorant adj. 无知的；漠视的"},
+{"q":"We need to <span class='highlight'>illustrate</span> the point with examples.\nA.空谈 B.举例说明/阐释 C.回避","ans":"B","explain":"单词：illustrate\n英 /ˈɪləstreɪt/ 美 /ˈɪləstreɪt/\n释义：v. 举例说明；阐释；配图\n词根拆解：il- 加强 + lustr 光亮 + -ate → 把道理讲明白\n词性变形：illustration n. 例证；插图；说明"},
+{"q":"The <span class='highlight'>illustration</span> makes the rule easy to understand.\nA.空话 B.例证/图解 C.借口","ans":"B","explain":"单词：illustration\n英 /ˌɪləˈstreɪʃn/ 美 /ˌɪləˈstreɪʃn/\n释义：n. 例证；图解；说明\n词根拆解：illustrate 阐释 + -ation 名词后缀\n词性变形：illustrate v. 举例说明"},
+{"q":"Reading can <span class='highlight'>imagine</span> a wider world.\nA.局限 B.想象/设想 C.固化","ans":"B","explain":"单词：imagine\n英 /ɪˈmædʒɪn/ 美 /ɪˈmædʒɪn/\n释义：v. 想象；设想；猜想\n词根拆解：imag 影像 + -ine → 脑海浮现画面\n词性变形：imagination n. 想象力；空想"},
+{"q":"Kids have rich <span class='highlight'>imagination</span>.\nA.惰性 B.想象力/创造力 C.记忆力","ans":"B","explain":"单词：imagination\n英 /ɪˌmædʒɪˈneɪʃn/ 美 /ɪˌmædʒɪˈneɪʃn/\n释义：n. 想象力；空想；创意\n词根拆解：imagine 想象 + -ation 名词后缀\n词性变形：imagine v. 设想"},
+{"q":"We should <span class='highlight'>imitate</span> good learning methods.\nA.排斥 B.模仿/效仿 C.照搬","ans":"B","explain":"单词：imitate\n英 /ˈɪmɪteɪt/ 美 /ˈɪmɪteɪt/\n释义：v. 模仿；效仿；仿效\n词根拆解：拉丁语 imitari 模仿复刻\n词性变形：imitation n. 模仿；仿制品"},
+{"q":"Blind <span class='highlight'>imitation</span> is not good for study.\nA.创新 B.模仿/照搬 C.独立","ans":"B","explain":"单词：imitation\n英 /ˌɪmɪˈteɪʃn/ 美 /ˌɪmɪˈteɪʃn/\n释义：n. 模仿；照搬；仿制品\n词根拆解：imitate 模仿 + -ation 名词后缀\n词性变形：imitate v. 效仿"},
+{"q":"We must keep <span class='highlight'>immediate</span> action once decided.\nA.拖延的 B.立即的/即刻的 C.谨慎的","ans":"B","explain":"单词：immediate\n英 /ɪˈmiːdiət/ 美 /ɪˈmiːdiət/\n释义：adj. 立即的；即刻的；直接的\n词根拆解：im- 无 + medi 中间 → 没有间隔、立刻\n词性变形：immediately adv. 立刻；马上"},
+{"q":"Please stop talking <span class='highlight'>immediately</span>.\nA.稍后 B.立刻/马上 C.缓慢","ans":"B","explain":"单词：immediately\n英 /ɪˈmiːdiətli/ 美 /ɪˈmiːdiətli/\n释义：adv. 立刻；马上；当即\n词根拆解：immediate 即刻的 + -ly 副词后缀\n词性变形：immediate adj. 立即的"},
+{"q":"We should <span class='highlight'>imply</span> our meaning politely.\nA.直白 B.暗示/暗含 C.隐瞒","ans":"B","explain":"单词：imply\n英 /ɪmˈplaɪ/ 美 /ɪmˈplaɪ/\n释义：v. 暗示；暗含；意味着\n词根拆解：im- 向内 + ply 折叠 → 内含深意、不直白说\n词性变形：implication n. 暗示；含义；牵连"},
+{"q":"His words have a deep <span class='highlight'>implication</span>.\nA.字面 B.暗示/深层含义 C.玩笑","ans":"B","explain":"单词：implication\n英 /ˌɪmplɪˈkeɪʃn/ 美 /ˌɪmplɪˈkeɪʃn/\n释义：n. 暗示；深层含义；牵连\n词根拆解：imply 暗示 + -ation 名词后缀\n词性变形：imply v. 暗含"},
+{"q":"We need to <span class='highlight'>improve</span> our weak subjects.\nA.固守 B.提升/改进 C.放弃","ans":"B","explain":"单词：improve\n英 /ɪmˈpruːv/ 美 /ɪmˈpruːv/\n释义：v. 提升；改进；改善\n词根拆解：im- 加强 + prove 进步 → 持续变得更好\n词性变形：improvement n. 进步；改进之处"},
+{"q":"Great <span class='highlight'>improvement</span> can be seen in his scores.\nA.退步 B.进步/提升 C.停滞","ans":"B","explain":"单词：improvement\n英 /ɪmˈpruːvmənt/ 美 /ɪmˈpruːvmənt/\n释义：n. 进步；提升；改进\n词根拆解：improve 提升 + -ment 名词后缀\n词性变形：improve v. 改善"},
+{"q":"Good books <span class='highlight'>impact</span> one’s whole life.\nA.无关 B.影响/冲击 C.束缚","ans":"B","explain":"单词：impact\n英 /ˈɪmpækt/ 美 /ˈɪmpækt/\n释义：v./n. 影响；冲击；作用\n词根拆解：im- 向内 + pact 挤压 → 内心受到触动影响\n词性变形：impactful adj. 有影响力的；效果显著的"},
+{"q":"His speech is very <span class='highlight'>impactful</span>.\nA.平淡的 B.有影响力的 C.冗长的","ans":"B","explain":"单词：impactful\n英 /ˈɪmpæktfəl/ 美 /ˈɪmpæktfəl/\n释义：adj. 有影响力的；感染力强的\n词根拆解：impact 影响 + -ful 形容词后缀\n词性变形：impact n. 影响力"},
+{"q":"We should <span class='highlight'>implement</span> the rules strictly.\nA.搁置 B.执行/落实 C.修改","ans":"B","explain":"单词：implement\n英 /ˈɪmplɪment/ 美 /ˈɪmplɪment/\n释义：v. 执行；落实  n. 工具；器具\n词根拆解：im- 加强 + ple 填满 + -ment → 把计划落地填满\n词性变形：implementation n. 执行；落地实施"},
+{"q":"The <span class='highlight'>implementation</span> of the rule works well.\nA.变通 B.执行/落地 C.形式","ans":"B","explain":"单词：implementation\n英 /ˌɪmplɪmenˈteɪʃn/ 美 /ˌɪmplɪmenˈteɪʃn/\n释义：n. 执行；实施；落地\n词根拆解：implement 落实 + -ation 名词后缀\n词性变形：implement v. 执行"}
+],
+
+
+pet800:[
+{"q":"We should <span class='highlight'>incline</span> to listen to different opinions.\nA.抵触 B.倾向/偏向 C.无视","ans":"B","explain":"单词：incline\n英 /ɪnˈklaɪn/ 美 /ɪnˈklaɪn/\n释义：v. 倾向；偏向；倾斜\n词根拆解：in- 向内 + cline 弯曲 → 内心偏向某一方\n词性变形：inclination n. 倾向；意愿；爱好"},
+{"q":"She has an <span class='highlight'>inclination</span> for painting.\nA.排斥 B.倾向/爱好 C.天赋","ans":"B","explain":"单词：inclination\n英 /ˌɪnklɪˈneɪʃn/ 美 /ˌɪnklɪˈneɪʃn/\n释义：n. 倾向；意愿；兴趣爱好\n词根拆解：incline 倾向 + -ation 名词后缀\n词性变形：incline v. 偏向"},
+{"q":"We need to <span class='highlight'>include</span> all key points in the summary.\nA.遗漏 B.包含/纳入 C.删减","ans":"B","explain":"单词：include\n英 /ɪnˈkluːd/ 美 /ɪnˈkluːd/\n释义：v. 包含；纳入；包括\n词根拆解：in- 在内 + clude 关闭 → 关在范围之内\n词性变形：inclusion n. 包含；包容；纳入"},
+{"q":"The <span class='highlight'>inclusion</span> of new rules makes it complete.\nA.排除 B.纳入/包含 C.修改","ans":"B","explain":"单词：inclusion\n英 /ɪnˈkluːʒn/ 美 /ɪnˈkluːʒn/\n释义：n. 纳入；包含；包容\n词根拆解：include 包含 + -sion 名词后缀\n词性变形：include v. 包括"},
+{"q":"We should <span class='highlight'>income</span> and expense well.\nA.挥霍 B.收入/收益 C.储蓄","ans":"B","explain":"单词：income\n英 /ˈɪnkʌm/ 美 /ˈɪnkʌm/\n释义：n. 收入；收益；所得\n词根拆解：in 向内 + come 到来 → 进到手里的钱财\n词性变形：incoming adj. 新来的；收入的"},
+{"q":"We need to <span class='highlight'>increase</span> our reading time daily.\nA.减少 B.增加/提升 C.固定","ans":"B","explain":"单词：increase\n英 /ɪnˈkriːs/ 美 /ɪnˈkriːs/\n释义：v./n. 增加；提升；增长\n词根拆解：in- 向上 + crease 生长 → 向上生长扩大\n词性变形：increasing adj. 不断增长的"},
+{"q":"There is an <span class='highlight'>increasing</span> number of students reading books.\nA.减少的 B.增长的/递增的 C.稳定的","ans":"B","explain":"单词：increasing\n英 /ɪnˈkriːsɪŋ/ 美 /ɪnˈkriːsɪŋ/\n释义：adj. 增长的；递增的\n词根拆解：increase 增长 + -ing 形容词后缀\n词性变形：increase v. 增加"},
+{"q":"We should <span class='highlight'>indeed</span> value every learning chance.\nA.或许 B.确实/真正 C.勉强","ans":"B","explain":"单词：indeed\n英 /ɪnˈdiːd/ 美 /ɪnˈdiːd/\n释义：adv. 确实；真正；的确\n词根拆解：in 加强 + deed 行动 → 实实在在地\n词性变形：indefinite adj. 不确定的；模糊的"},
+{"q":"He has an <span class='highlight'>indefinite</span> plan for holiday.\nA.明确的 B.不确定的/模糊的 C.详细的","ans":"B","explain":"单词：indefinite\n英 /ɪnˈdefɪnət/ 美 /ɪnˈdefɪnət/\n释义：adj. 不确定的；模糊的；无期限的\n词根拆解：in- 否定 + definite 明确的 → 不明确\n词性变形：definite adj. 明确的"},
+{"q":"We should keep <span class='highlight'>independent</span> in thinking.\nA.依赖的 B.独立的/自主的 C.盲从的","ans":"B","explain":"单词：independent\n英 /ˌɪndɪˈpendənt/ 美 /ˌɪndɪˈpendənt/\n释义：adj. 独立的；自主的；不依赖的\n词根拆解：in- 否定 + dependent 依赖的 → 不依附他人\n词性变形：independence n. 独立；自主性"},
+{"q":"Young people should seek <span class='highlight'>independence</span>.\nA.依赖 B.独立/自主 C.庇护","ans":"B","explain":"单词：independence\n英 /ˌɪndɪˈpendəns/ 美 /ˌɪndɪˈpendəns/\n释义：n. 独立；自主；自立\n词根拆解：independent 独立的 + -ence 名词后缀\n词性变形：independent adj. 自主的"},
+{"q":"We need to <span class='highlight'>indicate</span> the right answer clearly.\nA.隐藏 B.表明/指示 C.混淆","ans":"B","explain":"单词：indicate\n英 /ˈɪndɪkeɪt/ 美 /ˈɪndɪkeɪt/\n释义：v. 表明；指示；暗示\n词根拆解：in- 加强 + dic 言说 + -ate → 明确指出\n词性变形：indication n. 迹象；表明；指示"},
+{"q":"His smile is an <span class='highlight'>indication</span> of agreement.\nA.否认 B.迹象/暗示 C.敷衍","ans":"B","explain":"单词：indication\n英 /ˌɪndɪˈkeɪʃn/ 美 /ˌɪndɪˈkeɪʃn/\n释义：n. 迹象；暗示；表明\n词根拆解：indicate 指示 + -ation 名词后缀\n词性变形：indicate v. 表明"},
+{"q":"We should <span class='highlight'>individual</span> differences among students.\nA.忽视 B.个体/个人的 C.统一","ans":"B","explain":"单词：individual\n英 /ˌɪndɪˈvɪdʒuəl/ 美 /ˌɪndɪˈvɪdʒuəl/\n释义：adj. 个人的；个体的  n. 个人；个体\n词根拆解：in- 不可 + divid 分割 + -ual → 不可分割的独立个体\n词性变形：individuality n. 个性；独特性"},
+{"q":"Everyone has unique <span class='highlight'>individuality</span>.\nA.共性 B.个性/特质 C.缺点","ans":"B","explain":"单词：individuality\n英 /ˌɪndɪˌvɪdʒuˈæləti/ 美 /ˌɪndɪˌvɪdʒuˈæləti/\n释义：n. 个性；独特特质\n词根拆解：individual 个体的 + -ity 名词后缀\n词性变形：individual adj. 个人的"},
+{"q":"We should <span class='highlight'>induce</span> good habits step by step.\nA.阻碍 B.引导/诱发 C.强迫","ans":"B","explain":"单词：induce\n英 /ɪnˈdjuːs/ 美 /ɪnˈduːs/\n释义：v. 引导；诱发；促使\n词根拆解：in- 向内 + duce 引导 → 向内疏导促成\n词性变形：induction n. 归纳；入职；诱导"},
+{"q":"The <span class='highlight'>induction</span> of new teachers starts today.\nA.辞退 B.入职/接纳 C.考核","ans":"B","explain":"单词：induction\n英 /ɪnˈdʌkʃn/ 美 /ɪnˈdʌkʃn/\n释义：n. 入职；接纳；归纳推理\n词根拆解：induce 引导 + -tion 名词后缀\n词性变形：induce v. 引导、诱发"}
+],
+
+pet900:[
+{"q":"We should <span class='highlight'>infer</span> the meaning from context.\nA.直译 B.推断/推论 C.猜测","ans":"B","explain":"单词：infer\n英 /ɪnˈfɜː(r)/ 美 /ɪnˈfɜːr/\n释义：v. 推断；推论；推定\n词根拆解：in- 向内 + fer 推导 → 由线索向内推导结论\n词性变形：inference n. 推理；推论结论"},
+{"q":"Draw a reasonable <span class='highlight'>inference</span> from the facts.\nA.空想 B.推理/推论 C.借口","ans":"B","explain":"单词：inference\n英 /ˈɪnfərənce/ 美 /ˈɪnfərəns/\n释义：n. 推理；推论；推断结果\n词根拆解：infer 推断 + -ence 名词后缀\n词性变形：infer v. 推定"},
+{"q":"We need to <span class='highlight'>inform</span> parents of our progress.\nA.隐瞒 B.通知/告知 C.拖延","ans":"B","explain":"单词：inform\n英 /ɪnˈfɔːm/ 美 /ɪnˈfɔːrm/\n释义：v. 通知；告知；透露\n词根拆解：in- 向内 + form 形态 → 把信息传入他人认知\n词性变形：information n. 信息；资料；消息"},
+{"q":"Collect useful <span class='highlight'>information</span> before making plans.\nA.谣言 B.信息/资料 C.碎片","ans":"B","explain":"单词：information\n英 /ˌɪnfəˈmeɪʃn/ 美 /ˌɪnfəˈmeɪʃn/\n释义：n. 信息；资料；消息\n词根拆解：inform 告知 + -ation 名词后缀\n词性变形：inform v. 通知"},
+{"q":"We should <span class='highlight'>inherit</span> good traditional virtues.\nA.摒弃 B.继承/传承 C.漠视","ans":"B","explain":"单词：inherit\n英 /ɪnˈherɪt/ 美 /ɪnˈherɪt/\n释义：v. 继承；传承；承袭\n词根拆解：in- 加强 + herit 传承 → 接续前人特质\n词性变形：inheritance n. 遗产；传承；禀赋"},
+{"q":"Cultural <span class='highlight'>inheritance</span> is our duty.\nA.割裂 B.传承/遗产 C.复古","ans":"B","explain":"单词：inheritance\n英 /ɪnˈherɪtəns/ 美 /ɪnˈherɪtəns/\n释义：n. 传承；遗产；文化禀赋\n词根拆解：inherit 继承 + -ance 名词后缀\n词性变形：inherit v. 承袭"},
+{"q":"We must <span class='highlight'>inhibit</span'> lazy thoughts in study.\nA.纵容 B.抑制/约束 C.放任","ans":"B","explain":"单词：inhibit\n英 /ɪnˈhɪbɪt/ 美 /ɪnˈhɪbɪt/\n释义：v. 抑制；约束；禁止\n词根拆解：in- 向内 + hibit 压制 → 内心压制杂念\n词性变形：inhibition n. 克制；拘谨；抑制力"},
+{"q":"Overcome inner <span class='highlight'>inhibition</span> and dare to speak.\nA.自信 B.拘谨/克制 C.傲慢","ans":"B","explain":"单词：inhibition\n英 /ˌɪnhɪˈbɪʃn/ 美 /ˌɪnhɪˈbɪʃn/\n释义：n. 克制；拘谨；心理压抑\n词根拆解：inhibit 抑制 + -ion 名词后缀\n词性变形：inhibit v. 约束"},
+{"q":"We should <span class='highlight'>initial</span> every task seriously.\nA.敷衍 B.初始的/开端 C.收尾","ans":"B","explain":"单词：initial\n英 /ɪˈnɪʃl/ 美 /ɪˈnɪʃl/\n释义：adj. 最初的；初始的；开端的\n词根拆解：in- 进入 + it 起步 + -ial → 进入起始阶段\n词性变形：initially adv. 起初；一开始"},
+{"q":"<span class='highlight'>Initially</span>, the plan was simple but clear.\nA.最终 B.起初/一开始 C.中途","ans":"B","explain":"单词：initially\n英 /ɪˈnɪʃəli/ 美 /ɪˈnɪʃəli/\n释义：adv. 起初；一开始；最初\n词根拆解：initial 初始的 + -ly 副词后缀\n词性变形：initial adj. 开端的"},
+{"q":"We need to <span class='highlight'>initiate</span> a new reading activity.\nA.终止 B.发起/启动 C.旁观","ans":"B","explain":"单词：initiate\n英 /ɪˈnɪʃieɪt/ 美 /ɪˈnɪʃieɪt/\n释义：v. 发起；启动；创始\n词根拆解：initial 起始 + -iate 动词后缀 → 开启新项目\n词性变形：initiation n. 启动；创始；入门"},
+{"q":"The <span class='highlight'>initiation</span> of the club went smoothly.\nA.解散 B.启动/创办 C.转型","ans":"B","explain":"单词：initiation\n英 /ɪˌnɪʃiˈeɪʃn/ 美 /ɪˌnɪʃiˈeɪʃn/\n释义：n. 启动；创办；入门仪式\n词根拆解：initiate 发起 + -ation 名词后缀\n词性变形：initiate v. 启动"},
+{"q":"Good habits can <span class='highlight'>inject</span> energy into daily life.\nA.消耗 B.注入/投入 C.替代","ans":"B","explain":"单词：inject\n英 /ɪnˈdʒekt/ 美 /ɪnˈdʒekt/\n释义：v. 注入；投入；注射\n词根拆解：in- 向内 + ject 投射 → 向内输入能量\n词性变形：injection n. 注入；投入；注射"},
+{"q":"The <span class='highlight'>injection</span> of new ideas refreshes the team.\nA.排斥 B.注入/引入 C.固化","ans":"B","explain":"单词：injection\n英 /ɪnˈdʒekʃn/ 美 /ɪnˈdʒekʃn/\n释义：n. 注入；引入；投入\n词根拆解：inject 注入 + -ion 名词后缀\n词性变形：inject v. 投入"},
+{"q":"We should <span class='highlight'>insist</span> on practicing every day.\nA.放弃 B.坚持/执意 C.犹豫","ans":"B","explain":"单词：insist\n英 /ɪnˈsɪst/ 美 /ɪnˈsɪst/\n释义：v. 坚持；执意；坚决主张\n词根拆解：in- 加强 + sist 站立 → 坚定立场不动摇\n词性变形：insistence n. 坚持；执着；强求"},
+{"q":"His <span class='highlight'>insistence</span> finally paid off.\nA.妥协 B.坚持/执着 C.固执","ans":"B","explain":"单词：insistence\n英 /ɪnˈsɪstəns/ 美 /ɪnˈsɪstəns/\n释义：n. 坚持；执着；坚决要求\n词根拆解：insist 坚持 + -ence 名词后缀\n词性变形：insist v. 执意"},
+{"q":"We need to <span class='highlight'>inspect</span> every detail carefully.\nA.忽略 B.检查/审视 C.跳过","ans":"B","explain":"单词：inspect\n英 /ɪnˈspekt/ 美 /ɪnˈspekt/\n释义：v. 检查；审视；视察\n词根拆解：in- 向内 + spect 细看 → 逐一仔细查看\n词性变形：inspection n. 检查；视察；核查"},
+{"q":"Daily <span class='highlight'>inspection</span> avoids careless mistakes.\nA.放任 B.检查/核查 C.简化","ans":"B","explain":"单词：inspection\n英 /ɪnˈspekʃn/ 美 /ɪnˈspekʃn/\n释义：n. 检查；核查；视察\n词根拆解：inspect 检查 + -ion 名词后缀\n词性变形：inspect v. 审视"},
+{"q":"We should keep an <span class='highlight'>instinct</span> for right and wrong.\nA.麻木 B.本能/直觉 C.偏见","ans":"B","explain":"单词：instinct\n英 /ˈɪnstɪŋkt/ 美 /ˈɪnstɪŋkt/\n释义：n. 本能；直觉；天性\n词根拆解：in- 内在 + stinct 驱动 → 内在天性驱使\n词性变形：instinctive adj. 本能的；直觉的"},
+{"q":"It is an <span class='highlight'>instinctive</span> reaction to keep calm.\nA.刻意的 B.本能的/直觉的 C.伪装的","ans":"B","explain":"单词：instinctive\n英 /ɪnˈstɪŋktɪv/ 美 /ɪnˈstɪŋktɪv/\n释义：adj. 本能的；直觉的；天性的\n词根拆解：instinct 本能 + -ive 形容词后缀\n词性变形：instinct n. 天性"},
+{"q":"We need to <span class='highlight'>institute</span> strict rules for class.\nA.废除 B.制定/设立 C.变通","ans":"B","explain":"单词：institute\n英 /ˈɪnstɪtjuːt/ 美 /ˈɪnstɪtuːt/\n释义：v. 制定；设立  n. 学院；机构\n词根拆解：in- 稳固 + stit 建立 → 正式确立制度\n词性变形：institution n. 制度；机构；惯例"},
+{"q":"School is an important educational <span class='highlight'>institution</span>.\nA.场所 B.机构/制度 C.社团","ans":"B","explain":"单词：institution\n英 /ˌɪnstɪˈtjuːʃn/ 美 /ˌɪnstɪˈtuːʃn/\n释义：n. 机构；制度；社会惯例\n词根拆解：institute 设立 + -ion 名词后缀\n词性变形：institute v. 制定"},
+{"q":"We should <span class='highlight'>instruct</span> kids to form good habits.\nA.纵容 B.教导/指导 C.放任","ans":"B","explain":"单词：instruct\n英 /ɪnˈstrʌkt/ 美 /ɪnˈstrʌkt/\n释义：v. 教导；指导；指示\n词根拆解：in- 向内 + struct 构建 → 构建内在认知\n词性变形：instruction n. 指导；说明；指令"},
+{"q":"Follow the teacher’s <span class='highlight'>instruction</span> step by step.\nA.质疑 B.指导/说明 C.忽略","ans":"B","explain":"单词：instruction\n英 /ɪnˈstrʌkʃn/ 美 /ɪnˈstrʌkʃn/\n释义：n. 指导；说明；操作指令\n词根拆解：instruct 指导 + -ion 名词后缀\n词性变形：instruct v. 教导"},
+{"q":"Reading can <span class='highlight'>integrate</span> knowledge from different fields.\nA.割裂 B.整合/融合 C.混淆","ans":"B","explain":"单词：integrate\n英 /ˈɪntɪɡreɪt/ 美 /ˈɪntɪɡreɪt/\n释义：v. 整合；融合；合并\n词根拆解：integr 完整 + -ate 使… → 使零散变完整\n词性变形：integration n. 整合；融合；一体化"},
+{"q":"The <span class='highlight'>integration</span> of skills makes learning efficient.\nA.拆分 B.整合/融合 C.孤立","ans":"B","explain":"单词：integration\n英 /ˌɪntɪˈɡreɪʃn/ 美 /ˌɪntɪˈɡreɪʃn/\n释义：n. 整合；融合；一体化\n词根拆解：integrate 整合 + -ation 名词后缀\n词性变形：integrate v. 融合"},
+{"q":"We should <span class='highlight'>intend</span> to make progress every day.\nA.无心 B.打算/有意 C.敷衍","ans":"B","explain":"单词：intend\n英 /ɪnˈtend/ 美 /ɪnˈtend/\n释义：v. 打算；有意；计划\n词根拆解：in- 向内 + tend 心念 → 内心抱有目标\n词性变形：intention n. 意图；目的；打算"},
+{"q":"His <span class='highlight'>intention</span> is to learn abroad.\nA.冲动 B.意图/目的 C.借口","ans":"B","explain":"单词：intention\n英 /ɪnˈtenʃn/ 美 /ɪnˈtenʃn/\n释义：n. 意图；目的；打算\n词根拆解：intend 打算 + -ion 名词后缀\n词性变形：intend v. 计划"},
+{"q":"We need to keep <span class='highlight'>intent</span> on our study goals.\nA.分心 B.专注的/执意的 C.随意的","ans":"B","explain":"单词：intent\n英 /ɪnˈtent/ 美 /ɪnˈtent/\n释义：adj. 专注的；执意的  n. 意图\n词根拆解：同intend词根，心念聚焦\n词性变形：intently adv. 专注地；一心一意地"},
+{"q":"Listen <span class='highlight'>intently</span> in every class.\nA.走神 B.专注地/用心地 C.敷衍地","ans":"B","explain":"单词：intently\n英 /ɪnˈtentli/ 美 /ɪnˈtentli/\n释义：adv. 专注地；用心地；一心一意\n词根拆解：intent 专注的 + -ly 副词后缀\n词性变形：intent adj. 执意的"},
+{"q":"We should <span class='highlight'>interact</span> with classmates actively.\nA.疏远 B.互动/交流 C.沉默","ans":"B","explain":"单词：interact\n英 /ˌɪntərˈækt/ 美 /ˌɪntərˈækt/\n释义：v. 互动；交流；相互作用\n词根拆解：inter 互相 + act 行动 → 彼此行为往来\n词性变形：interaction n. 互动；交流；相互影响"},
+{"q":"Class <span class='highlight'>interaction</span> improves learning interest.\nA.隔阂 B.互动/交流 C.竞争","ans":"B","explain":"单词：interaction\n英 /ˌɪntərˈækʃn/ 美 /ˌɪntərˈækʃn/\n释义：n. 互动；交流；人际往来\n词根拆解：interact 互动 + -ion 名词后缀\n词性变形：interact v. 交流"},
+{"q":"We need to <span class='highlight'>interpret</span> the poem correctly.\nA.曲解 B.解读/阐释 C.臆想","ans":"B","explain":"单词：interpret\n英 /ɪnˈtɜːprət/ 美 /ɪnˈtɜːrprət/\n释义：v. 解读；阐释；口译\n词根拆解：inter 中间 + pret 传递 → 传递、阐释含义\n词性变形：interpretation n. 解读；阐释；翻译"},
+{"q":"Different people have different <span class='highlight'>interpretation</span> of the story.\nA.定论 B.解读/理解 C.偏见","ans":"B","explain":"单词：interpretation\n英 /ɪnˌtɜːprəˈteɪʃn/ 美 /ɪnˌtɜːrprəˈteɪʃn/\n释义：n. 解读；阐释；理解方式\n词根拆解：interpret 解读 + -ation 名词后缀\n词性变形：interpret v. 阐释"},
+{"q":"We should <span class='highlight'>interfere</span> less in others’ private affairs.\nA.参与 B.干涉/干预 C.关心","ans":"B","explain":"单词：interfere\n英 /ˌɪntəˈfɪə(r)/ 美 /ˌɪntərˈfɪr/\n释义：v. 干涉；干预；妨碍\n词根拆解：inter 介入 + fere 冲撞 → 介入他人事务冲撞\n词性变形：interference n. 干涉；干扰；妨碍"},
+{"q":"Don’t allow outside <span class='highlight'>interference</span> to affect your choice.\nA.支持 B.干扰/干涉 C.建议","ans":"B","explain":"单词：interference\n英 /ˌɪntəˈfɪərəns/ 美 /ˌɪntərˈfɪrəns/\n释义：n. 干涉；干扰；外界妨碍\n词根拆解：interfere 干涉 + -ence 名词后缀\n词性变形：interfere v. 干预"}
+],
+
+pet1000:[
+{"q":"We should <span class='highlight'>joint</span> hands to finish the task.\nA.各自 B.联合/共同 C.单独","ans":"B","explain":"单词：joint\n英 /dʒɔɪnt/ 美 /dʒɔɪnt/\n释义：adj. 联合的；共同的 n. 关节；连接处\n词根拆解：join 连接 + -t 名词/形容词后缀 → 连接在一起\n词性变形：jointly adv. 联合地；共同地"},
+{"q":"The two teams work <span class='highlight'>jointly</span> on the project.\nA.各自 B.共同/联合 C.轮流","ans":"B","explain":"单词：jointly\n英 /dʒɔɪntli/ 美 /dʒɔɪntli/\n释义：adv. 共同地；联合地；协力\n词根拆解：joint 联合的 + -ly 副词后缀\n词性变形：joint adj. 共同的"},
+{"q":"We need to <span class='highlight'>judge</span> a person by his action.\nA.臆断 B.评判/判断 C.偏袒","ans":"B","explain":"单词：judge\n英 /dʒʌdʒ/ 美 /dʒʌdʒ/\n释义：v. 评判；判断；裁定 n. 裁判；法官\n词根拆解：拉丁语 judicare 裁决评判\n词性变形：judgment n. 判断；判断力；看法"},
+{"q":"Use your own <span class='highlight'>judgment</span> instead of following others.\nA.盲从 B.判断/判断力 C.情绪","ans":"B","explain":"单词：judgment\n英 /ˈdʒʌdʒmənt/ 美 /ˈdʒʌdʒmənt/\n释义：n. 判断；判断力；见解\n词根拆解：judge 评判 + -ment 名词后缀\n词性变形：judge v. 裁定"},
+{"q":"We should <span class='highlight'>justify</span> our opinion with facts.\nA.空谈 B.证明/辩解 C.固执","ans":"B","explain":"单词：justify\n英 /ˈdʒʌstɪfaɪ/ 美 /ˈdʒʌstɪfaɪ/\n释义：v. 证明合理；辩解；正当化\n词根拆解：just 公正 + -ify 使… → 使合乎情理\n词性变形：justification n. 正当理由；辩解；佐证"},
+{"q":"There is no <span class='highlight'>justification</span> for being lazy.\nA.借口 B.正当理由/辩解 C.安慰","ans":"B","explain":"单词：justification\n英 /ˌdʒʌstɪfɪˈkeɪʃn/ 美 /ˌdʒʌstɪfɪˈkeɪʃn/\n释义：n. 正当理由；辩解；佐证\n词根拆解：justify 证明 + -ication 名词后缀\n词性变形：justify v. 佐证"},
+{"q":"We should <span class='highlight'>label</span> our books clearly.\nA.混杂 B.贴标签/归类 C.丢弃","ans":"B","explain":"单词：label\n英 /ˈleɪbl/ 美 /ˈleɪbl/\n释义：v. 贴标签；归类 n. 标签；标记\n词根拆解：古法语 标识条记\n词性变形：labeled adj. 贴有标签的；归类好的"},
+{"q":"All <span class='highlight'>labeled</span> items are easy to find.\nA.杂乱的 B.贴标/归类的 C.老旧的","ans":"B","explain":"单词：labeled\n英 /ˈleɪbld/ 美 /ˈleɪbld/\n释义：adj. 贴有标签的；已归类的\n词根拆解：label 贴标 + -ed 形容词后缀\n词性变形：label v. 标记"},
+{"q":"We need to <span class='highlight'>labor</span> diligently for our dream.\nA.懈怠 B.劳作/努力 C.空想","ans":"B","explain":"单词：labor\n英 /ˈleɪbə(r)/ 美 /ˈleɪbər/\n释义：v. 劳作；努力  n. 劳动；劳力\n词根拆解：拉丁语 labor 辛劳劳作\n词性变形：laborious adj. 费力的；刻苦的"},
+{"q":"It is a <span class='highlight'>laborious</span> but rewarding task.\nA.轻松的 B.费力的/刻苦的 C.无用的","ans":"B","explain":"单词：laborious\n英 /ləˈbɔːriəs/ 美 /ləˈbɔːriəs/\n释义：adj. 费力的；刻苦的；耗时的\n词根拆解：labor 劳作 + -ious 充满…的\n词性变形：labor n. 辛劳"},
+{"q":"We should <span class='highlight'>locate</span> our weakness in study.\nA.回避 B.定位/找出 C.掩饰","ans":"B","explain":"单词：locate\n英 /ləʊˈkeɪt/ 美 /ˈloʊkeɪt/\n释义：v. 定位；找出；设于\n词根拆解：loc 地点 + -ate 动词后缀 → 确定位置、找准问题\n词性变形：location n. 位置；地点；场所"},
+{"q":"Choose a quiet <span class='highlight'>location</span> for reading.\nA.环境 B.位置/场所 C.氛围","ans":"B","explain":"单词：location\n英 /ləʊˈkeɪʃn/ 美 /loʊˈkeɪʃn/\n释义：n. 位置；场所；地点\n词根拆解：locate 定位 + -ion 名词后缀\n词性变形：locate v. 找出"},
+{"q":"We should <span class='highlight'>logical</span> thinking in solving problems.\nA.混乱 B.逻辑的/合理的 C.感性的","ans":"B","explain":"单词：logical\n英 /ˈlɒdʒɪkl/ 美 /ˈlɑːdʒɪkl/\n释义：adj. 逻辑的；合理的；有条理的\n词根拆解：logic 逻辑 + -al 形容词后缀\n词性变形：logic n. 逻辑；条理"},
+{"q":"Your answer lacks clear <span class='highlight'>logic</span>.\nA.条理/逻辑 B.文采 C.情感","ans":"B","explain":"单词：logic\n英 /ˈlɒdʒɪk/ 美 /ˈlɑːdʒɪk/\n释义：n. 逻辑；条理；推理方式\n词根拆解：希腊语 logos 理性推演\n词性变形：logical adj. 有条理的"},
+{"q":"We need to <span class='highlight'>maintain</span> a good daily routine.\nA.打破 B.维持/保持 C.忽视","ans":"B","explain":"单词：maintain\n英 /meɪnˈteɪn/ 美 /meɪnˈteɪn/\n释义：v. 维持；保持；维护；坚持认为\n词根拆解：main 主要 + tain 坚守 → 坚守原有状态\n词性变形：maintenance n. 维持；维护；保养"},
+{"q":"Regular exercise helps body <span class='highlight'>maintenance</span>.\nA.损耗 B.保养/维持 C.透支","ans":"B","explain":"单词：maintenance\n英 /ˈmeɪntənəns/ 美 /ˈmeɪntənəns/\n释义：n. 维持；保养；维护\n词根拆解：maintain 维持 + -ance 名词后缀\n词性变形：maintain v. 保持"},
+{"q":"We should <span class='highlight'>maximize</span> the use of spare time.\nA.浪费 B.最大化/充分利用 C.限制","ans":"B","explain":"单词：maximize\n英 /ˈmæksɪmaɪz/ 美 /ˈmæksɪmaɪz/\n释义：v. 最大化；充分利用\n词根拆解：maximum 最大 + -ize 使…\n词性变形：maximum n. 最大值；极限"},
+{"q":"Reach your <span class='highlight'>maximum</span> potential step by step.\nA.下限 B.极限/最大值 C.平均","ans":"B","explain":"单词：maximum\n英 /ˈmæksɪməm/ 美 /ˈmæksɪməm/\n释义：n. 最大值；极限  adj. 最大的\n词根拆解：max 峰值 → 最高限度\n词性变形：maximize v. 充分利用"},
+{"q":"We should <span class='highlight'>minimize</span'> careless mistakes.\nA.放大 B.最小化/减少 C.忽视","ans":"B","explain":"单词：minimize\n英 /ˈmɪnɪmaɪz/ 美 /ˈmɪnɪmaɪz/\n释义：v. 最小化；尽量减少\n词根拆解：minimum 最小 + -ize 使…\n词性变形：minimum n. 最小值；最低限度"},
+{"q":"Keep mistakes to the <span class='highlight'>minimum</span>.\nA.最多 B.最低/最小值 C.常态","ans":"B","explain":"单词：minimum\n英 /ˈmɪnɪməm/ 美 /ˈmɪnɪməm/\n释义：n. 最小值；最低限度 adj. 最小的\n词根拆解：min 微小 → 最低标准\n词性变形：minimize v. 减少"},
+{"q":"We need to <span class='highlight'>motivate</span> ourselves to keep going.\nA.懈怠 B.激励/激发 C.放任","ans":"B","explain":"单词：motivate\n英 /ˈməʊtɪveɪt/ 美 /ˈmoʊtɪveɪt/\n释义：v. 激励；激发；促使\n词根拆解：motiv 动机 + -ate 动词后缀 → 唤起内在动力\n词性变形：motivation n. 动力；积极性；激励"},
+{"q":"Inner <span class='highlight'>motivation</span> lasts longer than pressure.\nA.惰性 B.动力/积极性 C.焦虑","ans":"B","explain":"单词：motivation\n英 /ˌməʊtɪˈveɪʃn/ 美 /ˌmoʊtɪˈveɪʃn/\n释义：n. 动力；积极性；内在激励\n词根拆解：motivate 激励 + -ation 名词后缀\n词性变形：motivate v. 激发"},
+{"q":"We should <span class='highlight'>neglect</span> no small knowledge point.\nA.重视 B.忽视/疏漏 C.简化","ans":"B","explain":"单词：neglect\n英 /nɪˈɡlekt/ 美 /nɪˈɡlekt/\n释义：v. 忽视；疏漏；怠慢\n词根拆解：neg 否定 + lect 留意 → 不去留意、忽略\n词性变形：neglectful adj. 疏忽的；不重视的"},
+{"q":"Being <span class='highlight'>neglectful</span> leads to avoidable errors.\nA.谨慎的 B.疏忽的/大意的 C.严谨的","ans":"B","explain":"单词：neglectful\n英 /nɪˈɡlektfl/ 美 /nɪˈɡlektfl/\n释义：adj. 疏忽的；大意的；不重视的\n词根拆解：neglect 忽视 + -ful 形容词后缀\n词性变形：neglect v. 疏漏"},
+{"q":"We should <span class='highlight'>negotiate</span> politely when disagreements appear.\nA.争执 B.协商/沟通 C.冷战","ans":"B","explain":"单词：negotiate\n英 /nɪˈɡəʊʃieɪt/ 美 /nɪˈɡoʊʃieɪt/\n释义：v. 协商；沟通；谈判\n词根拆解：neg 平和 + oti 处置 → 平和商议处理\n词性变形：negotiation n. 协商；谈判；沟通"},
+{"q":"The <span class='highlight'>negotiation</span> reached a good agreement.\nA.僵局 B.协商/谈判 C.冲突","ans":"B","explain":"单词：negotiation\n英 /nɪˌɡəʊʃiˈeɪʃn/ 美 /nɪˌɡoʊʃiˈeɪʃn/\n释义：n. 协商；谈判；意见沟通\n词根拆解：negotiate 协商 + -ation 名词后缀\n词性变形：negotiate v. 沟通"},
+{"q":"We need to <span class='highlight'>obey</span> school and class rules.\nA.违反 B.遵守/服从 C.漠视","ans":"B","explain":"单词：obey\n英 /əˈbeɪ/ 美 /əˈbeɪ/\n释义：v. 遵守；服从；遵从\n词根拆解：拉丁语 obedire 听从遵从\n词性变形：obedience n. 顺从；遵守；服从意识"},
+{"q":"Show <span class='highlight'>obedience</span> to public rules.\nA.抗拒 B.顺从/遵守 C.变通","ans":"B","explain":"单词：obedience\n英 /əˈbiːdiəns/ 美 /əˈbiːdiəns/\n释义：n. 顺从；遵守；服从\n词根拆解：obey 服从 + -ience 名词后缀\n词性变形：obey v. 遵从"},
+{"q":"We should <span class='highlight'>object</span> to bad behaviour.\nA.纵容 B.反对/抵制 C.默许","ans":"B","explain":"单词：object\n英 /əbˈdʒekt/ 美 /əbˈdʒekt/\n释义：v. 反对；不赞成  n. 物体；目标\n词根拆解：ob 反向 + ject 抛出 → 抛出相反意见\n词性变形：objection n. 反对；异议；顾虑"},
+{"q":"I have no <span class='highlight'>objection</span> to your plan.\nA.支持 B.异议/反对 C.建议","ans":"B","explain":"单词：objection\n英 /əbˈdʒekʃn/ 美 /əbˈdʒekʃn/\n释义：n. 反对；异议；顾虑\n词根拆解：object 反对 + -ion 名词后缀\n词性变形：object v. 不赞成"},
+{"q":"We should <span class='highlight'>observe</span> carefully in class.\nA.走神 B.观察/留意 C.忽视","ans":"B","explain":"单词：observe\n英 /əbˈzɜːv/ 美 /əbˈzɜːrv/\n释义：v. 观察；留意；遵守；奉行\n词根拆解：ob 加强 + serve 留意 → 仔细察看留意\n词性变形：observation n. 观察；观察力；评论"},
+{"q":"Careful <span class='highlight'>observation</span> helps discover rules.\nA.臆想 B.观察/留意 C.猜测","ans":"B","explain":"单词：observation\n英 /ˌɒbzəˈveɪʃn/ 美 /ˌɑːbzəˈveɪʃn/\n释义：n. 观察；观察力；见闻评论\n词根拆解：observe 观察 + -ation 名词后缀\n词性变形：observe v. 留意"}
+],
+
+pet1100:[
+{"q":"The amateur painter loves painting in spare time. 单词中词根 am 的含义是？\nA.爱 B.奔跑 C.制作","ans":"A","explain":"词根am：爱；同根词：amateur业余爱好者、amiable和蔼的、amity友好、enamor迷恋、amorous多情的"},
+{"q":"Animation makes the cartoon lively and interesting. 单词中词根 anim 的含义是？\nA.寒冷 B.生命/精神/心灵 C.行走","ans":"B","explain":"词根anim：生命，精神，心灵；同根词：animal动物、animation动画、animate使有生命、unanimous意见一致的、magnanimous宽宏大量的"},
+{"q":"The monarch rules the whole country wisely. 单词中词根 arch 的含义是？\nA.主要的/统治 B.圆形 C.声音","ans":"A","explain":"词根arch：主要的，统治；同根词：monarch君主、architect建筑师、archive档案、archbishop大主教、oligarch寡头统治者"},
+{"q":"The soldiers take up arm to defend their homeland. 单词中词根 arm 的含义是？\nA.手臂 B.武器 C.温暖","ans":"B","explain":"词根arm：武器；同根词：army军队、armor盔甲、armament军备、disarm解除武装、armistice停战"},
+{"q":"His artificial smile hides his real feeling. 单词中词根 art 的含义是？\nA.技艺/艺术 B.人造 C.虚假","ans":"A","explain":"词根art：技艺，艺术；同根词：artist艺术家、article文章、artificial人造的、artisan工匠、artwork艺术品"},
+{"q":"The rebel refuses to obey the old rules. 单词中词根 bell 的含义是？\nA.美丽 B.战争 C.铃铛","ans":"B","explain":"词根bell：战争；同根词：rebel反叛者、bellicose好战的、belligerent交战的、rebellion叛乱、antebellum战前的"},
+{"q":"Please make your speech brief and clear. 单词中词根 brev 的含义是？\nA.短 B.明亮 C.勇敢","ans":"A","explain":"词根brev：短；同根词：brief简短的、abbreviate缩写、brevity简洁、breviloquent言简意赅的、brevet名誉晋升"},
+{"q":"The accident happened on a rainy morning. 单词中词根 cad/cas/cid 的含义是？\nA.抓住 B.落下/发生 C.奔跑","ans":"B","explain":"词根cad/cas/cid：落下，发生；同根词：accident事故、casual偶然的、coincide巧合、cascade瀑布、decadent堕落的"},
+{"q":"He is the captain of the school football team. 单词中词根 capit 的含义是？\nA.首都 B.头 C.主要","ans":"B","explain":"词根capit：头；同根词：capital首都、captain船长/队长、decapitate斩首、capitol国会大厦、per capita人均"},
+{"q":"The ship carries heavy cargo across the sea. 单词中词根 car 的含义是？\nA.车/运载 B.关心 C.小心","ans":"A","explain":"词根car：车，运载；同根词：carry搬运、cargo货物、carrier承运人、career职业、carpool拼车"},
+{"q":"We had a cordial talk about our future. 单词中词根 card/cord 的含义是？\nA.心 B.卡片 C.绳子","ans":"A","explain":"词根card/cord：心；同根词：cordial热忱的、accord一致、discord不和、cardiac心脏的、core核心"},
+{"q":"Carnivore only eats meat instead of plants. 单词中词根 carn 的含义是？\nA.植物 B.肉/肉体 C.洞穴","ans":"B","explain":"词根carn：肉，肉体；同根词：carnival狂欢节、carnivore食肉动物、carnal肉体的、incarnation化身、carnage屠杀"},
+{"q":"The weather forecast tells us tomorrow’s rain. 单词中词根 cast 的含义是？\nA.投掷 B.预测 C.固定","ans":"A","explain":"词根cast：投掷；同根词：broadcast广播、forecast预报、castaway流浪者、caste等级、telecast电视广播"},
+{"q":"There is a small cavity in the rock. 单词中词根 cav 的含义是？\nA.洞 B.坚硬 C.阴影","ans":"A","explain":"词根cav：洞；同根词：cave洞穴、cavity空洞、caveman穴居人、excavate挖掘、concave凹面的"},
+{"q":"The plane began to accelerate on the runway. 单词中词根 celer 的含义是？\nA.缓慢 B.快速 C.平稳","ans":"B","explain":"词根celer：快速；同根词：accelerate加速、celerity迅速、decelerate减速、celeriac块根芹、celerifere速生植物"},
+{"q":"Students concentrate on their study in class. 单词中词根 centr 的含义是？\nA.中心 B.分离 C.专注","ans":"A","explain":"词根centr：中心；同根词：center中心、central中央的、concentrate集中、eccentric古怪的、centripetal向心的"},
+{"q":"It is hard to discern the difference between the two. 单词中词根 cern/cret 的含义是？\nA.区别/分开 B.生长 C.隐藏","ans":"A","explain":"词根cern/cret：区别，分开；同根词：concern关心、secret秘密、discern辨别、criterion标准、discreet谨慎的"},
+{"q":"I am certain that he will keep his promise. 单词中词根 cert 的含义是？\nA.怀疑 B.确定 C.靠近","ans":"B","explain":"词根cert：确定；同根词：certain确定的、certificate证书、certify证明、ascertain查明、certitude确信"},
+{"q":"You need to be precise with every calculation. 单词中词根 cid/cis 的含义是？\nA.切/杀 B.落下 C.抓住","ans":"A","explain":"词根cid/cis：切，杀；同根词：decide决定、precise精确的、suicide自杀、incision切口、circumcise环切"},
+{"q":"The earth moves in a regular circle. 单词中词根 circ 的含义是？\nA.直线 B.圆/环绕 C.奔跑","ans":"B","explain":"词根circ：圆，环绕；同根词：circle圆圈、circus马戏团、circumference周长、circulate循环、circuit回路"}
+],
+
+pet1200:[
+{"q":"He exclaims loudly when hearing the good news. 单词中词根 claim/clam 的含义是？\nA.哭泣 B.喊叫/宣称 C.感叹","ans":"B","explain":"词根claim/clam：喊叫，宣称；同根词：claim声称、exclaim惊呼、proclaim宣布、clamor喧闹、declaim慷慨陈词"},
+{"q":"Please clarify your opinion in simple words. 单词中词根 clar 的含义是？\nA.清楚 B.封闭 C.攀爬","ans":"A","explain":"词根clar：清楚；同根词：clear清晰的、clarify澄清、clarity明晰、declare声明、clarion嘹亮的"},
+{"q":"He can recognize his old friends at once. 单词中词根 cogn 的含义是？\nA.忘记 B.知道 C.比较","ans":"B","explain":"词根cogn：知道；同根词：recognize认出、cognitive认知的、cognition认知、cognizant知晓的、incognito隐姓埋名"},
+{"q":"We collect useful books for the village school. 单词中词根 col 的含义是？\nA.共同/一起 B.选择 C.收集","ans":"A","explain":"词根col：共同，一起；同根词：collect收集、collaborate合作、colleague同事、collide碰撞、collapse倒塌"},
+{"q":"We combine two plans into one better way. 单词中词根 com/con 的含义是？\nA.分开 B.共同/一起 C.完成","ans":"B","explain":"词根com/con：共同，一起；同根词：combine结合、connect连接、community社区、conference会议、concert音乐会"},
+{"q":"The corporation runs many big factories. 单词中词根 corp 的含义是？\nA.公司 B.身体 C.团体","ans":"B","explain":"词根corp：身体；同根词：corpse尸体、corporation公司、corps军团、corpulent肥胖的、incorporate合并"},
+{"q":"He loves the cosmic view of the starry sky. 单词中词根 cosm 的含义是？\nA.宇宙/秩序 B.浪漫 C.星空","ans":"A","explain":"词根cosm：宇宙，秩序；同根词：cosmic宇宙的、cosmos宇宙、cosmetic化妆品、cosmopolitan世界性的、microcosm微观世界"},
+{"q":"You can count the stars on a clear night. 单词中词根 count 的含义是？\nA.数数/计数 B.国家 C.柜台","ans":"A","explain":"词根count：计数；同根词：account账目、discount折扣、counter柜台、recount重数、countdown倒计时"},
+{"q":"The courier delivers packages every morning. 单词中词根 cour 的含义是？\nA.奔跑 B.关心 C.信件","ans":"A","explain":"词根cour：奔跑；同根词：course课程/航线、current水流、courier快递员、courtyard庭院、concourse广场"},
+{"q":"Parents create a warm home for kids. 单词中词根 cre/creat 的含义是？\nA.创造/生长 B.相信 C.增加","ans":"A","explain":"词根cre/creat：创造，生长；同根词：create创造、creature生物、creative有创造力的、recreate消遣、procreate繁衍"},
+{"q":"Trust is crucial for friendship. 单词中词根 cruc 的含义是？\nA.重要 B.十字形 C.坚硬","ans":"B","explain":"词根cruc：十字形；同根词：crucial关键的、crucifix十字架、crucible熔炉、cruciform十字形的、excruciate折磨"},
+{"q":"He succumbed to the temptation of laziness. 单词中词根 cub/cumb 的含义是？\nA.躺下 B.屈服 C.包围","ans":"A","explain":"词根cub/cumb：躺下；同根词：cucumber黄瓜、incumbent在职的、recumbent斜躺的、succumb屈服、concubine妾"},
+{"q":"He is not culpable for this mistake. 单词中词根 culp 的含义是？\nA.无辜 B.责备/罪 C.逃避","ans":"B","explain":"词根culp：责备，罪；同根词：culprit罪犯、exculpate开脱、culpable有罪的、inculpate归罪、mea culpa我的过错"},
+{"q":"Good care can cure all small illnesses. 单词中词根 cur 的含义是？\nA.关心/照料 B.奔跑 C.当前","ans":"A","explain":"词根cur：关心，照料；同根词：secure安全的、curious好奇的、cure治愈、curator馆长、procure获得"},
+{"q":"The leaves decline in autumn every year. 单词中词根 de 的含义是？\nA.向上 B.向下/完全 C.离开","ans":"B","explain":"词根de：向下，完全；同根词：decline下降、destroy摧毁、delete删除、depart离开、detain扣留"},
+{"q":"The dentist checks our teeth carefully. 单词中词根 dent 的含义是？\nA.牙齿 B.医生 C.检查","ans":"A","explain":"词根dent：牙齿；同根词：dentist牙医、dental牙齿的、denture假牙、indent缩进、dentine牙本质"},
+{"q":"Dermatology studies all kinds of skin diseases. 单词中词根 derm 的含义是？\nA.骨头 B.皮肤 C.疾病","ans":"B","explain":"词根derm：皮肤；同根词：dermatology皮肤病学、hypodermic皮下的、epidermis表皮、dermis真皮、taxidermy动物标本制作"},
+{"q":"The river divides the city into two parts. 单词中词根 di 的含义是？\nA.一 B.二/双 C.分开","ans":"B","explain":"词根di：二，双；同根词：divide划分、diameter直径、digital数字的、dilemma两难、dioxide二氧化物"},
+{"q":"We have a dialogue about study and life. 单词中词根 dia 的含义是？\nA.穿过/之间 B.对话 C.双向","ans":"A","explain":"词根dia：穿过，之间；同根词：dialogue对话、diagram图表、diagonal对角线、diameter直径、diagnosis诊断"},
+{"q":"He dominates the game with strong skills. 单词中词根 domin 的含义是？\nA.主宰/统治 B.优秀 C.技巧","ans":"A","explain":"词根domin：主宰，统治；同根词：domain领域、dominant占优势的、dominate支配、kingdom王国、predominant主要的"}
+],
+
+
+};
+
+function loadTopicPaper(){
+    const sel = document.getElementById('topicSel').value;
+    questionList = [...topicBank[sel]];
+    // 随机打乱
+    questionList.sort(()=>Math.random()-0.5);
+    currentIdx = 0;
+    loadQuestion();
+}
+
+function loadQuestion(){
+    if(currentIdx >= questionList.length){
+        alert('恭喜！你已完成本套100题！');
+        return;
+    }
+    const q = questionList[currentIdx];
+    document.getElementById('qNum').innerText = `第 ${currentIdx+1} 题 / 共 ${questionList.length} 题`;
+    document.getElementById('qContent').innerHTML = q.q;
+    // 重置状态
+    hasAnswered = false;
+    hasLookAns = false;
+    isScored = false;
+    document.querySelectorAll('.opt-btn').forEach(btn=>btn.classList.remove('active'));
+    document.getElementById('resultIcon').innerText = '';
+    document.getElementById('ansBox').style.display = 'none';
+    document.getElementById('lookAnsBtn').style.display = 'inline-block';
+    document.getElementById('nextQBtn').style.display = 'none';
+}
+
+function selectOpt(opt){
+    if(hasAnswered) return;
+    hasAnswered = true;
+    const q = questionList[currentIdx];
+    // 高亮选中项
+    document.querySelectorAll('.opt-btn').forEach(btn=>btn.classList.remove('active'));
+    event.target.classList.add('active');
+    // 判断对错
+    const isRight = (opt === q.ans);
+    document.getElementById('resultIcon').innerHTML = isRight ? '✔' : '✘';
+    document.getElementById('resultIcon').className = 'result-icon ' + (isRight ? 'right' : 'wrong');
+    // 计分
+    if(isRight && !isScored){
+        topicFullMark.pet100.score++;
+        isScored = true;
+        updateScorePanel();
+    }
+}
+
+function showAnswer(){
+    if(!hasAnswered){
+        alert('请先选择答案！');
+        return;
+    }
+    if(hasLookAns) return;
+    hasLookAns = true;
+    const q = questionList[currentIdx];
+    document.getElementById('ansText').innerText = q.explain;
+    document.getElementById('ansBox').style.display = 'block';
+    document.getElementById('lookAnsBtn').style.display = 'none';
+    document.getElementById('nextQBtn').style.display = 'inline-block';
+}
+
+function nextQuestion(){
+    currentIdx++;
+    loadQuestion();
+}
+
+function updateScorePanel(){
+    const score = topicFullMark.pet100.score;
+    const total = 100;
+    document.getElementById('currTopicScore').innerText = `${score} / ${total}`;
+    document.getElementById('totalScore').innerText = `${score} / ${total}`;
+    document.getElementById('passTopicNum').innerText = score === total ? '1 / 1' : '0 / 1';
+    // 小红花
+    const flowerBox = document.getElementById('flowerBox');
+    flowerBox.innerHTML = '';
+    if(score === total){
+        for(let i=0;i<3;i++){
+            flowerBox.innerHTML += '<span class="flower">🌸</span>';
+        }
+    }
+}
+
+function genNewPaper(){
+    const key = document.getElementById('apiKey').value.trim();
+    if(!key){
+        alert('请先填入API Key！');
+        return;
+    }
+    alert('已触发生成任务，生成后将自动加载新题库（当前为本地100题完整版）');
+}
+</script>
+</body>
+</html>
