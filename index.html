@@ -3,309 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>沃野100 - PET核心单词1000题完整版</title>
+    <title>沃野100 - PET核心单词智能练习</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "PingFang SC", "微软雅黑", sans-serif;
-        }
-        body {
-            background: #f0f2f5;
-            padding-bottom: 20px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", "微软雅黑", sans-serif; }
+        body { background: #f0f2f5; padding-bottom: 20px; }
         .login-mask {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
         }
         .login-card {
-            background: #fff;
-            width: 80%;
-            max-width: 340px;
-            border-radius: 16px;
-            padding: 35px 25px;
-            text-align: center;
+            background: #fff; width: 85%; max-width: 340px;
+            border-radius: 24px; padding: 35px 25px; text-align: center;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
         }
         .wx-logo {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: #07c160;
-            color: #fff;
-            font-size: 32px;
-            line-height: 70px;
-            margin: 0 auto 20px;
+            width: 70px; height: 70px; border-radius: 50%; background: #07c160;
+            color: #fff; font-size: 32px; line-height: 70px; margin: 0 auto 20px;
+        }
+        .login-card input {
+            width: 100%; padding: 12px; border: 1px solid #ddd;
+            border-radius: 12px; font-size: 16px; margin: 15px 0;
         }
         .login-btn {
-            width: 100%;
-            padding: 13px;
-            background: #07c160;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            width: 100%; padding: 12px; background: #07c160;
+            color: #fff; border: none; border-radius: 12px; font-size: 16px;
+            font-weight: bold; cursor: pointer;
         }
-        .tip-text {
-            font-size: 12px;
-            color: #999;
-            margin-top: 15px;
-        }
+        .tip-text { font-size: 12px; color: #999; margin-top: 12px; }
         .hide { display: none !important; }
-        .main-wrap {
-            padding: 15px;
+
+        .main-wrap { padding: 15px; max-width: 700px; margin: 0 auto; }
+        .top-bar { text-align: center; margin-bottom: 15px; }
+        .top-bar h2 { color: #333; font-size: 20px; }
+        .user-info { display: flex; justify-content: space-between; align-items: center; background: #e9ecef; padding: 8px 15px; border-radius: 30px; margin-bottom: 12px; font-size: 14px; }
+        .logout-btn { background: #dc3545; color: white; border: none; border-radius: 20px; padding: 4px 12px; cursor: pointer; }
+
+        .timer-panel {
+            background: #fff; border-radius: 20px; padding: 12px 18px;
+            margin-bottom: 15px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
-        .top-bar {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .top-bar h2 {
-            color: #333;
-            font-size: 20px;
-        }
-        .set-row {
-            margin-bottom: 12px;
-        }
-        .set-row select, .set-row input {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-        }
-        .gen-new-btn {
-            width: 100%;
-            padding: 12px;
-            background: #2c7be5;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
+        .timer-display { font-size: 28px; font-weight: bold; font-family: monospace; color: #2c7be5; }
+        .timer-controls input { width: 70px; padding: 6px; border-radius: 12px; border: 1px solid #ccc; text-align: center; }
+        .timer-controls button { background: #28a745; color: white; border: none; border-radius: 12px; padding: 6px 12px; cursor: pointer; }
+
+        .set-row { margin-bottom: 12px; }
+        .set-row select, .set-row input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 12px; font-size: 15px; }
+
         .book-box {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 25px 20px;
-            min-height: 380px;
-            position: relative;
-            margin-bottom: 15px;
+            background: #fff; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px; margin-bottom: 15px;
         }
-        .q-num {
-            font-size: 15px;
-            color: #888;
-            margin-bottom: 10px;
-        }
-        .q-content {
-            font-size: 17px;
-            line-height: 1.8;
-            color: #222;
-            margin-bottom: 25px;
-        }
-        .q-content .highlight {
-            color: #f56c6c;
-            font-weight: bold;
-        }
-        .opt-btns {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .q-num { font-size: 14px; color: #888; margin-bottom: 8px; }
+        .q-content { font-size: 18px; line-height: 1.6; color: #222; margin-bottom: 20px; }
+        .q-content .highlight { color: #f56c6c; font-weight: bold; }
+        .stats-badge { font-size: 12px; background: #f0f0f0; display: inline-block; padding: 4px 12px; border-radius: 20px; margin-bottom: 15px; }
+        .opt-btns { display: flex; gap: 12px; margin-bottom: 15px; }
         .opt-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #2c7be5;
-            background: #fff;
-            color: #2c7be5;
-            border-radius: 8px;
-            font-size: 16px;
+            flex: 1; padding: 12px; border: 1px solid #2c7be5;
+            background: #fff; color: #2c7be5; border-radius: 16px;
+            font-size: 16px; cursor: pointer; transition: 0.2s;
         }
-        .opt-btn.active {
-            background: #2c7be5;
-            color: #fff;
-        }
-        .result-icon {
-            font-size: 40px;
-            text-align: center;
-            margin: 15px 0;
-        }
+        .opt-btn.active { background: #2c7be5; color: #fff; }
+        .result-icon { font-size: 40px; text-align: center; margin: 10px 0; }
         .right { color: #19be6b; }
         .wrong { color: #f56c6c; }
         .ans-box {
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            margin: 15px 0;
-            line-height: 1.7;
-            display: none;
-            max-height: 220px;
-            overflow-y: auto;
+            background: #f8f9fa; border-radius: 16px; padding: 15px;
+            margin-top: 10px; display: none; max-height: 220px; overflow-y: auto;
+            line-height: 1.5;
         }
-        .ctrl-btns {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
+        .ctrl-btns { display: flex; gap: 12px; margin-top: 15px; }
         .ctrl-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
+            flex: 1; padding: 12px; border: none; border-radius: 30px;
+            font-size: 15px; cursor: pointer;
         }
-        .look-ans-btn {
-            background: #ff9500;
-            color: #fff;
-        }
-        .next-q-btn {
-            background: #19be6b;
-            color: #fff;
-            display: none;
-        }
+        .look-ans-btn { background: #ff9500; color: #fff; }
+        .next-q-btn { background: #19be6b; color: #fff; display: none; }
+
         .score-panel {
-            background: #fff;
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
+            background: #fff; border-radius: 24px; padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 15px;
         }
-        .score-title {
-            font-size: 17px;
-            color: #333;
-            margin-bottom: 12px;
-            text-align: center;
+        .score-title { font-size: 16px; font-weight: bold; margin-bottom: 12px; text-align: center; }
+        .score-row { display: flex; justify-content: space-between; margin: 8px 0; }
+        .flower-wrap { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; }
+        .flower { font-size: 24px; margin-right: 6px; }
+
+        .wrongbook-panel {
+            background: #fff; border-radius: 24px; padding: 15px;
+            margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
-        .score-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 15px;
-            color: #555;
-            margin: 8px 0;
-        }
-        .flower-wrap {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #eee;
-        }
-        .flower-title {
-            font-size: 15px;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        .flower {
-            font-size: 24px;
-            margin-right: 6px;
-        }
-        .bottom-api-area{
-            background: #fff;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
+        .wrongbook-title { font-weight: bold; margin-bottom: 8px; }
+        .wrongbook-select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; margin-top: 6px; }
+        .remove-wrong-btn { background: #dc3545; color: white; border: none; border-radius: 20px; padding: 6px 12px; margin-top: 10px; cursor: pointer; width: 100%; }
+
+        .bottom-api-area { background: #fff; border-radius: 24px; padding: 15px; }
     </style>
 </head>
 <body>
+
+<!-- 登录界面 -->
 <div class="login-mask" id="loginMask">
     <div class="login-card">
         <div class="wx-logo">微</div>
-        <div style="font-size:17px;color:#333;margin-bottom:20px;">微信快捷登录</div>
-        <button class="login-btn" onclick="wxLogin()">微信一键登录</button>
-        <div class="tip-text">仅本地模拟登录，不上传任何信息</div>
+        <div style="font-size:18px; margin-bottom:10px;">微信快捷登录</div>
+        <input type="text" id="wechatName" placeholder="请输入微信昵称" autocomplete="off">
+        <button class="login-btn" onclick="realLogin()">一键登录</button>
+        <div class="tip-text">数据将保存在本地，不同昵称独立统计</div>
     </div>
 </div>
+
+<!-- 主界面 -->
 <div class="main-wrap hide" id="mainPage">
     <div class="top-bar">
-        <h2>沃野100 - PET核心单词100题</h2>
+        <h2>沃野100 · PET核心单词</h2>
     </div>
+    <div class="user-info">
+        <span>当前用户：<strong id="currentUser">-</strong></span>
+        <button class="logout-btn" onclick="logout()">切换账号</button>
+    </div>
+
+    <!-- 倒计时模块 -->
+    <div class="timer-panel">
+        <div class="timer-display" id="timerDisplay">05:00</div>
+        <div class="timer-controls">
+            <input type="number" id="timerMinutes" value="5" min="1" max="60" step="1"> 分钟
+            <button id="startTimerBtn" onclick="startTimer()">开始</button>
+            <button onclick="resetTimer()">重置</button>
+        </div>
+    </div>
+
     <div class="set-row">
         <select id="topicSel" onchange="loadTopicPaper()">
-    <option value="pet100">PET 核心单词 1-100</option>
-    <option value="pet200">PET 核心单词 101-200</option>
-    <option value="pet300">PET 核心单词 201-300</option>
-    <option value="pet400">PET 核心单词 301-400</option>
-    <option value="pet500">PET 核心单词 401-500</option>
-    <option value="pet600">PET 核心单词 501-600</option>
-    <option value="pet700">PET 核心单词 601-700</option>
-    <option value="pet800">PET 核心单词 701-800</option>
-    <option value="pet900">PET 核心单词 801-900</option>
-    <option value="pet1000">PET 核心单词 901-1000</option>
-    <option value="pet1100">PET 核心单词 1001-1100</option>
-    <option value="pet1200">PET 核心单词 1101-1200</option>
-</select>
+            <option value="pet100">PET 核心单词 1-100</option>
+            <option value="pet200">PET 核心单词 101-200</option>
+            <option value="pet300">PET 核心单词 201-300</option>
+            <option value="pet400">PET 核心单词 301-400</option>
+            <option value="pet500">PET 核心单词 401-500</option>
+            <option value="pet600">PET 核心单词 501-600</option>
+            <option value="pet700">PET 核心单词 601-700</option>
+            <option value="pet800">PET 核心单词 701-800</option>
+            <option value="pet900">PET 核心单词 801-900</option>
+            <option value="pet1000">PET 核心单词 901-1000</option>
+            <option value="pet1100">PET 核心单词 1001-1100</option>
+            <option value="pet1200">PET 核心单词 1101-1200</option>
+        </select>
     </div>
+
+    <!-- 错题本区域 -->
+    <div class="wrongbook-panel">
+        <div class="wrongbook-title">📘 错题本</div>
+        <select id="wrongbookSelect" onchange="jumpToWrongQuestion()">
+            <option value="">-- 选择错题快速跳转 --</option>
+        </select>
+        <button class="remove-wrong-btn" onclick="removeSelectedWrong()">从错题本移除选中题</button>
+    </div>
+
     <div class="book-box">
         <div class="q-num" id="qNum">第 1 题 / 共 100 题</div>
-        <div class="q-content" id="qContent">请点击微信登录进入学习...</div>
+        <div class="stats-badge" id="statsBadge">本题战绩: 正确0次, 错误0次</div>
+        <div class="q-content" id="qContent">请登录后开始学习...</div>
         <div class="opt-btns">
             <button class="opt-btn" onclick="selectOpt('A')">A</button>
             <button class="opt-btn" onclick="selectOpt('B')">B</button>
             <button class="opt-btn" onclick="selectOpt('C')">C</button>
         </div>
         <div class="result-icon" id="resultIcon"></div>
-        <div class="ans-box" id="ansBox">
-            <div id="ansText"></div>
-        </div>
+        <div class="ans-box" id="ansBox"><div id="ansText"></div></div>
         <div class="ctrl-btns">
-            <button class="ctrl-btn look-ans-btn" id="lookAnsBtn" onclick="showAnswer()">查看答案解析</button>
+            <button class="ctrl-btn look-ans-btn" id="lookAnsBtn" onclick="showAnswer()">查看解析</button>
             <button class="ctrl-btn next-q-btn" id="nextQBtn" onclick="nextQuestion()">下一题</button>
         </div>
     </div>
+
     <div class="score-panel">
-        <div class="score-title">学习积分统计</div>
-        <div class="score-row">
-            <span>本专项得分</span>
-            <span id="currTopicScore">0 / 100</span>
-        </div>
-        <div class="score-row">
-            <span>累计总得分</span>
-            <span id="totalScore">0 / 100</span>
-        </div>
-        <div class="score-row">
-            <span>已通关专项</span>
-            <span id="passTopicNum">0 / 1</span>
-        </div>
-        <div class="flower-wrap">
-            <div class="flower-title">满分奖励小红花</div>
-            <div id="flowerBox"></div>
-        </div>
+        <div class="score-title">学习积分</div>
+        <div class="score-row"><span>本专项得分</span><span id="currTopicScore">0 / 100</span></div>
+        <div class="score-row"><span>累计总得分</span><span id="totalScore">0 / 100</span></div>
+        <div class="flower-wrap"><div class="flower-title">💐 满分奖励</div><div id="flowerBox"></div></div>
     </div>
     <div class="bottom-api-area">
-        <div class="set-row">
-            <input type="text" id="apiKey" placeholder="填入API Key可生成全新PET题库">
-        </div>
-        <button class="gen-new-btn" onclick="genNewPaper()">生成全新PET专项题库</button>
+        <div class="set-row"><input type="text" id="apiKey" placeholder="API Key (预留功能)"></div>
+        <button class="ctrl-btn" style="background:#2c7be5;color:#fff;" onclick="genNewPaper()">生成全新题库(预留)</button>
     </div>
 </div>
+
 <script>
-function wxLogin(){
-    document.getElementById('loginMask').classList.add('hide');
-    document.getElementById('mainPage').classList.remove('hide');
-    initScoreData();
-    loadTopicPaper();
-}
+    // ---------- 全局变量 ----------
+    let currentUser = null;               // 当前登录微信昵称
+    let questionList = [];                // 当前题目数组
+    let currentIdx = 0;
+    let hasAnswered = false;
+    let hasLookAns = false;
+    let isScored = false;                 // 本题是否已计分
+    let timerInterval = null;
+    let remainingSeconds = 5 * 60;
 
-let questionList = [];
-let currentIdx = 0;
-let hasAnswered = false;
-let hasLookAns = false;
-let isScored = false;
-
-const topicFullMark = {
-    pet100:{score:0, full:false}
-};
-
-function initScoreData(){
-    updateScorePanel();
-}
-
-// PET 100题完整题库（第一批100词，高亮+选项+解析全量）
+    // 题库数据（原样保留，太长省略部分，实际使用完整topicBank）
+    // 注意：为了代码可读性，下面保留原 topicBank 定义（此处省略，实际应从原文件复制）
+    // 由于篇幅限制，这里仅示意，实际运行请使用原完整 topicBank。
+    // 为了演示功能，我们保留原始数据引用（要求用户提供完整 topicBank 对象）。
+    // 以下假设 topicBank 已定义（从原文件复制）。为避免代码过长，此处不重复全部1200题，
+    // 实际部署时请把原文件中的 topicBank 对象（从 pet100 到 pet1200）完整粘贴到此处。
+    // 为了功能完整，我们将在最终版本中保留原 topicBank 的所有内容（用户已提供原文件，我们直接复用）。
+    // 由于 AI 输出有长度限制，此处只展示关键新增逻辑，原题库数据请从用户提供的 HTML 中复制 topicBank 对象
+    // 并粘贴到下方 "// 复制原 topicBank 对象" 位置。
+// PET 1000题完整题库（第一批100词，高亮+选项+解析全量）
 const topicBank = {
 pet100:[
 {"q":"We cannot <span class='highlight'>abandon</span> our plan halfway.\nA.坚持 B.抛弃/放弃 C.更改","ans":"B","explain":"单词：abandon\n英 /əˈbændən/ 美 /əˈbændən/\n释义：v. 抛弃；放弃；终止\n词根拆解：a- 离开 + band 捆绑 + -on → 解开束缚、抛下离开\n词性变形：abandoned adj. 被抛弃的；颓废的"},
@@ -942,96 +849,295 @@ pet1200:[
 
 };
 
-function loadTopicPaper(){
-    const sel = document.getElementById('topicSel').value;
-    questionList = [...topicBank[sel]];
-    // 随机打乱
-    questionList.sort(()=>Math.random()-0.5);
-    currentIdx = 0;
-    loadQuestion();
-}
+    
+    // ---------- 以下是新增的核心逻辑 ----------
+    // 战绩存储键: stats_用户名_专题
+    // 错题本存储键: wrong_用户名_专题
+    // 得分存储: score_用户名_专题
 
-function loadQuestion(){
-    if(currentIdx >= questionList.length){
-        alert('恭喜！你已完成本套100题！');
-        return;
+    function getUserTopicKey() {
+        if (!currentUser) return null;
+        const topic = document.getElementById('topicSel').value;
+        return { statsKey: `stats_${currentUser}_${topic}`, wrongKey: `wrong_${currentUser}_${topic}`, scoreKey: `score_${currentUser}_${topic}` };
     }
-    const q = questionList[currentIdx];
-    document.getElementById('qNum').innerText = `第 ${currentIdx+1} 题 / 共 ${questionList.length} 题`;
-    document.getElementById('qContent').innerHTML = q.q;
-    // 重置状态
-    hasAnswered = false;
-    hasLookAns = false;
-    isScored = false;
-    document.querySelectorAll('.opt-btn').forEach(btn=>btn.classList.remove('active'));
-    document.getElementById('resultIcon').innerText = '';
-    document.getElementById('ansBox').style.display = 'none';
-    document.getElementById('lookAnsBtn').style.display = 'inline-block';
-    document.getElementById('nextQBtn').style.display = 'none';
-}
 
-function selectOpt(opt){
-    if(hasAnswered) return;
-    hasAnswered = true;
-    const q = questionList[currentIdx];
-    // 高亮选中项
-    document.querySelectorAll('.opt-btn').forEach(btn=>btn.classList.remove('active'));
-    event.target.classList.add('active');
-    // 判断对错
-    const isRight = (opt === q.ans);
-    document.getElementById('resultIcon').innerHTML = isRight ? '✔' : '✘';
-    document.getElementById('resultIcon').className = 'result-icon ' + (isRight ? 'right' : 'wrong');
-    // 计分
-    if(isRight && !isScored){
-        topicFullMark.pet100.score++;
-        isScored = true;
-        updateScorePanel();
+    // 加载某道题的战绩
+    function loadQuestionStats(qId) {
+        const keys = getUserTopicKey();
+        if (!keys) return { correct: 0, wrong: 0 };
+        const allStats = JSON.parse(localStorage.getItem(keys.statsKey) || '{}');
+        const stat = allStats[qId] || { correct: 0, wrong: 0 };
+        return stat;
     }
-}
 
-function showAnswer(){
-    if(!hasAnswered){
-        alert('请先选择答案！');
-        return;
+    // 更新战绩（正确或错误）
+    function updateQuestionStats(qId, isCorrect) {
+        const keys = getUserTopicKey();
+        if (!keys) return;
+        const allStats = JSON.parse(localStorage.getItem(keys.statsKey) || '{}');
+        if (!allStats[qId]) allStats[qId] = { correct: 0, wrong: 0 };
+        if (isCorrect) allStats[qId].correct++;
+        else allStats[qId].wrong++;
+        localStorage.setItem(keys.statsKey, JSON.stringify(allStats));
+
+        // 刷新当前题目的战绩显示
+        const stat = allStats[qId];
+        document.getElementById('statsBadge').innerText = `本题战绩: 正确${stat.correct}次, 错误${stat.wrong}次`;
     }
-    if(hasLookAns) return;
-    hasLookAns = true;
-    const q = questionList[currentIdx];
-    document.getElementById('ansText').innerText = q.explain;
-    document.getElementById('ansBox').style.display = 'block';
-    document.getElementById('lookAnsBtn').style.display = 'none';
-    document.getElementById('nextQBtn').style.display = 'inline-block';
-}
 
-function nextQuestion(){
-    currentIdx++;
-    loadQuestion();
-}
-
-function updateScorePanel(){
-    const score = topicFullMark.pet100.score;
-    const total = 100;
-    document.getElementById('currTopicScore').innerText = `${score} / ${total}`;
-    document.getElementById('totalScore').innerText = `${score} / ${total}`;
-    document.getElementById('passTopicNum').innerText = score === total ? '1 / 1' : '0 / 1';
-    // 小红花
-    const flowerBox = document.getElementById('flowerBox');
-    flowerBox.innerHTML = '';
-    if(score === total){
-        for(let i=0;i<3;i++){
-            flowerBox.innerHTML += '<span class="flower">🌸</span>';
+    // 错题本操作
+    function addToWrongBook(qId, questionText) {
+        const keys = getUserTopicKey();
+        if (!keys) return;
+        let wrongList = JSON.parse(localStorage.getItem(keys.wrongKey) || '[]');
+        if (!wrongList.some(item => item.id === qId)) {
+            wrongList.push({ id: qId, text: questionText.substring(0, 40) });
+            localStorage.setItem(keys.wrongKey, JSON.stringify(wrongList));
+            refreshWrongBookSelect();
         }
     }
-}
 
-function genNewPaper(){
-    const key = document.getElementById('apiKey').value.trim();
-    if(!key){
-        alert('请先填入API Key！');
-        return;
+    function removeFromWrongBook(qId) {
+        const keys = getUserTopicKey();
+        if (!keys) return;
+        let wrongList = JSON.parse(localStorage.getItem(keys.wrongKey) || '[]');
+        const newList = wrongList.filter(item => item.id !== qId);
+        localStorage.setItem(keys.wrongKey, JSON.stringify(newList));
+        refreshWrongBookSelect();
     }
-    alert('已触发生成任务，生成后将自动加载新题库（当前为本地100题完整版）');
-}
+
+    function refreshWrongBookSelect() {
+        const select = document.getElementById('wrongbookSelect');
+        const keys = getUserTopicKey();
+        if (!keys) {
+            select.innerHTML = '<option value="">-- 请先登录 --</option>';
+            return;
+        }
+        const wrongList = JSON.parse(localStorage.getItem(keys.wrongKey) || '[]');
+        select.innerHTML = '<option value="">-- 选择错题快速跳转 --</option>';
+        wrongList.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.text;
+            select.appendChild(option);
+        });
+    }
+
+    function jumpToWrongQuestion() {
+        const select = document.getElementById('wrongbookSelect');
+        const qId = select.value;
+        if (!qId) return;
+        const idx = questionList.findIndex(q => q.id === qId);
+        if (idx !== -1) {
+            currentIdx = idx;
+            loadQuestion();
+        } else {
+            alert('错题不在当前专题，请切换专题或刷新');
+        }
+        select.value = '';
+    }
+
+    function removeSelectedWrong() {
+        const select = document.getElementById('wrongbookSelect');
+        const qId = select.value;
+        if (!qId) return;
+        removeFromWrongBook(qId);
+        select.value = '';
+        alert('已从错题本移除');
+    }
+
+    // 计分（保持原有）
+    let topicFullMark = { pet100: { score: 0, full: false } };
+    function updateScorePanel() {
+        const keys = getUserTopicKey();
+        if (!keys) return;
+        let savedScore = parseInt(localStorage.getItem(keys.scoreKey) || '0');
+        const total = questionList.length;
+        document.getElementById('currTopicScore').innerText = `${savedScore} / ${total}`;
+        document.getElementById('totalScore').innerText = `${savedScore} / ${total}`;
+        document.getElementById('passTopicNum').innerText = savedScore === total ? '1 / 1' : '0 / 1';
+        const flowerBox = document.getElementById('flowerBox');
+        flowerBox.innerHTML = '';
+        if (savedScore === total) {
+            for (let i = 0; i < 3; i++) flowerBox.innerHTML += '<span class="flower">🌸</span>';
+        }
+    }
+
+    function addScore() {
+        const keys = getUserTopicKey();
+        if (!keys) return;
+        let currentScore = parseInt(localStorage.getItem(keys.scoreKey) || '0');
+        currentScore++;
+        localStorage.setItem(keys.scoreKey, currentScore);
+        updateScorePanel();
+    }
+
+    // 重写 selectOpt 以集成战绩和错题本
+    function selectOpt(opt) {
+        if (hasAnswered) return;
+        const q = questionList[currentIdx];
+        if (!q) return;
+        const isRight = (opt === q.ans);
+        hasAnswered = true;
+        // 高亮选中按钮
+        document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById('resultIcon').innerHTML = isRight ? '✔️' : '❌';
+        document.getElementById('resultIcon').className = 'result-icon ' + (isRight ? 'right' : 'wrong');
+
+        // 更新战绩
+        updateQuestionStats(q.id, isRight);
+        // 错题本管理
+        if (!isRight) {
+            addToWrongBook(q.id, q.q.replace(/<[^>]+>/g, '').substring(0, 50));
+        } else {
+            // 如果答对了，且该题在错题本中，可选择自动移除？暂不移除，留给用户手动
+        }
+
+        if (isRight && !isScored) {
+            isScored = true;
+            addScore();
+        }
+    }
+
+    // 重写 showAnswer 和 nextQuestion 复用
+    function showAnswer() {
+        if (!hasAnswered) { alert('请先选择答案'); return; }
+        if (hasLookAns) return;
+        hasLookAns = true;
+        const q = questionList[currentIdx];
+        document.getElementById('ansText').innerText = q.explain;
+        document.getElementById('ansBox').style.display = 'block';
+        document.getElementById('lookAnsBtn').style.display = 'none';
+        document.getElementById('nextQBtn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+        currentIdx++;
+        if (currentIdx >= questionList.length) {
+            alert('恭喜你完成了本套题目！');
+            currentIdx = 0;
+        }
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (!questionList.length) return;
+        const q = questionList[currentIdx];
+        document.getElementById('qNum').innerText = `第 ${currentIdx+1} 题 / 共 ${questionList.length} 题`;
+        document.getElementById('qContent').innerHTML = q.q;
+        // 重置状态
+        hasAnswered = false;
+        hasLookAns = false;
+        isScored = false;
+        document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('resultIcon').innerHTML = '';
+        document.getElementById('ansBox').style.display = 'none';
+        document.getElementById('lookAnsBtn').style.display = 'inline-block';
+        document.getElementById('nextQBtn').style.display = 'none';
+        // 刷新战绩显示
+        const stat = loadQuestionStats(q.id);
+        document.getElementById('statsBadge').innerHTML = `本题战绩: 正确${stat.correct}次, 错误${stat.wrong}次`;
+    }
+
+    // 加载专题试卷
+    function loadTopicPaper() {
+        const sel = document.getElementById('topicSel').value;
+        if (!topicBank[sel]) return;
+        // 复制题库并添加唯一id
+        questionList = topicBank[sel].map((item, idx) => {
+            return {
+                ...item,
+                id: `${sel}_${idx}_${item.q.substring(0, 30)}`.replace(/[^a-zA-Z0-9]/g, '_')
+            };
+        });
+        // 随机打乱
+        questionList.sort(() => Math.random() - 0.5);
+        currentIdx = 0;
+        // 加载得分
+        const keys = getUserTopicKey();
+        if (keys) {
+            let savedScore = parseInt(localStorage.getItem(keys.scoreKey) || '0');
+            if (savedScore > questionList.length) savedScore = 0;
+            localStorage.setItem(keys.scoreKey, savedScore);
+        }
+        updateScorePanel();
+        refreshWrongBookSelect();
+        loadQuestion();
+    }
+
+    // 倒计时功能
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        const minutes = parseInt(document.getElementById('timerMinutes').value);
+        if (isNaN(minutes) || minutes < 1) minutes = 5;
+        remainingSeconds = minutes * 60;
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+            if (remainingSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert('倒计时结束！请继续练习，可重新开始计时。');
+                return;
+            }
+            remainingSeconds--;
+            updateTimerDisplay();
+        }, 1000);
+    }
+    function resetTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        const minutes = parseInt(document.getElementById('timerMinutes').value) || 5;
+        remainingSeconds = minutes * 60;
+        updateTimerDisplay();
+    }
+    function updateTimerDisplay() {
+        const mins = Math.floor(remainingSeconds / 60);
+        const secs = remainingSeconds % 60;
+        document.getElementById('timerDisplay').innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+    }
+
+    // 登录与登出
+    function realLogin() {
+        const name = document.getElementById('wechatName').value.trim();
+        if (!name) {
+            alert('请输入微信昵称');
+            return;
+        }
+        currentUser = name;
+        localStorage.setItem('currentUser', name);
+        document.getElementById('loginMask').classList.add('hide');
+        document.getElementById('mainPage').classList.remove('hide');
+        document.getElementById('currentUser').innerText = currentUser;
+        loadTopicPaper();
+        resetTimer();
+    }
+    function logout() {
+        if (timerInterval) clearInterval(timerInterval);
+        currentUser = null;
+        localStorage.removeItem('currentUser');
+        document.getElementById('loginMask').classList.remove('hide');
+        document.getElementById('mainPage').classList.add('hide');
+        document.getElementById('wechatName').value = '';
+    }
+    // 检查自动登录
+    function autoLogin() {
+        const saved = localStorage.getItem('currentUser');
+        if (saved) {
+            document.getElementById('wechatName').value = saved;
+            realLogin();
+        }
+    }
+    // 预留生成新题库
+    function genNewPaper() { alert('此功能需配合API使用，敬请期待'); }
+
+    // 初始化
+    window.onload = () => {
+        autoLogin();
+        resetTimer();
+    };
 </script>
+
+<!-- 注意：以下需要包含完整的 topicBank 对象，由于篇幅限制请从原文件复制 topicBank 定义 -->
+<!-- 请将用户提供的原HTML中 <script> 内的 topicBank 对象完整复制到此处（从 pet100 到 pet1200） -->
+<!-- 为确保功能完整，实际部署时务必包含原题库数据 -->
 </body>
 </html>
